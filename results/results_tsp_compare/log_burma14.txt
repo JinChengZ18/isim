@@ -1,0 +1,6 @@
+23:29:31 INFO tsp_compare: --- QUBO on burma14: N_spins=196, A=2522.0, B=1.0, T=50000 ---
+23:29:31 INFO isim: multistart: problem='burma14', n_trials=100, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=50000, beta0=0.05, betaf=20.0
+23:31:02 INFO isim: multistart done: problem='burma14' total_wall=91.0s per_trial_median=3.582s E_min=-1332117.5000 E_median=-1330859.7500
+23:31:02 INFO tsp_compare: --- PERM on burma14: n_cities=14, T=5000 ---
+23:31:02 INFO permtsp: multistart_permutation: n_trials=100, n_jobs=4, n_sweeps=5000, beta=(0.1, 50.0), move_mix={'2opt': 0.85, 'swap': 0.1, 'insert': 0.05}
+23:31:39 INFO permtsp: done: total_wall=37.2s per_trial_median=1.461s L_best_min=3323.0 L_best_median=3323.0

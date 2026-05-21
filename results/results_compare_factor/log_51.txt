@@ -1,0 +1,10 @@
+21:54:05 INFO compare: Problem factor_M51: n=9, kind=factor
+21:54:05 INFO compare:   running sMTJ-Gibbs dynamics ...
+21:54:05 INFO isim: multistart: problem='factor_M51', n_trials=200, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=20000, beta0=0.05, betaf=30.0
+21:54:13 INFO isim: multistart done: problem='factor_M51' total_wall=8.1s per_trial_median=0.136s E_min=-8248.0000 E_median=-7848.0000
+21:54:13 INFO compare:   running Classical SA (Metropolis) dynamics ...
+21:54:13 INFO isim: multistart: problem='factor_M51', n_trials=200, n_jobs=4, mode=async_numba, dynamics=metropolis, sweeps=20000, beta0=0.05, betaf=30.0
+21:54:22 INFO isim: multistart done: problem='factor_M51' total_wall=8.9s per_trial_median=0.150s E_min=-8248.0000 E_median=-7848.0000
+21:54:22 INFO compare:   target: product pq=M=51
+21:54:22 INFO compare:   sMTJ-Gibbs : E_min=-8248.0000 median=-7848.0000 p_s=0.050 TTS99=12.20s (t_med=0.14s)
+21:54:22 INFO compare:   Classical SA: E_min=-8248.0000 median=-7848.0000 p_s=0.045 TTS99=15.01s (t_med=0.15s)

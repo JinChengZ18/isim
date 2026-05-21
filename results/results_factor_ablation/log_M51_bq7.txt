@@ -1,0 +1,4 @@
+23:30:37 INFO ablation: M=51 bq=7: bp=2, N_spins=13, penalty=2602
+23:30:37 INFO isim: multistart: problem='factor_M51', n_trials=200, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=20000, beta0=0.05, betaf=30.0
+23:30:53 INFO isim: multistart done: problem='factor_M51' total_wall=16.4s per_trial_median=0.226s E_min=-38135.0000 E_median=-37811.0000
+23:30:53 INFO ablation:   p_success=2.50% constraint_rate=100.0% TTS99=41.10s

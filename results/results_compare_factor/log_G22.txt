@@ -1,0 +1,1 @@
+17:58:36 ERROR compare: [skip] G22: factor mode expects an integer M, got 'G22'

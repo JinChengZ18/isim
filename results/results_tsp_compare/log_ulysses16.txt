@@ -1,0 +1,6 @@
+23:31:40 INFO tsp_compare: --- QUBO on ulysses16: N_spins=256, A=5578.0, B=1.0, T=50000 ---
+23:31:40 INFO isim: multistart: problem='ulysses16', n_trials=100, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=50000, beta0=0.05, betaf=20.0
+23:33:14 INFO isim: multistart done: problem='ulysses16' total_wall=93.4s per_trial_median=3.626s E_min=-4490662.0000 E_median=-4488607.7500
+23:33:14 INFO tsp_compare: --- PERM on ulysses16: n_cities=16, T=5000 ---
+23:33:14 INFO permtsp: multistart_permutation: n_trials=100, n_jobs=4, n_sweeps=5000, beta=(0.1, 50.0), move_mix={'2opt': 0.85, 'swap': 0.1, 'insert': 0.05}
+23:33:43 INFO permtsp: done: total_wall=29.4s per_trial_median=1.185s L_best_min=6859.0 L_best_median=6870.0

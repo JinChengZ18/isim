@@ -1,0 +1,5 @@
+23:29:22 INFO bench_maxcut: Loaded G22: n=2000, edges=19990, edge_sum=19990
+23:29:22 INFO isim: multistart: problem='G22', n_trials=200, n_jobs=8, mode=async_numba, dynamics=gibbs, sweeps=10000, beta0=0.1, betaf=10.0
+23:31:01 INFO isim: multistart done: problem='G22' total_wall=99.3s per_trial_median=3.901s E_min=-3364.0000 E_median=-3361.0000
+23:31:01 INFO bench_maxcut:   G22 results: best_cut=13359 median_cut=13356 BKS=13359 gap_best=0.000%
+23:31:01 INFO bench_maxcut:   p_success=0.020 time_median=3.90s TTS99_wall=889.20s

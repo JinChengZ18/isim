@@ -1,0 +1,6 @@
+23:29:50 INFO bench_factor: Built M=21: N_spins=5 (bp=2, bq=3, penalty=442.0)
+23:29:50 INFO isim: multistart: problem='factor_M21', n_trials=200, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=20000, beta0=0.05, betaf=30.0
+23:30:05 INFO isim: multistart done: problem='factor_M21' total_wall=14.8s per_trial_median=0.240s E_min=-789.0000 E_median=-645.0000
+23:30:05 INFO bench_factor:   M=21: constraint_ok=100.0% product_match=13.5% p_success=13.50%
+23:30:05 INFO bench_factor:   best (p, q) = (3, 7) (target 21 = 3 x 7)
+23:30:05 INFO bench_factor:   time_median=0.24s TTS_99=7.62s

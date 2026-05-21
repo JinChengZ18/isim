@@ -1,0 +1,5 @@
+23:29:01 INFO bench_maxcut: Loaded G14: n=800, edges=4694, edge_sum=4694
+23:29:01 INFO isim: multistart: problem='G14', n_trials=200, n_jobs=8, mode=async_numba, dynamics=gibbs, sweeps=10000, beta0=0.1, betaf=10.0
+23:29:22 INFO isim: multistart done: problem='G14' total_wall=20.1s per_trial_median=0.792s E_min=-715.0000 E_median=-707.0000
+23:29:22 INFO bench_maxcut:   G14 results: best_cut=3062 median_cut=3054 BKS=3064 gap_best=0.065%
+23:29:22 INFO bench_maxcut:   p_success=0.000 time_median=0.79s TTS99_wall=infs

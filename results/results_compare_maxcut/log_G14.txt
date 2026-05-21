@@ -1,0 +1,10 @@
+17:48:22 INFO compare: Problem G14: n=800, kind=maxcut
+17:48:22 INFO compare:   running sMTJ-Gibbs dynamics ...
+17:48:22 INFO isim: multistart: problem='G14', n_trials=200, n_jobs=1, mode=async_numba, dynamics=gibbs, sweeps=10000, beta0=0.1, betaf=10.0
+17:49:40 INFO isim: multistart done: problem='G14' total_wall=77.6s per_trial_median=0.387s E_min=-715.0000 E_median=-707.0000
+17:49:40 INFO compare:   running Classical SA (Metropolis) dynamics ...
+17:49:40 INFO isim: multistart: problem='G14', n_trials=200, n_jobs=1, mode=async_numba, dynamics=metropolis, sweeps=10000, beta0=0.1, betaf=10.0
+17:50:56 INFO isim: multistart done: problem='G14' total_wall=76.8s per_trial_median=0.379s E_min=-715.0000 E_median=-708.0000
+17:50:56 INFO compare:   target: cut=3064
+17:50:56 INFO compare:   sMTJ-Gibbs : E_min=-715.0000 median=-707.0000 p_s=0.000 TTS99=infs (t_med=0.39s)
+17:50:56 INFO compare:   Classical SA: E_min=-715.0000 median=-708.0000 p_s=0.000 TTS99=infs (t_med=0.38s)

@@ -1,0 +1,41 @@
+# Python bytecode and runtime caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.nbi
+*.nbc
+
+# Test, type-check, and coverage caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Virtual environments and local environment files
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
+!.env.example
+
+# Packaging and build output
+build/
+dist/
+*.egg-info/
+
+# Editor and OS metadata
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local scratch files
+*.log
+*.tmp
+*.bak
+*.swp

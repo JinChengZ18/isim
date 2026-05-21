@@ -1,0 +1,4 @@
+instance,n_cities,N_spins,opt_len,best_len,median_len,gap_best_pct,gap_median_pct,p_success,tts99_wall,tts99_sweeps,time_median,feasible_frac,n_trials,n_sweeps,opt_tol,update_mode,dynamics,schedule,beta0,betaf,A,B
+burma14,14,196,3323,5045.0,5415.0,51.8206439963888,62.9551609990972,0.0,inf,inf,2.6980579499795567,0.03,100,50000,0.01,async_numba,gibbs,geometric,0.05,20.0,2522.0,1.0
+ulysses16,16,256,6859,13877.0,13944.0,102.31812217524421,103.29494095349176,0.0,inf,inf,4.272822949977126,0.03,100,50000,0.01,async_numba,gibbs,geometric,0.05,20.0,5578.0,1.0
+gr17,17,289,2085,3055.0,3866.0,46.52278177458034,85.41966426858512,0.0,inf,inf,4.18886044996907,0.21,100,50000,0.01,async_numba,gibbs,geometric,0.05,20.0,1490.0,1.0

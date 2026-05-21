@@ -1,0 +1,6 @@
+23:29:39 INFO bench_factor: Built M=15: N_spins=5 (bp=2, bq=3, penalty=226.0)
+23:29:39 INFO isim: multistart: problem='factor_M15', n_trials=200, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=20000, beta0=0.05, betaf=30.0
+23:29:50 INFO isim: multistart done: problem='factor_M15' total_wall=11.8s per_trial_median=0.173s E_min=-381.0000 E_median=-345.0000
+23:29:50 INFO bench_factor:   M=15: constraint_ok=100.0% product_match=26.0% p_success=26.00%
+23:29:50 INFO bench_factor:   best (p, q) = (3, 5) (target 15 = 3 x 5)
+23:29:50 INFO bench_factor:   time_median=0.17s TTS_99=2.64s

@@ -1,0 +1,10 @@
+22:48:59 INFO compare: Problem gr17: n=289, kind=tsp
+22:48:59 INFO compare:   running sMTJ-Gibbs dynamics ...
+22:48:59 INFO isim: multistart: problem='gr17', n_trials=100, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=50000, beta0=0.05, betaf=20.0
+22:49:41 INFO isim: multistart done: problem='gr17' total_wall=42.9s per_trial_median=1.649s E_min=-1499827.0000 E_median=-1499057.5000
+22:49:41 INFO compare:   running Classical SA (Metropolis) dynamics ...
+22:49:41 INFO isim: multistart: problem='gr17', n_trials=100, n_jobs=4, mode=async_numba, dynamics=metropolis, sweeps=50000, beta0=0.05, betaf=20.0
+22:50:27 INFO isim: multistart done: problem='gr17' total_wall=45.7s per_trial_median=1.723s E_min=-1500068.0000 E_median=-1499067.2500
+22:50:27 INFO compare:   target: E_best_observed=-1500068.0000
+22:50:27 INFO compare:   sMTJ-Gibbs : E_min=-1499827.0000 median=-1499057.5000 p_s=0.000 TTS99=infs (t_med=1.65s)
+22:50:27 INFO compare:   Classical SA: E_min=-1500068.0000 median=-1499067.2500 p_s=0.010 TTS99=789.39s (t_med=1.72s)

@@ -1,0 +1,1 @@
+19:19:18 ERROR compare: [skip] No TSPLIB file for G14

@@ -1,0 +1,4 @@
+23:33:54 INFO tsp_ablation: === A_margin=3 -> A=8367.0, N_spins=256 ===
+23:33:54 INFO isim: multistart: problem='ulysses16', n_trials=100, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=50000, beta0=0.05, betaf=20.0
+23:35:02 INFO isim: multistart done: problem='ulysses16' total_wall=68.2s per_trial_median=2.580s E_min=-6543366.0000 E_median=-6541277.5000
+23:35:02 INFO tsp_ablation:   feasible=3.0%, best_len=13877.0, gap_best=102.32%, p_s=0.000, TTS99=infs

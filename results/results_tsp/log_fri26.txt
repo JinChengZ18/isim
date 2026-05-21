@@ -1,0 +1,1 @@
+23:34:16 ERROR bench_tsp: [skip] fri26: TSP n=26 exceeds default guard (n<=20). The n^2-spin QUBO encoding converges very slowly under SA for large n. Pass allow_large=True to proceed (expect hour-scale runs and poor convergence).

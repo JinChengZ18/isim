@@ -1,0 +1,5 @@
+23:28:30 INFO bench_maxcut: Loaded G1: n=800, edges=19176, edge_sum=19176
+23:28:30 INFO isim: multistart: problem='G1', n_trials=200, n_jobs=8, mode=async_numba, dynamics=gibbs, sweeps=10000, beta0=0.1, betaf=10.0
+23:29:01 INFO isim: multistart done: problem='G1' total_wall=30.7s per_trial_median=1.162s E_min=-2036.0000 E_median=-2036.0000
+23:29:01 INFO bench_maxcut:   G1 results: best_cut=11624 median_cut=11624 BKS=11624 gap_best=0.000%
+23:29:01 INFO bench_maxcut:   p_success=0.685 time_median=1.16s TTS99_wall=4.63s

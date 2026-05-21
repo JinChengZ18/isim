@@ -1,0 +1,6 @@
+23:30:55 INFO bench_factor: Built M=65: N_spins=11 (bp=3, bq=4, penalty=4226.0)
+23:30:55 INFO isim: multistart: problem='factor_M65', n_trials=200, n_jobs=4, mode=async_numba, dynamics=gibbs, sweeps=20000, beta0=0.05, betaf=30.0
+23:31:10 INFO isim: multistart done: problem='factor_M65' total_wall=15.0s per_trial_median=0.258s E_min=-19607.0000 E_median=-18707.0000
+23:31:10 INFO bench_factor:   M=65: constraint_ok=100.0% product_match=5.0% p_success=5.00%
+23:31:10 INFO bench_factor:   best (p, q) = (5, 13) (target 65 = 5 x 13)
+23:31:10 INFO bench_factor:   time_median=0.26s TTS_99=23.18s
