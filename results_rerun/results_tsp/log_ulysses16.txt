@@ -1,0 +1,5 @@
+02:16:31 INFO bench_tsp: Loaded ulysses16: n_cities=16, N_spins=256, A=5578.0, B=1.0
+02:16:31 INFO isim: multistart: problem='ulysses16', n_trials=100, n_jobs=6, mode=async_numba, dynamics=gibbs, sweeps=50000, beta0=0.05, betaf=20.0
+02:17:21 INFO isim: multistart done: problem='ulysses16' total_wall=49.5s per_trial_median=2.790s E_min=-4490662.0000 E_median=-4488607.7500
+02:17:21 INFO bench_tsp:   ulysses16: feasible=3/100 best_len=13877.0 median_len=13944.0 OPT=6859
+02:17:21 INFO bench_tsp:   gap_best=102.32% gap_median=103.29% p_s(tol=0.01)=0.000 TTS99=infs

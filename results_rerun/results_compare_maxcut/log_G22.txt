@@ -1,0 +1,10 @@
+02:20:29 INFO compare: Problem G22: n=2000, kind=maxcut
+02:20:29 INFO compare:   running sMTJ-Gibbs dynamics ...
+02:20:29 INFO isim: multistart: problem='G22', n_trials=200, n_jobs=6, mode=async_numba, dynamics=gibbs, sweeps=10000, beta0=0.1, betaf=10.0
+02:21:18 INFO isim: multistart done: problem='G22' total_wall=48.5s per_trial_median=1.394s E_min=-3364.0000 E_median=-3361.0000
+02:21:18 INFO compare:   running Classical SA (Metropolis) dynamics ...
+02:21:18 INFO isim: multistart: problem='G22', n_trials=200, n_jobs=6, mode=async_numba, dynamics=metropolis, sweeps=10000, beta0=0.1, betaf=10.0
+02:22:02 INFO isim: multistart done: problem='G22' total_wall=44.7s per_trial_median=1.285s E_min=-3364.0000 E_median=-3362.0000
+02:22:02 INFO compare:   target: cut=13359
+02:22:02 INFO compare:   sMTJ-Gibbs : E_min=-3364.0000 median=-3361.0000 p_s=0.020 TTS99=317.81s (t_med=1.39s)
+02:22:02 INFO compare:   Classical SA: E_min=-3364.0000 median=-3362.0000 p_s=0.005 TTS99=1180.39s (t_med=1.28s)

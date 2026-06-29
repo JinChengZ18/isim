@@ -1,0 +1,6 @@
+loaded results_rerun\results_compare_maxcut\summary.csv (3 rows so far)
+loaded results_rerun\results_compare_factor\summary.csv (12 rows so far)
+loaded results_rerun\results_compare_tsp\summary.csv (14 rows so far)
+skipping 1 unsolved instance(s) (p_success=0): ['G14']
+wrote results_rerun\results_hw_compare_full\hw_compare_summary.csv
+wrote results_rerun\results_hw_compare_full\hw_compare_panels.png

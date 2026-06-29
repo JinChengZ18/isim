@@ -1,0 +1,97 @@
+02:33:58 INFO bench_dev_ablation: Enumerating ground state of ER14_p0.3 (2^14 states) ...
+02:33:58 INFO bench_dev_ablation:   ground-state energy = -6.8776
+02:33:58 INFO bench_dev_ablation: Running ideal-Gibbs baseline ...
+02:33:58 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+  ER14_p0.3:   0%|                                   | 0/200 [00:00<?, ?trial/s]  ER14_p0.3:   0%|▏                          | 1/200 [00:00<02:15,  1.47trial/s]  ER14_p0.3:   4%|█                          | 8/200 [00:00<00:14, 13.13trial/s]  ER14_p0.3:  10%|██▍                       | 19/200 [00:00<00:06, 29.55trial/s]  ER14_p0.3:  13%|███▍                      | 26/200 [00:01<00:04, 36.50trial/s]  ER14_p0.3:  16%|████▏                     | 32/200 [00:01<00:04, 41.35trial/s]  ER14_p0.3:  22%|█████▌                    | 43/200 [00:01<00:03, 48.81trial/s]  ER14_p0.3:  26%|██████▊                   | 52/200 [00:01<00:02, 57.41trial/s]  ER14_p0.3:  30%|███████▋                  | 59/200 [00:01<00:02, 60.20trial/s]  ER14_p0.3:  33%|████████▌                 | 66/200 [00:01<00:02, 61.79trial/s]  ER14_p0.3:  36%|█████████▍                | 73/200 [00:01<00:02, 55.40trial/s]  ER14_p0.3:  40%|██████████▍               | 80/200 [00:01<00:02, 58.42trial/s]  ER14_p0.3:  44%|███████████▌              | 89/200 [00:02<00:01, 64.52trial/s]  ER14_p0.3:  48%|████████████▍             | 96/200 [00:02<00:01, 65.10trial/s]  ER14_p0.3:  52%|████████████▉            | 103/200 [00:02<00:01, 59.50trial/s]  ER14_p0.3:  55%|█████████████▊           | 110/200 [00:02<00:01, 59.58trial/s]  ER14_p0.3:  58%|██████████████▋          | 117/200 [00:02<00:01, 58.89trial/s]  ER14_p0.3:  62%|███████████████▋         | 125/200 [00:02<00:01, 61.81trial/s]  ER14_p0.3:  66%|████████████████▌        | 132/200 [00:02<00:01, 59.69trial/s]  ER14_p0.3:  70%|█████████████████▍       | 139/200 [00:02<00:01, 58.64trial/s]  ER14_p0.3:  73%|██████████████████▎      | 146/200 [00:02<00:00, 60.16trial/s]  ER14_p0.3:  76%|███████████████████▏     | 153/200 [00:03<00:00, 56.11trial/s]  ER14_p0.3:  80%|███████████████████▉     | 159/200 [00:03<00:00, 50.77trial/s]  ER14_p0.3:  82%|████████████████████▋    | 165/200 [00:03<00:00, 48.28trial/s]  ER14_p0.3:  85%|█████████████████████▎   | 170/200 [00:03<00:00, 44.71trial/s]  ER14_p0.3:  88%|█████████████████████▉   | 175/200 [00:03<00:00, 44.77trial/s]  ER14_p0.3:  90%|██████████████████████▋  | 181/200 [00:03<00:00, 48.28trial/s]  ER14_p0.3:  94%|███████████████████████▍ | 187/200 [00:03<00:00, 46.49trial/s]  ER14_p0.3:  96%|████████████████████████▏| 193/200 [00:04<00:00, 43.70trial/s]  ER14_p0.3: 100%|████████████████████████▉| 199/200 [00:04<00:00, 47.35trial/s]  ER14_p0.3: 100%|█████████████████████████| 200/200 [00:04<00:00, 47.96trial/s]
+02:34:02 INFO isim: multistart done: problem='ER14_p0.3' total_wall=4.2s per_trial_median=0.095s E_min=-6.8776 E_median=-6.7683
+02:34:02 INFO bench_dev_ablation:   baseline p_s = 0.185, TTS_99 sweeps = 45023.55
+02:34:02 INFO bench_dev_ablation: Device run: g_dev=0.5
+02:34:02 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:08 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.2s per_trial_median=0.104s E_min=-6.8776 E_median=-6.5902
+02:34:08 INFO bench_dev_ablation:   p_s = 0.065, TTS_99 sweeps = 137040.79
+02:34:08 INFO bench_dev_ablation: Device run: g_dev=0.7
+02:34:08 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:13 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.3s per_trial_median=0.104s E_min=-6.8776 E_median=-6.7289
+02:34:13 INFO bench_dev_ablation:   p_s = 0.145, TTS_99 sweeps = 58794.23
+02:34:13 INFO bench_dev_ablation: Device run: g_dev=1.0
+02:34:13 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:18 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.0s per_trial_median=0.103s E_min=-6.8776 E_median=-6.7683
+02:34:18 INFO bench_dev_ablation:   p_s = 0.185, TTS_99 sweeps = 45023.55
+02:34:18 INFO bench_dev_ablation: Device run: g_dev=1.5
+02:34:18 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:23 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.0s per_trial_median=0.103s E_min=-6.8776 E_median=-6.7712
+02:34:23 INFO bench_dev_ablation:   p_s = 0.280, TTS_99 sweeps = 28037.22
+02:34:23 INFO bench_dev_ablation: Device run: g_dev=2.0
+02:34:23 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:28 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.3s per_trial_median=0.106s E_min=-6.8776 E_median=-6.7712
+02:34:28 INFO bench_dev_ablation:   p_s = 0.275, TTS_99 sweeps = 28640.58
+02:34:28 INFO bench_dev_ablation: Device run: h_off=0.0
+02:34:28 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:33 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.1s per_trial_median=0.102s E_min=-6.8776 E_median=-6.7683
+02:34:33 INFO bench_dev_ablation:   p_s = 0.185, TTS_99 sweeps = 45023.55
+02:34:33 INFO bench_dev_ablation: Device run: h_off=0.05
+02:34:33 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:39 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.5s per_trial_median=0.115s E_min=-6.8776 E_median=-6.7683
+02:34:39 INFO bench_dev_ablation:   p_s = 0.140, TTS_99 sweeps = 61067.26
+02:34:39 INFO bench_dev_ablation: Device run: h_off=0.1
+02:34:39 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:44 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.2s per_trial_median=0.105s E_min=-6.8776 E_median=-6.7289
+02:34:44 INFO bench_dev_ablation:   p_s = 0.110, TTS_99 sweeps = 79035.77
+02:34:44 INFO bench_dev_ablation: Device run: h_off=0.2
+02:34:44 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:49 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.1s per_trial_median=0.103s E_min=-6.8776 E_median=-6.4415
+02:34:49 INFO bench_dev_ablation:   p_s = 0.005, TTS_99 sweeps = 1837459.06
+02:34:49 INFO bench_dev_ablation: Device run: sigma_c2c=0.0
+02:34:49 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:34:54 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.1s per_trial_median=0.111s E_min=-6.8776 E_median=-6.7683
+02:34:54 INFO bench_dev_ablation:   p_s = 0.185, TTS_99 sweeps = 45023.55
+02:34:54 INFO bench_dev_ablation: Device run: sigma_c2c=0.5
+02:34:54 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:01 INFO isim: multistart done: problem='ER14_p0.3' total_wall=6.5s per_trial_median=0.124s E_min=-6.8776 E_median=-6.7683
+02:35:01 INFO bench_dev_ablation:   p_s = 0.165, TTS_99 sweeps = 51076.75
+02:35:01 INFO bench_dev_ablation: Device run: sigma_c2c=1.0
+02:35:01 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:06 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.8s per_trial_median=0.117s E_min=-6.8776 E_median=-6.7289
+02:35:06 INFO bench_dev_ablation:   p_s = 0.110, TTS_99 sweeps = 79035.77
+02:35:06 INFO bench_dev_ablation: Device run: sigma_c2c=2.0
+02:35:06 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:12 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.6s per_trial_median=0.115s E_min=-6.8776 E_median=-6.5902
+02:35:12 INFO bench_dev_ablation:   p_s = 0.090, TTS_99 sweeps = 97659.57
+02:35:12 INFO bench_dev_ablation: Device run: p_max=1.0
+02:35:12 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:17 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.0s per_trial_median=0.103s E_min=-6.8776 E_median=-6.7683
+02:35:17 INFO bench_dev_ablation:   p_s = 0.185, TTS_99 sweeps = 45023.55
+02:35:17 INFO bench_dev_ablation: Device run: p_max=0.9
+02:35:17 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:23 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.9s per_trial_median=0.125s E_min=-6.8776 E_median=-4.5042
+02:35:23 INFO bench_dev_ablation:   p_s = 0.020, TTS_99 sweeps = 455896.34
+02:35:23 INFO bench_dev_ablation: Device run: p_max=0.8
+02:35:23 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:29 INFO isim: multistart done: problem='ER14_p0.3' total_wall=6.0s per_trial_median=0.133s E_min=-6.8776 E_median=-3.5477
+02:35:29 INFO bench_dev_ablation:   p_s = 0.010, TTS_99 sweeps = 916421.15
+02:35:29 INFO bench_dev_ablation: Device run: p_max=0.72
+02:35:29 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:35 INFO isim: multistart done: problem='ER14_p0.3' total_wall=6.6s per_trial_median=0.127s E_min=-6.8382 E_median=-2.5811
+02:35:35 INFO bench_dev_ablation:   p_s = 0.000, TTS_99 sweeps = inf
+02:35:35 INFO bench_dev_ablation: Device run: cv_gain=0.0
+02:35:35 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:40 INFO isim: multistart done: problem='ER14_p0.3' total_wall=4.9s per_trial_median=0.104s E_min=-6.8776 E_median=-6.7683
+02:35:40 INFO bench_dev_ablation:   p_s = 0.185, TTS_99 sweeps = 45023.55
+02:35:40 INFO bench_dev_ablation: Device run: cv_gain=0.077
+02:35:40 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:46 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.5s per_trial_median=0.117s E_min=-6.8776 E_median=-6.7683
+02:35:46 INFO bench_dev_ablation:   p_s = 0.135, TTS_99 sweeps = 63508.30
+02:35:46 INFO bench_dev_ablation: Device run: cv_gain=0.15
+02:35:46 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:52 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.7s per_trial_median=0.114s E_min=-6.8776 E_median=-6.7683
+02:35:52 INFO bench_dev_ablation:   p_s = 0.160, TTS_99 sweeps = 52825.70
+02:35:52 INFO bench_dev_ablation: Device run: cv_gain=0.3
+02:35:52 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:35:58 INFO isim: multistart done: problem='ER14_p0.3' total_wall=6.0s per_trial_median=0.116s E_min=-6.8776 E_median=-6.7289
+02:35:58 INFO bench_dev_ablation:   p_s = 0.150, TTS_99 sweeps = 56672.42
+02:35:58 INFO bench_dev_ablation: Device run: cv_gain=0.6
+02:35:58 INFO isim: multistart: problem='ER14_p0.3', n_trials=200, n_jobs=6, mode=block, dynamics=gibbs, sweeps=2000, beta0=0.1, betaf=5.0
+02:36:03 INFO isim: multistart done: problem='ER14_p0.3' total_wall=5.8s per_trial_median=0.121s E_min=-4.7922 E_median=-4.0074
+02:36:03 INFO bench_dev_ablation:   p_s = 0.000, TTS_99 sweeps = inf
+02:36:03 INFO bench_dev_ablation: summary written: results_rerun\results_dev_ablation\device_ablation_summary.csv
+02:36:04 INFO bench_dev_ablation: plot written: results_rerun\results_dev_ablation\device_ablation_panels.png

@@ -1,0 +1,6 @@
+02:15:38 INFO bench_factor: Built M=33: N_spins=7 (bp=2, bq=4, penalty=1090.0)
+02:15:38 INFO isim: multistart: problem='factor_M33', n_trials=200, n_jobs=6, mode=async_numba, dynamics=gibbs, sweeps=20000, beta0=0.05, betaf=30.0
+02:15:42 INFO isim: multistart done: problem='factor_M33' total_wall=3.9s per_trial_median=0.075s E_min=-2658.5000 E_median=-2334.5000
+02:15:42 INFO bench_factor:   M=33: constraint_ok=100.0% product_match=6.5% p_success=6.50%
+02:15:42 INFO bench_factor:   best (p, q) = (3, 11) (target 33 = 3 x 11)
+02:15:42 INFO bench_factor:   time_median=0.08s TTS_99=5.15s

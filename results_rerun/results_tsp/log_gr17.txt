@@ -1,0 +1,5 @@
+02:17:21 INFO bench_tsp: Loaded gr17: n_cities=17, N_spins=289, A=1490.0, B=1.0
+02:17:21 INFO isim: multistart: problem='gr17', n_trials=100, n_jobs=6, mode=async_numba, dynamics=gibbs, sweeps=50000, beta0=0.05, betaf=20.0
+02:18:18 INFO isim: multistart done: problem='gr17' total_wall=56.8s per_trial_median=3.231s E_min=-1499827.0000 E_median=-1499057.5000
+02:18:18 INFO bench_tsp:   gr17: feasible=21/100 best_len=3055.0 median_len=3866.0 OPT=2085
+02:18:18 INFO bench_tsp:   gap_best=46.52% gap_median=85.42% p_s(tol=0.01)=0.000 TTS99=infs

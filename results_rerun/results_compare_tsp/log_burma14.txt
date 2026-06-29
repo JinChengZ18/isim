@@ -1,0 +1,10 @@
+02:23:13 INFO compare: Problem burma14: n=196, kind=tsp
+02:23:13 INFO compare:   running sMTJ-Gibbs dynamics ...
+02:23:13 INFO isim: multistart: problem='burma14', n_trials=100, n_jobs=6, mode=async_numba, dynamics=gibbs, sweeps=50000, beta0=0.05, betaf=20.0
+02:23:33 INFO isim: multistart done: problem='burma14' total_wall=20.1s per_trial_median=1.095s E_min=-1332117.5000 E_median=-1330859.7500
+02:23:33 INFO compare:   running Classical SA (Metropolis) dynamics ...
+02:23:33 INFO isim: multistart: problem='burma14', n_trials=100, n_jobs=6, mode=async_numba, dynamics=metropolis, sweeps=50000, beta0=0.05, betaf=20.0
+02:23:52 INFO isim: multistart done: problem='burma14' total_wall=19.2s per_trial_median=1.038s E_min=-1332117.5000 E_median=-1330841.2500
+02:23:52 INFO compare:   target: E_best_observed=-1332117.5000
+02:23:52 INFO compare:   sMTJ-Gibbs : E_min=-1332117.5000 median=-1330859.7500 p_s=0.010 TTS99=501.62s (t_med=1.09s)
+02:23:52 INFO compare:   Classical SA: E_min=-1332117.5000 median=-1330841.2500 p_s=0.010 TTS99=475.67s (t_med=1.04s)

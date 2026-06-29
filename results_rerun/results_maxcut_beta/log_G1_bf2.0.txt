@@ -1,0 +1,4 @@
+02:26:54 INFO mc_ablation: === scan point: bf=2.0 (T=10000, beta0=0.1, betaf=2.0) ===
+02:26:54 INFO isim: multistart: problem='G1', n_trials=100, n_jobs=6, mode=async_numba, dynamics=gibbs, sweeps=10000, beta0=0.1, betaf=2.0
+02:27:10 INFO isim: multistart done: problem='G1' total_wall=16.3s per_trial_median=0.885s E_min=-2036.0000 E_median=-2031.0000
+02:27:10 INFO mc_ablation:   best_cut=11624 median_cut=11619 BKS=11624 p_s=0.010 TTS99=405.64s t_med=0.89s

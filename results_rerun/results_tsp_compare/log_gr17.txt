@@ -1,0 +1,6 @@
+02:32:46 INFO tsp_compare: --- QUBO on gr17: N_spins=289, A=1490.0, B=1.0, T=50000 ---
+02:32:46 INFO isim: multistart: problem='gr17', n_trials=100, n_jobs=6, mode=async_numba, dynamics=gibbs, sweeps=50000, beta0=0.05, betaf=20.0
+02:33:26 INFO isim: multistart done: problem='gr17' total_wall=40.0s per_trial_median=2.285s E_min=-1499827.0000 E_median=-1499057.5000
+02:33:26 INFO tsp_compare: --- PERM on gr17: n_cities=17, T=5000 ---
+02:33:26 INFO permtsp: multistart_permutation: n_trials=100, n_jobs=6, n_sweeps=5000, beta=(0.1, 50.0), move_mix={'2opt': 0.85, 'swap': 0.1, 'insert': 0.05}
+02:33:39 INFO permtsp: done: total_wall=12.4s per_trial_median=0.696s L_best_min=2085.0 L_best_median=2090.0
