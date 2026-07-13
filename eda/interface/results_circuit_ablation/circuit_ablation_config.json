@@ -1,0 +1,21 @@
+{
+  "_label": "solver-side feedback of MEASURED chain constraints; protocol identical to Section 3.4.2 device ablation",
+  "instance": "ER14_p0.3",
+  "er": {
+    "n": 14,
+    "p": 0.3,
+    "seed": 0
+  },
+  "target_energy": -6.87755433892761,
+  "h_clip": 3.0,
+  "sweeps": 2000,
+  "beta": [
+    0.1,
+    5.0
+  ],
+  "trials": 200,
+  "master_seed": 2024,
+  "update_mode": "block",
+  "r_reset": 0.72,
+  "measured_grid_source": "update_chain_summary.json"
+}

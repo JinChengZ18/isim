@@ -1,0 +1,9 @@
+source /opt/pdk/sky130A/libs.tech/xschem/xschemrc
+lappend XSCHEM_LIBRARY_PATH [file dirname [info script]]
+# journal style: monochrome line-art -- white background, drawing layers black (top-venue circuit
+# figures are black on white, not the green-device/red-pin EDA default). Secondary device sizing
+# text (layer 13) kept dark-grey to de-emphasise vs the topology; layer 7 is a single accent colour
+# (#cc2222) reserved for highlighting the key/innovation element of each figure (and the free-layer
+# switchable magnetisation arrow in the SOT-MTJ symbol).
+set dark_colorscheme 0
+set light_colors {#ffffff #000000 #000000 #000000 #000000 #000000 #000000 #cc2222 #000000 #000000 #000000 #000000 #000000 #555555 #000000 #000000 #000000 #000000 #000000 #000000 #000000 #000000}

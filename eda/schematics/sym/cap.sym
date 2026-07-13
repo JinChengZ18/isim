@@ -1,0 +1,19 @@
+v {xschem version=3.4.4 file_version=1.2}
+G {}
+K {type=capacitor
+format="@name @pinlist @value m=@m"
+template="name=C1
+value=1f
+device=capacitor
+m=1"}
+V {}
+S {}
+E {}
+L 4 0 -30 0 -8 {}
+L 4 -14 -8 14 -8 {}
+L 4 -14 8 14 8 {}
+L 4 0 8 0 30 {}
+B 5 -2.5 -32.5 2.5 -27.5 {name=P dir=inout}
+B 5 -2.5 27.5 2.5 32.5 {name=M dir=inout}
+T {@name} -13 -4 0 1 0.18 0.18 {}
+T {@value} 16 -2 0 0 0.18 0.18 {}

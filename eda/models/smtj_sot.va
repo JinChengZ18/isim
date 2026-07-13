@@ -1,0 +1,78 @@
+// smtj_sot.va — Stochastic SOT-MTJ compact model (Ising p-bit circuit sim)
+// SPDX-License-Identifier: MIT
+//
+// VENDORED from smtj_pbnn_sim/eda/models/smtj_sot.va (same thesis, Chapter 2
+// device): hand-written Verilog-A transcription of the Chapter 2.3 calibrated
+// formulas. Parameter defaults are LOCKED to the Chapter 2 calibration
+// (Device A, P->AP, t_p = 0.75 ns), so agreement with the Python golden is by
+// construction (a port-consistency check), not independent corroboration.
+// Kept byte-identical in the analog core; only this provenance header differs.
+//
+//   * operating-point switching probability  psw_sigmoid(V, Vth, VT)
+//   * Neel-Brown escape rate                  neel_brown_rate(V; Delta, Vc0, tau0)
+//   * telegraph knobs                         tau(V) = 1/(r_up+r_dn),  <s> = tanh(Delta*V/Vc0)
+//
+// ---------------------------------------------------------------------------
+// DESIGN NOTE (open-source / OpenVAF target):
+//   OpenVAF is a compact-model compiler; in-module $random/$rdist, @cross events and
+//   persistent integer state are unreliable across the OSDI path. So the stochastic
+//   Bernoulli draw and the temporal state machine are kept OUT of this .va:
+//
+//     * the MTJ READ branch is a two-state resistor whose state is set by the control
+//       node `st` (V(st) in [0,1]); the HARNESS owns the RNG and sets the next state
+//       per trial (P_sw computed in the harness, draw u, update st);
+//     * the calibrated switching probability is EXPOSED as observable node `psw`, so a
+//       plain DC sweep validates the sigmoid against the measured 46-point data;
+//     * telegraph knobs are exposed as observables `tau` (in ns) and `sinf`.
+//
+//   The SOT WRITE branch (R_SOT) is Ohmic; per-write energy = integral of V*I, taken in
+//   the harness.
+// ---------------------------------------------------------------------------
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module smtj_sot(wr, rd, com, st, psw, tau, sinf);
+   inout  wr, rd, com;        // SOT write top, MTJ read top, common reference
+   input  st;                 // state control: V(st) in [0,1]  (0 = P, 1 = AP)
+   output psw, tau, sinf;     // observable probe nodes (read with .print/.save)
+   electrical wr, rd, com, st, psw, tau, sinf;
+
+   // ---- calibrated parameters: Device A, P->AP, t_p = 0.75 ns (Chapter 2.3) ----
+   parameter real Vth   = 0.895783 from (0:inf);  // sigmoid center [V]
+   parameter real VT    = 0.023414 from (0:inf);  // slope param = 1/beta_s [V]
+   parameter real Delta = 4.91     from (0:inf);  // thermal stability factor [-]
+   parameter real Vc0   = 0.857    from (0:inf);  // zero-thermal critical voltage [V]
+   parameter real tau0  = 1.0e-9   from (0:inf);  // attempt time [s]
+   parameter real Rp    = 4900.0   from (0:inf);  // parallel MTJ resistance [ohm]
+   parameter real TMR   = 1.0      from (0:inf);  // R_AP = Rp*(1+TMR)
+   parameter real Rsot  = 776.0    from (0:inf);  // SOT channel resistance [ohm]
+
+   real Rap, Gstate, st_c, Vwr, p, rup, rdn;
+
+   analog begin
+      Rap = Rp*(1.0 + TMR);
+
+      // --- READ branch: state-dependent conductance, state from control node st ---
+      st_c   = (V(st) < 0.0) ? 0.0 : ((V(st) > 1.0) ? 1.0 : V(st));   // clamp [0,1]
+      Gstate = (1.0 - st_c)/Rp + st_c/Rap;        // linear G interpolation P<->AP
+      I(rd, com) <+ V(rd, com)*Gstate;
+
+      // --- WRITE branch: SOT channel (Ohmic). Energy = integral(V*I) in harness ---
+      Vwr = V(wr, com);
+      I(wr, com) <+ Vwr/Rsot;
+
+      // --- OBSERVABLES (voltage probes; not part of the electrical network) ---
+      // operating-point switching probability  P_sw(V_wr)
+      p = 1.0/(1.0 + exp(-(Vwr - Vth)/VT));
+      V(psw) <+ p;
+
+      // telegraph stationary mean <s> = tanh(Delta*V/Vc0)
+      V(sinf) <+ tanh(Delta*Vwr/Vc0);
+
+      // telegraph correlation time tau(V) = 1/(r_up + r_dn), reported in ns
+      rup = (1.0/tau0)*exp(-Delta*(1.0 - Vwr/Vc0));
+      rdn = (1.0/tau0)*exp(-Delta*(1.0 + Vwr/Vc0));
+      V(tau) <+ 1.0e9/(rup + rdn);
+   end
+endmodule

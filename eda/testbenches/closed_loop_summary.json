@@ -1,0 +1,340 @@
+{
+  "_label": "Part 1 replay: ANALYTIC solver loop on the MEASURED 6-bit u-grid (MEASURED); Part 2 waveform: MEASURED, ngspice tran, sky130 tt, schematic-level, committed OSDI device; stochastic outcomes on node st are the seeded harness draws, NOT spice noise",
+  "instance": {
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "mapping": "J_ij = -w_ij/2, h_i = 0",
+    "n_spins": 5,
+    "n_sweeps": 200,
+    "beta_schedule": "geometric 0.1 -> 5.0",
+    "update": "asynchronous random-permutation Gibbs (mirrors demo)",
+    "sigma": "0.5*(1+tanh(x)), demo convention",
+    "n_trials": 8,
+    "seeds": [
+      2024,
+      2025,
+      2026,
+      2027,
+      2028,
+      2029,
+      2030,
+      2031
+    ],
+    "seed_protocol": "per-trial np.random.default_rng(2024+k) exactly as demo/toy_demo_maxcut5.py; all three variants restart the identical stream per trial",
+    "demo_crosscheck": "ideal variant vs demo/out/toy_run.npz trial_energies: IDENTICAL"
+  },
+  "enumeration": {
+    "label": "ANALYTIC (in-script full enumeration of 2^5 states)",
+    "E_min": -2.0,
+    "degeneracy": 4
+  },
+  "u_grid": {
+    "label": "MEASURED",
+    "n_levels": 64,
+    "u_min": -3.88138,
+    "u_max": 4.39718,
+    "source": "update_chain_summary.json per_bits[6].transfer[*].u"
+  },
+  "sticky_reset": {
+    "label": "ANALYTIC (committed formula)",
+    "k_pulses": 3,
+    "r_reset_single": 0.72,
+    "rho": 0.021952000000000006,
+    "rule": "if s_prev = +1: stays +1 with prob rho, before the draw"
+  },
+  "variants": {
+    "ideal": {
+      "final_energies": [
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "ground_state_hits": 8,
+      "hit_rate": 1.0,
+      "mean_final_energy": -2.0,
+      "first_sweep_at_Emin": [
+        2,
+        0,
+        0,
+        8,
+        0,
+        8,
+        12,
+        0
+      ]
+    },
+    "quantized": {
+      "final_energies": [
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "ground_state_hits": 8,
+      "hit_rate": 1.0,
+      "mean_final_energy": -2.0,
+      "first_sweep_at_Emin": [
+        2,
+        0,
+        0,
+        8,
+        0,
+        8,
+        12,
+        0
+      ]
+    },
+    "realistic": {
+      "final_energies": [
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "ground_state_hits": 8,
+      "hit_rate": 1.0,
+      "mean_final_energy": -2.0,
+      "first_sweep_at_Emin": [
+        8,
+        0,
+        0,
+        5,
+        0,
+        7,
+        3,
+        0
+      ]
+    }
+  },
+  "spin0_trace_trial0_quantized": [
+    {
+      "sweep": 1,
+      "beta": 0.101975,
+      "u_cmd": -0.203951,
+      "code": 29,
+      "u_q": -0.16916,
+      "p": 0.416218,
+      "draw": 0.169619,
+      "s_new": 1
+    },
+    {
+      "sweep": 2,
+      "beta": 0.10399,
+      "u_cmd": -0.207979,
+      "code": 29,
+      "u_q": -0.16916,
+      "p": 0.416218,
+      "draw": 0.975622,
+      "s_new": -1
+    },
+    {
+      "sweep": 3,
+      "beta": 0.106044,
+      "u_cmd": -0.212087,
+      "code": 29,
+      "u_q": -0.16916,
+      "p": 0.416218,
+      "draw": 0.206344,
+      "s_new": 1
+    },
+    {
+      "sweep": 4,
+      "beta": 0.108138,
+      "u_cmd": 0.0,
+      "code": 30,
+      "u_q": -0.03981,
+      "p": 0.480106,
+      "draw": 0.264205,
+      "s_new": 1
+    },
+    {
+      "sweep": 5,
+      "beta": 0.110274,
+      "u_cmd": 0.0,
+      "code": 30,
+      "u_q": -0.03981,
+      "p": 0.480106,
+      "draw": 0.773767,
+      "s_new": -1
+    },
+    {
+      "sweep": 6,
+      "beta": 0.112452,
+      "u_cmd": 0.224905,
+      "code": 32,
+      "u_q": 0.21932,
+      "p": 0.607935,
+      "draw": 0.905475,
+      "s_new": -1
+    },
+    {
+      "sweep": 7,
+      "beta": 0.114674,
+      "u_cmd": 0.0,
+      "code": 30,
+      "u_q": -0.03981,
+      "p": 0.480106,
+      "draw": 0.341993,
+      "s_new": 1
+    },
+    {
+      "sweep": 8,
+      "beta": 0.116939,
+      "u_cmd": 0.233878,
+      "code": 32,
+      "u_q": 0.21932,
+      "p": 0.607935,
+      "draw": 0.4203,
+      "s_new": 1
+    },
+    {
+      "sweep": 9,
+      "beta": 0.119249,
+      "u_cmd": 0.238497,
+      "code": 32,
+      "u_q": 0.21932,
+      "p": 0.607935,
+      "draw": 0.518931,
+      "s_new": 1
+    },
+    {
+      "sweep": 10,
+      "beta": 0.121604,
+      "u_cmd": -0.243208,
+      "code": 28,
+      "u_q": -0.29838,
+      "p": 0.355085,
+      "draw": 0.406999,
+      "s_new": -1
+    },
+    {
+      "sweep": 11,
+      "beta": 0.124006,
+      "u_cmd": 0.0,
+      "code": 30,
+      "u_q": -0.03981,
+      "p": 0.480106,
+      "draw": 0.565821,
+      "s_new": -1
+    },
+    {
+      "sweep": 12,
+      "beta": 0.126456,
+      "u_cmd": -0.252911,
+      "code": 28,
+      "u_q": -0.29838,
+      "p": 0.355085,
+      "draw": 0.218521,
+      "s_new": 1
+    }
+  ],
+  "waveform": {
+    "label": "MEASURED (ngspice tran 2 ps step; DC refs = fresh .op per code)",
+    "cycle_ns": 2.0,
+    "pulse_plateau_ns": 0.75,
+    "lead_ns": 0.5,
+    "enable_on_offset_ns": 1.0,
+    "picked_from": "trial 0, quantized variant, spin 0, sweeps 1-4",
+    "flattop_window": "last 0.21 ns of each enable plateau",
+    "cycles": [
+      {
+        "cycle": 0,
+        "sweep": 1,
+        "u_cmd": -0.203951,
+        "code": 29,
+        "u_q": -0.16916,
+        "st_outcome": 1,
+        "v_tap_dc": 0.88993,
+        "v_wr_dc": 0.891822,
+        "psw_dc": 0.457812,
+        "flattop_mean_V": 0.89466,
+        "delta_mV": 2.837,
+        "peak_wr_V": 0.897286,
+        "psw_flattop": 0.48801
+      },
+      {
+        "cycle": 1,
+        "sweep": 2,
+        "u_cmd": -0.207979,
+        "code": 29,
+        "u_q": -0.16916,
+        "st_outcome": 0,
+        "v_tap_dc": 0.88993,
+        "v_wr_dc": 0.891822,
+        "psw_dc": 0.457812,
+        "flattop_mean_V": 0.897485,
+        "delta_mV": 5.663,
+        "peak_wr_V": 0.8998,
+        "psw_flattop": 0.51817
+      },
+      {
+        "cycle": 2,
+        "sweep": 3,
+        "u_cmd": -0.212087,
+        "code": 29,
+        "u_q": -0.16916,
+        "st_outcome": 1,
+        "v_tap_dc": 0.88993,
+        "v_wr_dc": 0.891822,
+        "psw_dc": 0.457812,
+        "flattop_mean_V": 0.897554,
+        "delta_mV": 5.732,
+        "peak_wr_V": 0.899847,
+        "psw_flattop": 0.5189
+      },
+      {
+        "cycle": 3,
+        "sweep": 4,
+        "u_cmd": 0.0,
+        "code": 30,
+        "u_q": -0.03981,
+        "st_outcome": 1,
+        "v_tap_dc": 0.892856,
+        "v_wr_dc": 0.894851,
+        "psw_dc": 0.49005,
+        "flattop_mean_V": 0.899931,
+        "delta_mV": 5.08,
+        "peak_wr_V": 0.902473,
+        "psw_flattop": 0.544175
+      }
+    ],
+    "wave_csv": "closed_loop_wave.csv"
+  }
+}

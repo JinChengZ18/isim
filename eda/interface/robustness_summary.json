@@ -1,0 +1,60 @@
+{
+  "_label": "seed-robustness of the beta-scaled-3bit and reset-k findings; canonical seed 2024 lives in results_circuit_ablation/",
+  "instance": "ER14_p0.3",
+  "trials": 200,
+  "sweeps": 2000,
+  "beta": [
+    0.1,
+    5.0
+  ],
+  "rows": [
+    {
+      "master_seed": 2025,
+      "config": "ideal",
+      "p_success": 0.21,
+      "tts99_sweeps": 39072.83724201265
+    },
+    {
+      "master_seed": 2025,
+      "config": "beta_scaled_3bit",
+      "p_success": 0.535,
+      "tts99_sweeps": 12028.373232483777
+    },
+    {
+      "master_seed": 2025,
+      "config": "reset_k1",
+      "p_success": 0.2,
+      "tts99_sweeps": 41275.40463406469
+    },
+    {
+      "master_seed": 2025,
+      "config": "reset_k3",
+      "p_success": 0.205,
+      "tts99_sweeps": 40147.392582997825
+    },
+    {
+      "master_seed": 4096,
+      "config": "ideal",
+      "p_success": 0.13,
+      "tts99_sweeps": 66136.74885293115
+    },
+    {
+      "master_seed": 4096,
+      "config": "beta_scaled_3bit",
+      "p_success": 0.605,
+      "tts99_sweeps": 9915.645020483324
+    },
+    {
+      "master_seed": 4096,
+      "config": "reset_k1",
+      "p_success": 0.125,
+      "tts99_sweeps": 68975.09410296327
+    },
+    {
+      "master_seed": 4096,
+      "config": "reset_k3",
+      "p_success": 0.17,
+      "tts99_sweeps": 49430.37203954054
+    }
+  ]
+}

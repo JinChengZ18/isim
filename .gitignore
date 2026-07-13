@@ -39,3 +39,17 @@ Desktop.ini
 *.tmp
 *.bak
 *.swp
+
+# EDA regenerable byproducts
+# generated ngspice decks
+eda/**/_*.spice
+# compiled OSDI device model
+eda/**/*.osdi
+# generated ngspice init file
+eda/testbenches/.spiceinit
+# magic extraction intermediates
+eda/**/*.ext
+eda/**/*.res.ext
+eda/**/*.sim
+eda/**/*.nodes
+eda/**/*.al
