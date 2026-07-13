@@ -6,11 +6,13 @@ eda/ result files (no hand-typed numbers anywhere: every curve/label reads a
 Outputs:
   * clean single panels (no panel letters, no figure numbers, descriptive
     English titles only) -> eda/figs_raw/
-  * provisional composites in the caption's (a)(b)(c) reading order
-    (left-to-right, top-to-bottom, letters NOT baked in; the user adds
-    letters in the PPT pass) -> article/figs/Chapter03_local_{09,10,11}.png
+  * preview composites in the caption's (a)(b)(c) reading order (letters NOT
+    baked in) for a quick visual check -> eda/figs_raw/preview_{09,10,11}.png
 
-Run:  python eda/figs_make.py
+The FINAL numbered figures article/figs/Chapter03_local_{09,10,11}.png are
+produced by eda/build_ppt_figs.py, which composes these panels into a PPT
+deck, adds the (a)(b)(c) letters and exports via LibreOffice. Run order:
+  python eda/figs_make.py && python eda/build_ppt_figs.py
 """
 from __future__ import annotations
 
@@ -326,15 +328,15 @@ PANELS = {
 }
 
 COMPOSITES = {
-    "Chapter03_local_09.png": [  # (a) schematic (b) transfer (c) waveform
+    "preview_09.png": [  # (a) schematic (b) transfer (c) waveform
         ["chain_schematic", "chain_schematic"],
         ["chain_transfer", "chain_waveform"],
     ],
-    "Chapter03_local_10.png": [  # (a) bits (b) span (c) reset (d) replay
+    "preview_10.png": [  # (a) bits (b) span (c) reset (d) replay
         ["abl_bits", "abl_span"],
         ["abl_reset", "abl_traj"],
     ],
-    "Chapter03_local_11.png": [  # (a) IR (b) impact (c) energy (d) projection
+    "preview_11.png": [  # (a) IR (b) impact (c) energy (d) projection
         ["ir_profile", "ir_impact"],
         ["energy_stack", "hw_projection"],
     ],
@@ -367,9 +369,9 @@ def main():
                 ax = fig.add_subplot(gs[i, :] if spans[i] else gs[i, j])
                 PANELS[key][0](ax)
         fig.tight_layout()
-        fig.savefig(FIGS / out, dpi=300, bbox_inches="tight")
+        fig.savefig(RAW / out, dpi=300, bbox_inches="tight")
         plt.close(fig)
-        print(f"composite -> article/figs/{out}")
+        print(f"preview   -> figs_raw/{out}")
 
 
 if __name__ == "__main__":

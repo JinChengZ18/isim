@@ -53,3 +53,9 @@ eda/**/*.res.ext
 eda/**/*.sim
 eda/**/*.nodes
 eda/**/*.al
+
+# PPT figure composition (deck .pptx and final article/figs PNGs are tracked)
+# LibreOffice PDF export is regenerable
+article/ppt/*.pdf
+# letter-free preview composites from figs_make.py
+eda/figs_raw/preview_*.png

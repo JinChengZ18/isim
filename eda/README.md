@@ -47,7 +47,8 @@ maps to a write voltage V = Vth + u·V_T.
 | `interface/reproject_hw.py` | §3.4.3 projection re-run with measured end-to-end sMTJ constants | `results_reproject/reproject_summary.csv` |
 | `extraction/writeline_ir/` | KLayout strap → Magic extresist → per-row IR offset → solver impact | `ir_drop_summary.json`, `ir_solver_impact.csv` |
 | `schematics/` | Xschem schematic of the update chain (headless SVG/PNG export) | `update_chain.svg/.png` |
-| `figs_make.py` | thesis figure panels + provisional composites from the committed results | `figs_raw/*.png`, `article/figs/Chapter03_local_{09..11}.png` |
+| `figs_make.py` | clean thesis figure panels + letter-free preview composites from the committed results | `figs_raw/*.png`, `figs_raw/preview_{09..11}.png` |
+| `build_ppt_figs.py` | composes the panels into a PPT deck, adds the (a)(b)(c) panel letters and exports the numbered figures via LibreOffice (run after `figs_make.py`) | `article/ppt/Chapter03_local.pptx`, `article/figs/Chapter03_local_{09..11}.png` |
 
 ## Integrity protocol
 

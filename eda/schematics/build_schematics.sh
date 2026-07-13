@@ -13,6 +13,8 @@ for sch in "$@"; do
   base="${sch%.sch}"
   timeout 90 xschem --rcfile "$RC" -q --svg --plotfile "$DIR/$base.svg" "$DIR/$sch" </dev/null >/dev/null 2>&1
   [ "$?" -eq 124 ] && { echo "$base: xschem TIMEOUT"; continue; }
+  # render math-style labels (V_th, V_wr, R_SOT, 2^b, ->) with real sub/superscripts
+  python3 "$DIR/postprocess_schematic_svg.py" "$DIR/$base.svg" >/dev/null 2>&1
   python3 -c "import cairosvg; b='$base'; cairosvg.svg2png(url=b+'.svg', write_to=b+'.png', output_width=$PNG_W); cairosvg.svg2pdf(url=b+'.svg', write_to=b+'.pdf')" 2>/dev/null
   dim=$(python3 -c "import struct; d=open('$base.png','rb').read(26); w,h=struct.unpack('>II',d[16:24]); print(str(w)+'x'+str(h))" 2>/dev/null || echo '?')
   echo "$base -> svg $([ -f $base.svg ] && echo ok || echo -), png $dim, pdf $([ -f $base.pdf ] && echo ok || echo -)"
