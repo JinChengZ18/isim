@@ -91,7 +91,7 @@ item's Decision rule.
 - Artifacts: stats.py, ci_audit_summary.csv, N2000 compare summary + JSONs.
 
 ### RX-02 Parallel-update semantics vs the N_par=64 projection assumption
-- Status: open
+- Status: claimed 2026-07-19 session-e063faf4-loop
 - Effort: 1-2 days. Deps: RX-01 (use its CIs).
 - Objection: 表3.8 divides sweeps by N_par=64 while p_s was measured under
   strictly ASYNC Gibbs. Simultaneous updates of coupled spins =
