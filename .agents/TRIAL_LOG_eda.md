@@ -104,3 +104,19 @@ terminates the token), giving "20 / 0.5", "80 / 0.5", "4 / 0.15", "8 / 0.15" in 
 Connectivity separately verified by netlisting the .sch (xschem -n -s) and matching every
 device line against the update_chain_dc.py deck (M1-M4/Mt/Mo/Ccm/TG/WE all exact, feedback
 gate of M2 = wr after the enable gate).
+
+## 2026-07-19 RX-01: the G22 "3.71x core finding" fails its own CI audit; N=2000 rerun demotes it
+
+Tried: adding Wilson/bootstrap intervals to every p_s table (new stats.py + ci_audit.py) as
+table-stakes statistics. Symptom: the chapter's headline algorithmic claim — G22 speedup
+3.71x — rested on 4-vs-1 hits at N_trial=200; the sweeps-basis bootstrap interval is
+[0.33, 8.14] with 37% undefined replicates, i.e. the claim was never statistically
+established. Verification before revision: reran G22 both dynamics at N_trial=2000 with the
+same master seed; SeedSequence(2024).spawn(2000) children 0..199 are identical to the
+original protocol and the rerun's first 200 trials reproduce the original 4-vs-1 hits and
+per-trial energy multisets exactly (no protocol drift — pure upward fluctuation). Result:
+p_s 0.004 vs 0.0025 (8 vs 5 hits), sweeps speedup 1.6x CI [0.5, 7.0], straddling 1.
+Correction applied: 3.3.1/3.3小结/3.6 rewritten (grounds [^process-g22-power]); the G1
+N=1000 control simultaneously showed SA significantly faster (0.84x [0.75, 0.94]),
+consistent with the Peskun ordering — the chapter's Gibbs value proposition was moved from
+algorithmic speed to physical sampling realization.
