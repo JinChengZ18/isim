@@ -1,0 +1,222 @@
+{
+  "_label": "RX-05a LLG reset-pulse correlation; macrospin LLG (vendored Chapter-2 vgsot_llg.va, Linux-recompiled OSDI) + Brown-1963 thermal field via hx/hy/hz; ALL numbers SIMULATED (macrospin), not measured",
+  "va_source": "/mnt/d/Documents/Graduation Project-2026/04PBNNSim/smtj_pbnn_sim/eda/vendor/vgsot-sim/va/llg/vgsot_llg.va",
+  "v_reset": -0.999,
+  "i_reset_mA": -1.287,
+  "tw_s": 7.5e-10,
+  "tr_s": 5e-11,
+  "cycle_s": 2e-09,
+  "n_pulses": 4,
+  "h_th_per_axis_Apm": 25567.428900702584,
+  "t_step_s": 1e-12,
+  "temp_K": 300.0,
+  "device": {
+    "Ms": 625000.0,
+    "alpha": 0.05,
+    "tf": 1.1e-09,
+    "D_elec": 6.5e-08,
+    "V_free_m3": 3.65013796438964e-24,
+    "R_sot": 776.0
+  },
+  "anchors": {
+    "vth_P_to_AP": 0.895783,
+    "vt": 0.023414,
+    "measured_plateau": 0.72
+  },
+  "master_seed": 20260720,
+  "classify": "P: mz>+0.2, AP: mz<-0.2, X otherwise; state sampled 50 ps before each next pulse and 2.95 ns after the last edge",
+  "train": {
+    "n_requested": 1000,
+    "n_ok": 1000,
+    "n_failed_runs": 0,
+    "n_started_AP": 1000,
+    "n_ambiguous_samples": 585,
+    "r1": 0.7,
+    "r1_ci": [
+      0.6708755915748548,
+      0.727593648990589
+    ],
+    "conditional_chain": [
+      {
+        "k": 1,
+        "n_fail_k": 300,
+        "n_fail_k_plus_1": 76,
+        "p_fail_next_given_fail": 0.25333333333333335,
+        "ci": [
+          0.2074489707089529,
+          0.3054551214232634
+        ]
+      },
+      {
+        "k": 2,
+        "n_fail_k": 220,
+        "n_fail_k_plus_1": 47,
+        "p_fail_next_given_fail": 0.21363636363636362,
+        "ci": [
+          0.16463139306439356,
+          0.2724705576007196
+        ]
+      },
+      {
+        "k": 3,
+        "n_fail_k": 188,
+        "n_fail_k_plus_1": 18,
+        "p_fail_next_given_fail": 0.09574468085106383,
+        "ci": [
+          0.061422431987976166,
+          0.1462572370723319
+        ]
+      }
+    ],
+    "backhop_chain": [
+      {
+        "k": 1,
+        "n_P_at_k": 700,
+        "n_AP_at_k_plus_1": 144,
+        "p_backhop": 0.2057142857142857,
+        "ci": [
+          0.1774139489778374,
+          0.23722707252472797
+        ]
+      },
+      {
+        "k": 2,
+        "n_P_at_k": 780,
+        "n_AP_at_k_plus_1": 141,
+        "p_backhop": 0.18076923076923077,
+        "ci": [
+          0.1553477839473281,
+          0.2093197713342492
+        ]
+      },
+      {
+        "k": 3,
+        "n_P_at_k": 812,
+        "n_AP_at_k_plus_1": 116,
+        "p_backhop": 0.14285714285714285,
+        "ci": [
+          0.1204678920470366,
+          0.1686097916601928
+        ]
+      }
+    ],
+    "still_AP_vs_independence": [
+      {
+        "k": 1,
+        "n_still_AP": 300,
+        "p_still_AP": 0.3,
+        "ci": [
+          0.272406351009411,
+          0.32912440842514523
+        ],
+        "independence_pred": 0.30000000000000004
+      },
+      {
+        "k": 2,
+        "n_still_AP": 220,
+        "p_still_AP": 0.22,
+        "ci": [
+          0.19542306230476744,
+          0.24672000090361132
+        ],
+        "independence_pred": 0.09000000000000002
+      },
+      {
+        "k": 3,
+        "n_still_AP": 188,
+        "p_still_AP": 0.188,
+        "ci": [
+          0.1649943095437335,
+          0.21339367517417424
+        ],
+        "independence_pred": 0.027000000000000014
+      },
+      {
+        "k": 4,
+        "n_still_AP": 134,
+        "p_still_AP": 0.134,
+        "ci": [
+          0.11428073897264132,
+          0.1565205507925966
+        ],
+        "independence_pred": 0.008100000000000005
+      }
+    ],
+    "wall_total_s": 1548.7
+  },
+  "sweep": [
+    {
+      "vamp": -0.9,
+      "i_sot_mA": -1.16,
+      "n": 200,
+      "n_switched": 96,
+      "p_sw": 0.48,
+      "ci": [
+        0.4117904407948983,
+        0.5489633994418346
+      ],
+      "sigmoid_mirror_P_to_AP": 0.5449
+    },
+    {
+      "vamp": -0.95,
+      "i_sot_mA": -1.224,
+      "n": 200,
+      "n_switched": 106,
+      "p_sw": 0.53,
+      "ci": [
+        0.46091557335361155,
+        0.5979536662912893
+      ],
+      "sigmoid_mirror_P_to_AP": 0.9102
+    },
+    {
+      "vamp": -0.999,
+      "i_sot_mA": -1.287,
+      "n": 200,
+      "n_switched": 129,
+      "p_sw": 0.645,
+      "ci": [
+        0.5765198448160798,
+        0.7080148134676072
+      ],
+      "sigmoid_mirror_P_to_AP": 0.988
+    },
+    {
+      "vamp": -1.05,
+      "i_sot_mA": -1.353,
+      "n": 200,
+      "n_switched": 136,
+      "p_sw": 0.68,
+      "ci": [
+        0.612479733946457,
+        0.7407357039229475
+      ],
+      "sigmoid_mirror_P_to_AP": 0.9986
+    },
+    {
+      "vamp": -1.1,
+      "i_sot_mA": -1.418,
+      "n": 200,
+      "n_switched": 126,
+      "p_sw": 0.63,
+      "ci": [
+        0.5612250134987606,
+        0.6938750249624759
+      ],
+      "sigmoid_mirror_P_to_AP": 0.9998
+    },
+    {
+      "vamp": -1.2,
+      "i_sot_mA": -1.546,
+      "n": 200,
+      "n_switched": 121,
+      "p_sw": 0.605,
+      "ci": [
+        0.5358822087449843,
+        0.6701601300121683
+      ],
+      "sigmoid_mirror_P_to_AP": 1.0
+    }
+  ],
+  "sweep_wall_total_s": 485.9
+}

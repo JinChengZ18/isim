@@ -25,6 +25,28 @@ Two constraints measured/derived from the eda/ workspace are modeled:
        P(s'=+1 | s=-1) = sigma(u)
    (+1 is mapped to AP: the probabilistic pulse is the P->AP direction.)
 
+3. Write-pulse saturation ceiling (RX-05b mechanism control): the
+   probabilistic P->AP write pulse itself plateaus in its OWN switching
+   direction, p_write = min(sigma(u), write_ceiling); the opposite
+   direction is untouched (a write pulse that fails to switch leaves the
+   device in P, so P(-1) -> 1 at strongly negative drive as in the ideal
+   sigmoid). Two controls built from this flag:
+     * asymmetric ceiling  (n_reset=0, write_ceiling=0.72): perfect reset
+       + plateaued write. State-independent one-step map
+           P(s'=+1) = min(sigma(u), 0.72),  floor untouched.
+       Isolates ASYMMETRY (only one transition direction saturates)
+       without the two-step reset-write structure.
+     * within-scheme symmetric saturation (n_reset=k, write_ceiling=0.72):
+       BOTH steps of the reset-write scheme saturate at 0.72 — the reset
+       pulse per-pulse success stays r_reset=0.72 (sticky residual
+       rho=(1-0.72)^k) AND the write pulse caps at 0.72:
+           P(s'=+1 | s=+1) = rho + (1-rho)*min(sigma(u), 0.72)
+           P(s'=+1 | s=-1) = min(sigma(u), 0.72).
+       Keeps the two-step structure but removes the asymmetry, so the
+       four-way comparison {sticky, asym ceiling, within-scheme symmetric,
+       behavioral_smtj p_max=0.72 symmetric clip} separates asymmetry
+       from two-step structure as the source of the reset benignity.
+
 Backends are registered for the block update mode (the JIT path bypasses
 sample_batch, same constraint as device_model.BehavioralSMTJSpin).
 """
@@ -79,12 +101,23 @@ class CircuitChainSpin(SpinBackend):
     u_offset : float or sequence
         Static drive offset(s) in u units (e.g. write-line IR drop per
         row, from the extraction flow); scalar or per-spin array.
+    write_ceiling : float
+        Saturation ceiling of the probabilistic write pulse in its own
+        (P->AP, +1) direction: p = min(sigma(u), write_ceiling), floor
+        untouched (state-independent, applied to the write sample).
+        1.0 = clean sigmoid (default). See module docstring, item 3.
+    rho : float, optional
+        Direct override of the k-pulse stuck-in-AP residual probability
+        (bypasses the (1-r_reset)**n_reset independence formula) — for
+        feeding a MEASURED conditional failure chain, e.g. the RX-05a
+        LLG P(still AP after k pulses), into the solver.
     """
 
     kind = "circuit_chain"
 
     def __init__(self, u_grid=None, nbits=6, u_span=4.0, mode="fixed_u",
-                 n_reset=0, r_reset=R_RESET, u_offset=0.0):
+                 n_reset=0, r_reset=R_RESET, u_offset=0.0,
+                 write_ceiling=1.0, rho=None):
         if mode not in ("fixed_u", "beta_scaled", "none"):
             raise ValueError(f"bad mode: {mode}")
         self.mode = mode
@@ -98,7 +131,12 @@ class CircuitChainSpin(SpinBackend):
         self.n_reset = int(n_reset)
         self.r_reset = float(r_reset)
         self.rho = (1.0 - self.r_reset) ** self.n_reset if self.n_reset else 0.0
+        if rho is not None:
+            self.rho = float(rho)
         self.u_offset = np.asarray(u_offset, dtype=np.float64)
+        self.write_ceiling = float(write_ceiling)
+        if not 0.0 < self.write_ceiling <= 1.0:
+            raise ValueError(f"bad write_ceiling: {write_ceiling}")
 
     # -- drive path ---------------------------------------------------------
     def _p_plus(self, h_eff_arr, beta, idx=None):
@@ -113,7 +151,10 @@ class CircuitChainSpin(SpinBackend):
         off = self.u_offset
         if off.ndim > 0 and idx is not None:
             off = off[idx]
-        return _sigmoid(u + off)
+        p = _sigmoid(u + off)
+        if self.write_ceiling < 1.0:
+            p = np.minimum(p, self.write_ceiling)
+        return p
 
     # -- SpinBackend API ----------------------------------------------------
     def sample(self, h_eff, s_cur, beta, rng):

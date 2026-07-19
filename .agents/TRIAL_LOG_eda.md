@@ -64,6 +64,31 @@ with steering the rail power already contains the pulse Ohmic energy, so the pre
 "k*(E_dev+E_tg) + P_buf*t_update" always-on sum double-counts it; the JSON carries a
 supply-true accounting alongside.
 
+## 2026-07-20 RX-05a: vendored LLG .osdi is a Windows PE DLL — not loadable by WSL ngspice
+
+Tried: pointing the new reset-correlation harness at the vendored compiled model
+`04PBNNSim/smtj_pbnn_sim/eda/vendor/vgsot-sim/va/llg/vgsot_llg.osdi` (the RX-05 spec said
+"compiled .osdi exists"). Symptom: the file is a PE32+ Windows DLL built with MSVC link.exe
+(its sibling `.exp`/`.spiceinit` embed `E:\EDA\ngspice-46\Spice64\bin\ngspice_con.EXE`);
+a Linux ngspice inside Ubuntu-24.04-EDA cannot dlopen it. Fix: the harness recompiles the
+`.va` source with the WSL-side OpenVAF into its own workspace
+(`eda/testbenches/llg_reset/vgsot_llg.osdi`, ELF x86-64) and treats the vendor repo as
+read-only; deterministic sanity deck (AP->P at -0.999 V, 0.75 ns) switches to mz=+0.998,
+matching the vendor tb_switch.spice behavior.
+
+## 2026-07-20 RX-05a: SeedSequence.spawn children share .entropy — all "seeded" LLG trials were identical
+
+Tried: deriving per-trial noise streams as `default_rng(SeedSequence(int(child.entropy)))`
+with `child = SeedSequence(master).spawn(N)[i]`, mirroring the entropy bookkeeping used for
+logging elsewhere. Symptom (caught in the 2-seed pilot before the 1000-seed run): both
+"independent" trials returned bit-identical mz trajectories — `.entropy` of a spawned child
+is the PARENT's entropy; the child's identity lives in `spawn_key`, which the int() round-trip
+discards. A 1000-seed run would have been 1000 copies of one trajectory. Fix: pass the child
+SeedSequence objects themselves through the multiprocessing jobs (they pickle fine) and
+document seed identity as `SeedSequence(master_seed).spawn(N)[idx]`; pilot re-run confirmed
+distinct trajectories (one seed even showing three consecutive reset failures, the other a
+back-hop knock-out of an already-switched device).
+
 ## 2026-07-13 (W8, xschem schematic) vendored fet symbol renders W blank in "@W/@L" sizing text
 
 Tried: vendored the PBNN hero symbol set (sym/nfet.sym, sym/pfet.sym) unchanged and generated

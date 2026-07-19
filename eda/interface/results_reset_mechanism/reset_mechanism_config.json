@@ -1,0 +1,39 @@
+{
+  "_label": "RX-05b mechanism controls (asymmetry vs two-step structure) + RX-05c scale check; protocol = Section 3.4.2 device ablation",
+  "sweeps": 2000,
+  "beta": [
+    0.1,
+    5.0
+  ],
+  "trials": 200,
+  "master_seed": 2024,
+  "update_mode": "block",
+  "r_reset": 0.72,
+  "write_ceiling_model": "p_write = min(sigma(u), 0.72) in the P->AP direction only; -1 tail untouched",
+  "stats": "Wilson 95% CI on p_s; parametric-bootstrap 95% CI on TTS ratio vs same-instance ideal baseline (stats.py)",
+  "instances": {
+    "er14": {
+      "n": 14,
+      "p": 0.3,
+      "seed": 0,
+      "target": -6.87755433892761,
+      "target_kind": "ENUM"
+    },
+    "er20": {
+      "n": 20,
+      "p": 0.3,
+      "seed": 0,
+      "target": -15.953545212538145,
+      "target_kind": "ENUM"
+    },
+    "er64": {
+      "n": 64,
+      "p": 0.1,
+      "seed": 0,
+      "target": -56.84259775567446,
+      "target_kind": "LONGRUN_BEST(T=20000,trials=200,seed=20260720)",
+      "ref_hits_at_best": 28,
+      "note": "no exact ground truth at n=64; p_success rows for ER64 are hit rates at the long-run reference energy, the honest scale metric is energy-median degradation"
+    }
+  }
+}

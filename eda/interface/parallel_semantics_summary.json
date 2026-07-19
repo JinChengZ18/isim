@@ -1,0 +1,336 @@
+{
+  "_label": "RX-02 parallel-update semantics: async vs chromatic (correct Gibbs, honest width) vs fixed64 (\u88683.8 N_par=64 assumption, parallel Glauber inside blocks)",
+  "protocol": {
+    "T_sweeps": 10000,
+    "schedule": "geometric",
+    "beta": [
+      0.1,
+      10.0
+    ],
+    "beta_indexing": "schedule_beta(shape, t, T, b0, bf), t = 0..T-1 (isim convention)",
+    "master_seed": 2024,
+    "seed_derivation": "np.random.SeedSequence(2024).spawn(N)[i] per trial",
+    "init": "rng.choice([-1,+1], size=n) per trial",
+    "target": "edge_sum/2 - BKS_cut, tol 1e-6",
+    "bks": {
+      "G1": 11624,
+      "G14": 3064,
+      "G22": 13359
+    },
+    "n_trials": {
+      "G1": 200,
+      "G14": 200,
+      "G22": 2000
+    }
+  },
+  "engine": "numba",
+  "jobs": 16,
+  "versions": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "numba": "0.65.1",
+    "python": "3.10.11"
+  },
+  "instances": {
+    "G1": {
+      "n": 800,
+      "edge_sum": 19176.0,
+      "target": -2036.0,
+      "chromatic_blocks": {
+        "n_classes": 19,
+        "mean_class_size": 42.10526315789474,
+        "max_class_size": 64,
+        "min_class_size": 1,
+        "class_sizes": [
+          61,
+          60,
+          64,
+          62,
+          59,
+          54,
+          51,
+          48,
+          50,
+          48,
+          46,
+          46,
+          42,
+          32,
+          29,
+          26,
+          15,
+          6,
+          1
+        ]
+      },
+      "fixed64_blocks": {
+        "n_classes": 13,
+        "mean_class_size": 61.53846153846154,
+        "max_class_size": 64,
+        "min_class_size": 32,
+        "class_sizes": [
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          32
+        ]
+      }
+    },
+    "G14": {
+      "n": 800,
+      "edge_sum": 4694.0,
+      "target": -717.0,
+      "chromatic_blocks": {
+        "n_classes": 7,
+        "mean_class_size": 114.28571428571429,
+        "max_class_size": 165,
+        "min_class_size": 30,
+        "class_sizes": [
+          165,
+          151,
+          138,
+          119,
+          109,
+          88,
+          30
+        ]
+      },
+      "fixed64_blocks": {
+        "n_classes": 13,
+        "mean_class_size": 61.53846153846154,
+        "max_class_size": 64,
+        "min_class_size": 32,
+        "class_sizes": [
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          32
+        ]
+      }
+    },
+    "G22": {
+      "n": 2000,
+      "edge_sum": 19990.0,
+      "target": -3364.0,
+      "chromatic_blocks": {
+        "n_classes": 12,
+        "mean_class_size": 166.66666666666666,
+        "max_class_size": 311,
+        "min_class_size": 1,
+        "class_sizes": [
+          311,
+          285,
+          285,
+          243,
+          224,
+          199,
+          175,
+          139,
+          83,
+          42,
+          13,
+          1
+        ]
+      },
+      "fixed64_blocks": {
+        "n_classes": 32,
+        "mean_class_size": 62.5,
+        "max_class_size": 64,
+        "min_class_size": 16,
+        "class_sizes": [
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          16
+        ]
+      }
+    }
+  },
+  "g22_async_reuse": {
+    "source": "D:\\Documents\\Graduation Project-2026\\03ISim\\isim_framework\\results_rerun\\results_compare_maxcut_N2000\\compare_G22_smtj.json",
+    "note": "G22 async row REUSES the RX-01 N=2000 async_numba Gibbs baseline (8/2000 hits, p_s=0.004)",
+    "rx01_n_trials": 2000,
+    "rx01_hits": 8,
+    "verification_rerun": {
+      "n_trials": 2000,
+      "exact_reproduction": true,
+      "hits": 8,
+      "max_abs_diff_sorted": 0.0
+    }
+  },
+  "selftest": [
+    {
+      "instance": "G14",
+      "schedule": "chromatic",
+      "T": 300,
+      "trials": 2,
+      "bitwise_equal": true,
+      "energies_numba": [
+        -700.0,
+        -684.0
+      ],
+      "energies_numpy": [
+        -700.0,
+        -684.0
+      ]
+    },
+    {
+      "instance": "G14",
+      "schedule": "fixed64",
+      "T": 300,
+      "trials": 2,
+      "bitwise_equal": true,
+      "energies_numba": [
+        -691.0,
+        -680.0
+      ],
+      "energies_numpy": [
+        -691.0,
+        -680.0
+      ]
+    },
+    {
+      "instance": "G22",
+      "schedule": "fixed64",
+      "T": 300,
+      "trials": 2,
+      "bitwise_equal": true,
+      "energies_numba": [
+        -3289.0,
+        -3273.0
+      ],
+      "energies_numpy": [
+        -3289.0,
+        -3273.0
+      ]
+    }
+  ],
+  "probe_s_per_trial": {
+    "G22_chromatic": 1.287139849999221,
+    "G22_fixed64": 1.2138085000005958,
+    "G1_chromatic": 0.8366500000011001
+  },
+  "validation_gate": {
+    "g1_async_ps": 0.685,
+    "g1_chromatic_ps": 0.655,
+    "canonical_band": [
+      0.6,
+      0.8
+    ],
+    "passed": true
+  },
+  "tts_ratio_cis": [
+    {
+      "instance": "G1",
+      "comparison": "chromatic_vs_async",
+      "ratio": 1.0854828506814607,
+      "lo": 0.8374688400552548,
+      "hi": 1.4035672374424906,
+      "frac_undefined": 0.0,
+      "note": "ratio = TTS99(chromatic)/TTS99(async) in sweeps; >1 means chromatic slower than async"
+    },
+    {
+      "instance": "G1",
+      "comparison": "fixed64_vs_async",
+      "ratio": 0.9863383078484388,
+      "lo": 0.7647250122469955,
+      "hi": 1.2642776388940915,
+      "frac_undefined": 0.0,
+      "note": "ratio = TTS99(fixed64)/TTS99(async) in sweeps; >1 means fixed64 slower than async"
+    },
+    {
+      "instance": "G14",
+      "comparison": "chromatic_vs_async",
+      "ratio": NaN,
+      "lo": NaN,
+      "hi": NaN,
+      "frac_undefined": 1.0,
+      "note": "ratio = TTS99(chromatic)/TTS99(async) in sweeps; >1 means chromatic slower than async"
+    },
+    {
+      "instance": "G14",
+      "comparison": "fixed64_vs_async",
+      "ratio": NaN,
+      "lo": NaN,
+      "hi": NaN,
+      "frac_undefined": 1.0,
+      "note": "ratio = TTS99(fixed64)/TTS99(async) in sweeps; >1 means fixed64 slower than async"
+    },
+    {
+      "instance": "G22",
+      "comparison": "chromatic_vs_async",
+      "ratio": 0.8886659045770625,
+      "lo": 0.28499820824886396,
+      "hi": 2.503763804600248,
+      "frac_undefined": 0.0,
+      "note": "ratio = TTS99(chromatic)/TTS99(async) in sweeps; >1 means chromatic slower than async"
+    },
+    {
+      "instance": "G22",
+      "comparison": "fixed64_vs_async",
+      "ratio": 1.334002118302951,
+      "lo": 0.39969967456809197,
+      "hi": 5.0100351347117025,
+      "frac_undefined": 0.0026000000000000467,
+      "note": "ratio = TTS99(fixed64)/TTS99(async) in sweeps; >1 means fixed64 slower than async"
+    }
+  ],
+  "wall_s": {
+    "G1_async": 27.23255330000029,
+    "G1_chromatic": 26.268433700002788,
+    "G1_fixed64": 25.344723999998678,
+    "G14_async": 14.927139900002658,
+    "G14_chromatic": 19.028596899999684,
+    "G14_fixed64": 18.9148262000017,
+    "G22_async": null,
+    "G22_chromatic": 227.2445024999979,
+    "G22_fixed64": 217.69364929999938
+  },
+  "total_wall_s": 944.8899653999979
+}

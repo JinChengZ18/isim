@@ -1,0 +1,104 @@
+{
+  "_label": "RX-08 adversarial boundary for the beta-scaled coarse grid; block mode; ideal-Gibbs comparator arm per seed; beta6 = bit-depth control; all rows MEASURED",
+  "seeds": [
+    2024,
+    2025,
+    4096
+  ],
+  "trials": 200,
+  "boot_B": 10000,
+  "boot_seed": 20260720,
+  "h_clip_rule": "ceil(max_i(sum_j|J_ij| + |h_i|))",
+  "m65_success": "decoded factors (compare_baselines.py factor mode); energy target = planted-solution Ising energy, tol 0.5 (QUBO 0 minus dropped constant)",
+  "landscapes": [
+    {
+      "name": "ER14_wiring",
+      "n_spins": 14,
+      "target": -6.87755433892761,
+      "tol": 1e-06,
+      "sweeps": 2000,
+      "beta": [
+        0.1,
+        5.0
+      ],
+      "seeds": [
+        2024
+      ],
+      "arms": [
+        "ideal",
+        "beta3"
+      ],
+      "success": "energy",
+      "metric": "p_s (wiring validation)"
+    },
+    {
+      "name": "G14",
+      "n_spins": 800,
+      "target": -717.0,
+      "tol": 1e-06,
+      "sweeps": 10000,
+      "beta": [
+        0.1,
+        10.0
+      ],
+      "seeds": [
+        2024,
+        2025,
+        4096
+      ],
+      "arms": [
+        "ideal",
+        "beta3",
+        "beta6"
+      ],
+      "success": "energy",
+      "metric": "energy_median (p_s=0 regime at T=1e4)"
+    },
+    {
+      "name": "M65",
+      "n_spins": 11,
+      "target": -19607.0,
+      "tol": 0.5,
+      "sweeps": 20000,
+      "beta": [
+        0.05,
+        30.0
+      ],
+      "seeds": [
+        2024,
+        2025,
+        4096
+      ],
+      "arms": [
+        "ideal",
+        "beta3",
+        "beta6"
+      ],
+      "success": "decoded",
+      "metric": "p_s/TTS (decoded factors)"
+    },
+    {
+      "name": "reg3_n16_s7",
+      "n_spins": 16,
+      "target": -9.0,
+      "tol": 1e-06,
+      "sweeps": 2000,
+      "beta": [
+        0.1,
+        5.0
+      ],
+      "seeds": [
+        2024,
+        2025,
+        4096
+      ],
+      "arms": [
+        "ideal",
+        "beta3",
+        "beta6"
+      ],
+      "success": "energy",
+      "metric": "p_s/TTS (exact E_min)"
+    }
+  ]
+}
