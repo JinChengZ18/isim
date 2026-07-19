@@ -65,7 +65,7 @@ item's Decision rule.
 ## P0 — blocking-grade (defend existing headline claims; cheap)
 
 ### RX-01 Statistical power + confidence intervals for all p_s tables
-- Status: open
+- Status: claimed 2026-07-19 session-e063faf4-loop
 - Effort: 0.5-1 day. Deps: none (unlocks the stats helper for all others).
 - Objection: the §3.3.1 core finding "G22 3.71x Gibbs-vs-Metropolis speedup"
   is 4 hits vs 1 hit at N_trial=200; 95% CI on p_s=0.020 is ~[0.006,0.05]
@@ -121,7 +121,7 @@ item's Decision rule.
 - Artifacts: run_parallel_semantics.py + summary csv (+ solver diff).
 
 ### RX-03 PVT corners for the write chain (DC + energy/timing)
-- Status: open
+- Status: claimed 2026-07-19 session-e063faf4-loop
 - Effort: ~1 day (compute-bound). Deps: none. Runs in WSL.
 - Objection: every §3.5.1/§3.5.4 number is sky130 tt-only; "2.87 mW / 9.0 ns
   is an implementation upper bound" is asserted without ss/ff data;
