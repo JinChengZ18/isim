@@ -121,7 +121,7 @@ item's Decision rule.
 - Artifacts: run_parallel_semantics.py + summary csv (+ solver diff).
 
 ### RX-03 PVT corners for the write chain (DC + energy/timing)
-- Status: claimed 2026-07-19 session-e063faf4-loop
+- Status: done 2026-07-19 -> eda/testbenches/{update_chain,update_energy}_summary_{ss,ff,sf,fs}.json, update_chain_corners_summary.json, results_reproject_{ss,sf,fs}/, fig 3.9(d), 表3.9 note + 3.5.1/3.5.4/3.5.5 text. OUTCOME: monotonic at ALL corners (表3.9 validated); sf skew corner = outlier (INL 9.3 LSB / -39.4 mV bow / 18 mV offset, one-time per-code calibration absorbs it); settle 5.5-14.2 ns, gated k=3 e 13.7-16.3 pJ; projection correction x14-26 time / x17-21 energy across corners.
 - Effort: ~1 day (compute-bound). Deps: none. Runs in WSL.
 - Objection: every §3.5.1/§3.5.4 number is sky130 tt-only; "2.87 mW / 9.0 ns
   is an implementation upper bound" is asserted without ss/ff data;

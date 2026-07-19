@@ -41,6 +41,9 @@ content OUT of here; this directory never ships.
   fluctuation (N=2000: 1.6x CI [0.5,7.0]); G1 SA significantly faster
   0.84x; 3.3.1/3.6 honestly rewritten, Peskun ref added, CI convention
   now chapter-wide. RX-03 corner sweep running.
+- 2026-07-19: RX-03 DONE — five-corner sweep: monotonic everywhere, sf
+  skew corner is the outlier (-39.4 mV bow, per-code cal absorbs); fig
+  3.9 gained panel (d); corner bands in 3.5.4/表3.9.
 - 2026-07-19: two-persona reviewer audit distilled into
   `EXPERIMENTS_QUEUE.md` (RX-01..RX-15, claim protocol). Suggested first
   wave: RX-01/02/03/05/08. Nothing claimed yet.
