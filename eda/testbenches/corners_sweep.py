@@ -30,13 +30,13 @@ def run_corner(corner):
     env = dict(os.environ, SKY130_CORNER=corner)
     for script, args in (("update_chain_dc.py", ["--bits", "6"]),
                          ("update_energy.py", [])):
-        # tt canonical outputs already exist from the W2/W3 runs; re-running
-        # tt would be redundant compute but harmless — skip DC for tt only.
-        if corner == "tt" and script == "update_chain_dc.py" \
-                and (HERE / "update_chain_summary.json").exists():
-            continue
-        if corner == "tt" and script == "update_energy.py" \
-                and (HERE / "update_energy_summary.json").exists():
+        # resumable: skip any (corner, script) whose summary already exists
+        # (tt canonical files come from the W2/W3 runs; non-tt from a prior
+        # interrupted sweep — delete the suffixed json to force a re-run)
+        done = (chain_file(corner) if script == "update_chain_dc.py"
+                else energy_file(corner))
+        if done.exists():
+            print(f"[{corner}] skip {script} (have {done.name})", flush=True)
             continue
         print(f"[{corner}] {script} {' '.join(args)}", flush=True)
         r = subprocess.run([sys.executable, str(HERE / script), *args],

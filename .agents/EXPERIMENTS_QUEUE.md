@@ -281,7 +281,7 @@ item's Decision rule.
 - Artifacts: run_fullstack.py + csv; backend extension.
 
 ### RX-08 Adversarial boundary for the beta-scaled 3-bit speedup
-- Status: open
+- Status: claimed 2026-07-19 session-e9b0f4b0-loop
 - Effort: ~1 day. Deps: none.
 - Objection: §3.5.2 reports 0.16x TTS for beta-scaled 3-bit and refuses to
   generalize, but never shows where it HURTS — unfalsifiable as written.
