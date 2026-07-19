@@ -52,6 +52,9 @@ content OUT of here; this directory never ships.
   -> effective residual decays slowly, k guidance ~2-3 + device-side fix;
   beta-scaled boundary found on G14/reg3 (mid-rise grid erases small
   fields). P0 wave + RX-05/08 all closed.
+- 2026-07-20: three-auditor verification of the whole RX wave applied
+  37 fixes (e066e03) incl. a HIGH k-guidance contradiction in 3.5.4;
+  TRIAL_LOG now grounds both new process footnotes. RX-04 claimed next.
 - 2026-07-19: two-persona reviewer audit distilled into
   `EXPERIMENTS_QUEUE.md` (RX-01..RX-15, claim protocol). Suggested first
   wave: RX-01/02/03/05/08. Nothing claimed yet.

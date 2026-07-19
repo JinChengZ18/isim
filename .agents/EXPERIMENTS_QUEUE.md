@@ -146,7 +146,7 @@ item's Decision rule.
 ## P1 — turns single-instance anecdotes into design rules; real novelty
 
 ### RX-04 Generalize the §3.4.2 + §3.5.2/3 rules beyond ER14
-- Status: open
+- Status: claimed 2026-07-20 session-e063faf4-loop
 - Effort: 2-3 days (compute-bound sweeps). Deps: RX-01 stats helper.
 - Objection: sensitivity ranking (§3.4.2), rail-span >=6V_T and >=4-bit
   rules, measured-grid==ideal-grid equivalence, IR 3.04x (§3.5.2/3.5.3)
