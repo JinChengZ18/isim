@@ -175,7 +175,7 @@ item's Decision rule.
 - Artifacts: multi-seed + gset ablation CSVs, G1 device-ablation dir.
 
 ### RX-05 Harden the reset story (LLG correlation + mechanism controls + scale)
-- Status: claimed 2026-07-20 session-e063faf4-loop
+- Status: done 2026-07-20 -> eda/interface/{run_reset_mechanism.py,run_reset_llginformed.py,results_reset_mechanism/,reset_llginformed_summary.csv}, eda/testbenches/{reset_correlation_llg.py,reset_correlation_llg_summary.json,llg_reset/*.csv}, circuit_backends write_ceiling flag, 3.5.2 rewrite + [^process-llg-seed] + 3.5.5/3.6 (commit 108425a). OUTCOME: (b) four-way isolates HOLD-vs-CAP as the true mechanism (asym ceiling 3.6x is NOT benign); (c) n=64 sticky k=1 degrades 2.40x — k=1 verdict was size-limited; (a) LLG reproduces plateau (r1=0.70), failures uncorrelated BUT 14-21% per-pulse back-hop -> effective residual {0.30,0.22,0.19,0.13} not 0.28^k; LLG-informed n=64 k=1..4 -> 2.09/1.75/1.50/1.25x. k guidance now ~2-3 + device-side back-hop suppression. NOTE for RX-14 (H-bridge): reset energy rows should eventually use effective-k accounting.
 - Effort: 2-4 days. Deps: none. Highest physics novelty; touches ch2 assets.
 - Objection: §3.5.2's headline "plateau downgraded to sticky residual,
   k=1-2 suffice" rests on (i) reset-failure INDEPENDENCE (0.28^k), admitted
