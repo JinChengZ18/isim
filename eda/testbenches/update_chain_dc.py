@@ -29,6 +29,7 @@ Writes update_chain_summary.json next to this script.
 """
 from __future__ import annotations
 
+import os
 import sys
 
 import numpy as np
@@ -36,6 +37,7 @@ import numpy as np
 from _common import (HERE, SKY130_LIB, VTH, VT, RSOT, grab, psw, run_deck,
                      write_summary)
 
+CORNER = os.environ.get("SKY130_CORNER", "tt")   # RX-03: PVT corner
 USPAN = 4.0          # DAC rails at Vth +/- USPAN*VT  (probability clip window)
 RUNIT = 100.0        # resistor-string unit R [ohm]
 NBITS_LIST = [4, 5, 6, 8]
@@ -107,7 +109,7 @@ def deck(code, nbits, uspan=USPAN):
     vlo = VTH - uspan * VT
     ntap = 2 ** nbits
     s = (f"* Ising p-bit write chain, code={code}/{ntap - 1} nbits={nbits}\n"
-         f".lib {SKY130_LIB} tt\n"
+         f".lib {SKY130_LIB} {CORNER}\n"
          f"Vdd vdd 0 1.8\n"
          f"Vhi vhi 0 {vhi:.6f}\n"
          f"Vlo vlo 0 {vlo:.6f}\n")
@@ -153,6 +155,10 @@ def metrics(rows, nbits):
 
 def main():
     smoke = "--smoke" in sys.argv
+    bits_list = NBITS_LIST
+    if "--bits" in sys.argv:
+        bits_list = [int(b) for b in
+                     sys.argv[sys.argv.index("--bits") + 1].split(",")]
     print(f"chain rails: Vth +/- {USPAN}*VT = "
           f"[{(VTH - USPAN * VT) * 1e3:.1f}, {(VTH + USPAN * VT) * 1e3:.1f}] mV; "
           f"load = SOT branch {RSOT:.0f} ohm")
@@ -166,7 +172,7 @@ def main():
         return
 
     per_bits = {}
-    for nb in NBITS_LIST:
+    for nb in bits_list:
         rows = [run_code(c, nb) for c in range(2 ** nb)]
         m = metrics(rows, nb)
         per_bits[str(nb)] = m
@@ -176,14 +182,17 @@ def main():
               f"off={m['buffer_offset_mV']:.2f} mV")
 
     summary = dict(
-        _label=("MEASURED, ngspice DC .op, sky130 tt, schematic-level; device = "
+        _label=(f"MEASURED, ngspice DC .op, sky130 {CORNER}, schematic-level; device = "
                 "committed OSDI smtj_sot (psw read from its observable node)"),
+        corner=CORNER,
         u_span_design=USPAN, vth_V=VTH, vt_V=VT, r_unit_ohm=RUNIT,
         rails_mV=[round((VTH - USPAN * VT) * 1e3, 3), round((VTH + USPAN * VT) * 1e3, 3)],
         chain=("resistor-string DAC -> TG -> NMOS-input two-stage Miller unity "
                "buffer -> write-enable TG -> SOT branch (776 ohm)"),
         per_bits=per_bits)
-    write_summary(HERE / "update_chain_summary.json", summary)
+    out = ("update_chain_summary.json" if CORNER == "tt"
+           else f"update_chain_summary_{CORNER}.json")
+    write_summary(HERE / out, summary)
 
 
 if __name__ == "__main__":

@@ -34,6 +34,8 @@ Writes update_energy_summary.json next to this script.
 """
 from __future__ import annotations
 
+import os
+
 import re
 import sys
 
@@ -41,6 +43,8 @@ import numpy as np
 
 from _common import (HERE, SKY130_LIB, VTH, VT, RSOT, RP, TMR, TW, grab, load_wrdata,
                      run_deck, trapz, write_summary)
+
+CORNER = os.environ.get("SKY130_CORNER", "tt")   # RX-03: PVT corner
 from update_chain_dc import _tg, USPAN, RUNIT
 
 VDD = 1.8
@@ -135,7 +139,7 @@ def chain_prefix(code, nbits=NB):
     vlo, vhi = dac_rails()
     ntap = 2 ** nbits
     s = (f"* W3 update-energy chain, code={code}/{ntap - 1} nbits={nbits}\n"
-         f".lib {SKY130_LIB} tt\n"
+         f".lib {SKY130_LIB} {CORNER}\n"
          f"Vdd vdd 0 {VDD}\n"
          f"Vhi vhi 0 {vhi:.6f}\n"
          f"Vlo vlo 0 {vlo:.6f}\n")
@@ -216,7 +220,7 @@ def run_settle(tag, upward=True):
     va, vb = (v0, v1) if upward else (v1, v0)
     tstep, tstop = 10e-9, 90e-9
     deck = (f"* W3 settle test, {'up' if upward else 'down'} full-scale step at bin\n"
-            f".lib {SKY130_LIB} tt\n"
+            f".lib {SKY130_LIB} {CORNER}\n"
             f"Vdd vdd 0 {VDD}\n"
             f"Vbin bin 0 PULSE({va:.6f} {vb:.6f} {tstep} {TR} {TR} 200n 400n)\n")
     deck += BUFFER_FB.format(inp="bin", fb="fbn") + STEER
@@ -271,7 +275,7 @@ def run_read(st, tag):
     """
     tclk, teval = 1e-9, 2e-9
     deck = (f"* W3 read: PMOS-input StrongARM over the device read divider, st={st}\n"
-            f".lib {SKY130_LIB} tt\n"
+            f".lib {SKY130_LIB} {CORNER}\n"
             f"Vdd vdd 0 {VDD}\n"
             f"Vread vread 0 {VREAD}\n"
             f"Rref vread vsen {RREF:.0f}\n"
@@ -451,7 +455,7 @@ def main():
                      "steering, contains the pulse Ohmic energy)"),
             e_read_used="max over st in {0,1} of E_sa+E_readrail"),
         table=rows)
-    write_summary(HERE / "update_energy_summary.json", summary)
+    write_summary(HERE / ("update_energy_summary.json" if CORNER == "tt" else f"update_energy_summary_{CORNER}.json"), summary)
 
 
 if __name__ == "__main__":
