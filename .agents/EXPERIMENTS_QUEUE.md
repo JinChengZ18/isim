@@ -65,7 +65,7 @@ item's Decision rule.
 ## P0 — blocking-grade (defend existing headline claims; cheap)
 
 ### RX-01 Statistical power + confidence intervals for all p_s tables
-- Status: claimed 2026-07-19 session-e063faf4-loop
+- Status: done 2026-07-19 -> eda/interface/{stats.py,ci_audit.py,ci_audit_summary.csv}, results_rerun/results_compare_maxcut_{N2000,N1000_G1}/, chapter 3.3.1/3.3小结/3.6 rewritten (commit eb81325). OUTCOME: downgrade branch fired AND G1 flipped — N=2000 G22 speedup 1.6x CI [0.5,7.0] (was-3.71x = 4-vs-1-hit fluctuation, prefix-verified); G1 N=1000 SA significantly faster 0.84x [0.75,0.94], consistent with Peskun ordering (ref added). Chapter reframed: Gibbs value = physical sampling realization, not algorithmic speedup. NOTE for RX-02/RX-11: use these CIs; RX-11 premise (monotonic-growth prediction) was DELETED from 3.3.1 — RX-11 is now exploratory, not claim-defense.
 - Effort: 0.5-1 day. Deps: none (unlocks the stats helper for all others).
 - Objection: the §3.3.1 core finding "G22 3.71x Gibbs-vs-Metropolis speedup"
   is 4 hits vs 1 hit at N_trial=200; 95% CI on p_s=0.020 is ~[0.006,0.05]

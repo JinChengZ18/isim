@@ -37,6 +37,10 @@ content OUT of here; this directory never ships.
 - 2026-07-13 (parallel session): de-AIGC pass over ch3 + panel letters +
   PPT compose workflow `eda/build_ppt_figs.py` (0885355); figs_make.py
   retargeted to clean panels + previews.
+- 2026-07-19: RX-01 DONE (commit eb81325) — G22 3.71x was low-count
+  fluctuation (N=2000: 1.6x CI [0.5,7.0]); G1 SA significantly faster
+  0.84x; 3.3.1/3.6 honestly rewritten, Peskun ref added, CI convention
+  now chapter-wide. RX-03 corner sweep running.
 - 2026-07-19: two-persona reviewer audit distilled into
   `EXPERIMENTS_QUEUE.md` (RX-01..RX-15, claim protocol). Suggested first
   wave: RX-01/02/03/05/08. Nothing claimed yet.
