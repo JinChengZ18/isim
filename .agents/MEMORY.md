@@ -44,6 +44,9 @@ content OUT of here; this directory never ships.
 - 2026-07-19: RX-03 DONE — five-corner sweep: monotonic everywhere, sf
   skew corner is the outlier (-39.4 mV bow, per-code cal absorbs); fig
   3.9 gained panel (d); corner bands in 3.5.4/表3.9.
+- 2026-07-20: RX-02 DONE — fixed-64-block parallel Gibbs == async within
+  CI on G1/G22; chromatic width G1=42/G22=167; 表3.8 N_par=64 validated
+  (footnote in 3.4.3). All three P0 items closed.
 - 2026-07-19: two-persona reviewer audit distilled into
   `EXPERIMENTS_QUEUE.md` (RX-01..RX-15, claim protocol). Suggested first
   wave: RX-01/02/03/05/08. Nothing claimed yet.

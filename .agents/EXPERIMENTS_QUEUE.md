@@ -91,7 +91,7 @@ item's Decision rule.
 - Artifacts: stats.py, ci_audit_summary.csv, N2000 compare summary + JSONs.
 
 ### RX-02 Parallel-update semantics vs the N_par=64 projection assumption
-- Status: claimed 2026-07-19 session-e063faf4-loop
+- Status: done 2026-07-20 -> eda/interface/{run_parallel_semantics.py,parallel_semantics_summary.csv,results_parallel_semantics/}, 3.4.3 validating sentence + [^par-semantics] footnote. OUTCOME: positive branch — fixed-64-block p_s == async within CI on G1 (0.690 vs 0.685) and G22 (0.003 vs 0.004, N=2000); chromatic width G1=42 (19 classes) / G22=167 (12 classes), so N_par=64 is conservative for G22-class graphs. Objection retired without projection changes.
 - Effort: 1-2 days. Deps: RX-01 (use its CIs).
 - Objection: 表3.8 divides sweeps by N_par=64 while p_s was measured under
   strictly ASYNC Gibbs. Simultaneous updates of coupled spins =
