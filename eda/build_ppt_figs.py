@@ -33,7 +33,7 @@ DECK = PPT / "Chapter03_local.pptx"
 SOFFICE = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
 # slide + layout geometry (inches)
-SLIDE_W, SLIDE_H = 10.0, 10.0
+SLIDE_W, SLIDE_H = 10.0, 13.0
 MARGIN, GAP, TOP = 0.25, 0.16, 0.42
 LETTER_DX, LETTER_DY = 0.04, 0.02   # letter offset from panel top-left
 EXPORT_DPI = 419
@@ -43,7 +43,8 @@ CROP_PAD = 8
 # left-to-right, top-to-bottom in caption reading order.
 FIGURES = [
     {"num": 9,  "rows": [["chain_schematic"],
-                         ["chain_transfer", "chain_waveform"]]},
+                         ["chain_transfer", "chain_waveform"],
+                         ["chain_corners"]]},
     {"num": 10, "rows": [["abl_bits", "abl_span"],
                          ["abl_reset", "abl_traj"]]},
     {"num": 11, "rows": [["ir_profile", "ir_impact"],

@@ -1,0 +1,211 @@
+{
+  "_label": "W3 MEASURED (ngspice tran/op, sky130 tt, schematic-level) energy+timing of one Gibbs update on the W2 write chain; DAC-string static is ANALYTIC",
+  "rng": {
+    "seeds": [],
+    "note": "no stochastic element in W3; all transients deterministic"
+  },
+  "design_correction": {
+    "naive_prescribed_gating": {
+      "code": 32,
+      "e_dev_pJ": 2.7795,
+      "e_tg_pJ": 0.2923,
+      "e_drvstage_pJ": 0.1478,
+      "vwr_flat_mean_V": 1.63165,
+      "vwr_flat_min_V": 1.61495,
+      "vwr_flat_max_V": 1.64031,
+      "u_flat_mean": 31.428,
+      "i_vdd_idle_mA": 0.0004,
+      "i_vdd_pulse_mA": 2.5789
+    },
+    "note": "W2 feedback is taken from wr (after the enable TG); pulsing wen/wep opens the loop, buffer rails, device sees ~1.6 V all pulse. Fixed by current-steering (complementary replica branch keeps buffer load constant; feedback steered wr<->wrr). Always-on replica (no steering) was tried and rejected: 30..90 mV droop. See .agents/TRIAL_LOG_eda.md 2026-07-13."
+  },
+  "write_pulse": {
+    "label": "MEASURED",
+    "tw_ns": 0.75,
+    "tr_ns": 0.05,
+    "mid": {
+      "code": 32,
+      "e_dev_pJ": 0.8038,
+      "e_tg_pJ": 0.1793,
+      "e_drvstage_pJ": 0.6614,
+      "vwr_flat_mean_V": 0.89886,
+      "vwr_flat_min_V": 0.89514,
+      "vwr_flat_max_V": 0.90232,
+      "u_flat_mean": 0.131,
+      "i_vdd_idle_mA": 1.4846,
+      "i_vdd_pulse_mA": 1.4842
+    },
+    "top": {
+      "code": 63,
+      "e_dev_pJ": 0.9803,
+      "e_tg_pJ": 0.176,
+      "e_drvstage_pJ": 0.6636,
+      "vwr_flat_mean_V": 0.99164,
+      "vwr_flat_min_V": 0.98496,
+      "vwr_flat_max_V": 0.99616,
+      "u_flat_mean": 4.094,
+      "i_vdd_idle_mA": 1.7356,
+      "i_vdd_pulse_mA": 1.7375
+    },
+    "sanity_analytic_flatmean_pJ": 0.7809
+  },
+  "buffer_static": {
+    "label": "MEASURED",
+    "idle_op": {
+      "v_wr": 2.376712e-08,
+      "v_wrr": 0.898965,
+      "v_drv": 1.073201,
+      "v_bin": 0.8987098,
+      "i_vdd_A": 0.00148457,
+      "p_rail_mW": 2.6722
+    },
+    "active_op": {
+      "v_wr": 0.898965,
+      "v_wrr": 2.376712e-08,
+      "v_drv": 1.073201,
+      "v_bin": 0.8987098,
+      "i_vdd_A": 0.00148457,
+      "p_rail_mW": 2.6722
+    },
+    "p_buf_W": 0.0026722,
+    "note": "P_buf = Vdd*I(vdd) at the idle DC op (replica conducting). Steering makes the rail current the same during pulses (device burn replaces replica burn), so P_buf*t already CONTAINS the pulse Ohmic energy; the prescribed always-on sum k*(E_dev+E_tg)+P_buf*t_update double-counts it by <= e_pulses/e_update; e_update_supply_true is the exact rail accounting."
+  },
+  "power_gating": {
+    "note": "Power gating the buffer+replica between updates is standard; the sibling repo reproduced 24-36% primitive-level savings in design_survey/repro/picoram_gating.py (referenced, not re-run here).",
+    "gated_accounting": "P_buf applied over (k+1) pulse windows of TW+2*TR only, as prescribed",
+    "gated_caveat": "optimistic: the loop must be awake t_settle before the first pulse; within one update the chain is busy for the whole t_update, so the realistic saving is the idle time BETWEEN updates"
+  },
+  "dac_static": {
+    "label": "ANALYTIC",
+    "p_string_W": 5.4822e-06,
+    "formula": "(Vhi-Vlo)^2/(2^6*R_unit) with rails [0.802127,0.989439] V, R_unit=100 ohm"
+  },
+  "settle": {
+    "label": "MEASURED",
+    "tol_V": 0.002341,
+    "runs": [
+      {
+        "direction": "up",
+        "v_from_V": 0.805054,
+        "v_to_V": 0.989439,
+        "v_final_V": 0.991622,
+        "t_settle_ns": 3.695,
+        "e_supply_window_pJ": 10.769,
+        "p_rail_pre_mW": 2.1979,
+        "p_rail_post_mW": 3.1241
+      },
+      {
+        "direction": "down",
+        "v_from_V": 0.989439,
+        "v_to_V": 0.805054,
+        "v_final_V": 0.804083,
+        "t_settle_ns": 5.545,
+        "e_supply_window_pJ": 13.197,
+        "p_rail_pre_mW": 3.1241,
+        "p_rail_post_mW": 2.1979
+      }
+    ],
+    "t_settle_ns": 5.545,
+    "note": "worst of up/down full-scale step at bin, settle band 0.1*VT on wrr"
+  },
+  "read": {
+    "label": "MEASURED",
+    "rail_V": 0.2,
+    "rref_ohm": 7350.0,
+    "rationale": "0.2 V read rail keeps the divider current ~16 uA and vsen ~0.08..0.11 V << Vth=0.896 V, so read disturb on the write sigmoid is negligible; Rref=Rp*(1+TMR/2) is the midpoint reference",
+    "sa": "PMOS-input StrongARM, mirror of the proven sibling NMOS SA (smtj_pbnn_sim/eda/hero/strongarm_sa.spice); NMOS input does not work at the ~0.1 V divider common mode",
+    "states": [
+      {
+        "st": 0,
+        "vsen_V": 0.08,
+        "e_sa_pJ": 0.10051,
+        "e_readrail_pJ": 0.01428,
+        "outp_V": 0.0,
+        "outn_V": 1.8,
+        "resolved": true,
+        "correct": true
+      },
+      {
+        "st": 1,
+        "vsen_V": 0.11429,
+        "e_sa_pJ": 0.10092,
+        "e_readrail_pJ": 0.01204,
+        "outp_V": 1.8,
+        "outn_V": 0.0,
+        "resolved": true,
+        "correct": true
+      }
+    ],
+    "e_read_pJ": 0.11479
+  },
+  "timing_model": {
+    "formula": "t_update = (k+1)*(TW+t_gap) + t_settle + t_read",
+    "tw_ns": 0.75,
+    "t_gap_ns": 0.25,
+    "t_read_ns": 1.0,
+    "t_settle_ns": 5.545,
+    "pulse_window_ns": 0.85,
+    "note": "k reset pulses at TOP code + 1 probabilistic pulse at the update code + 1 read strobe; t_settle charged once per update (DAC recode)"
+  },
+  "update_energy_model": {
+    "formula": "e_update(k) = k*(E_dev_top+E_tg_top) + (E_dev_mid+E_tg_mid) + E_read + statics; statics_always_on=(P_buf+P_string)*t_update, statics_gated=(P_buf+P_string)*(k+1)*(TW+2*TR); e_update_supply_true=(P_buf+P_string)*t_update+E_read (exact under steering, contains the pulse Ohmic energy)",
+    "e_read_used": "max over st in {0,1} of E_sa+E_readrail"
+  },
+  "table": [
+    {
+      "k": 1,
+      "t_update_ns": 8.545,
+      "e_pulses_pJ": 2.1394,
+      "e_read_pJ": 0.1148,
+      "statics_always_on_pJ": 22.881,
+      "statics_gated_pJ": 4.552,
+      "e_update_always_on_pJ": 25.135,
+      "e_update_gated_pJ": 6.806,
+      "e_update_supply_true_pJ": 22.996
+    },
+    {
+      "k": 2,
+      "t_update_ns": 9.545,
+      "e_pulses_pJ": 3.2957,
+      "e_read_pJ": 0.1148,
+      "statics_always_on_pJ": 25.558,
+      "statics_gated_pJ": 6.828,
+      "e_update_always_on_pJ": 28.969,
+      "e_update_gated_pJ": 10.239,
+      "e_update_supply_true_pJ": 25.673
+    },
+    {
+      "k": 3,
+      "t_update_ns": 10.545,
+      "e_pulses_pJ": 4.452,
+      "e_read_pJ": 0.1148,
+      "statics_always_on_pJ": 28.236,
+      "statics_gated_pJ": 9.104,
+      "e_update_always_on_pJ": 32.803,
+      "e_update_gated_pJ": 13.671,
+      "e_update_supply_true_pJ": 28.351
+    },
+    {
+      "k": 4,
+      "t_update_ns": 11.545,
+      "e_pulses_pJ": 5.6083,
+      "e_read_pJ": 0.1148,
+      "statics_always_on_pJ": 30.914,
+      "statics_gated_pJ": 11.38,
+      "e_update_always_on_pJ": 36.637,
+      "e_update_gated_pJ": 17.103,
+      "e_update_supply_true_pJ": 31.029
+    },
+    {
+      "k": 5,
+      "t_update_ns": 12.545,
+      "e_pulses_pJ": 6.7646,
+      "e_read_pJ": 0.1148,
+      "statics_always_on_pJ": 33.592,
+      "statics_gated_pJ": 13.656,
+      "e_update_always_on_pJ": 40.471,
+      "e_update_gated_pJ": 20.536,
+      "e_update_supply_true_pJ": 33.706
+    }
+  ]
+}

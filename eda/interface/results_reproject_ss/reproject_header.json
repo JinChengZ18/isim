@@ -1,0 +1,65 @@
+{
+  "_label": "Section 3.4.3 projection re-run; ONLY the sMTJ-array row upgraded to measured end-to-end per-update cost",
+  "k_reset": 3,
+  "t_update_e2e_ns": 19.245,
+  "e_update_e2e_pJ": 14.486,
+  "provenance": "update_energy_summary_ss.json",
+  "device_only": {
+    "t_update_ns": 0.75,
+    "e_update_pJ": 0.783
+  },
+  "shifts": {
+    "factor_M15": {
+      "tts_x": 25.66,
+      "energy_x": 18.50063856960409
+    },
+    "factor_M91": {
+      "tts_x": 25.66,
+      "energy_x": 18.50063856960409
+    },
+    "factor_M35": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.50063856960409
+    },
+    "ulysses16": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.50063856960409
+    },
+    "factor_M21": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.500638569604085
+    },
+    "G1": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.500638569604085
+    },
+    "factor_M51": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.50063856960409
+    },
+    "G22": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.50063856960409
+    },
+    "factor_M33": {
+      "tts_x": 25.66,
+      "energy_x": 18.50063856960409
+    },
+    "factor_M77": {
+      "tts_x": 25.66,
+      "energy_x": 18.500638569604092
+    },
+    "factor_M143": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.500638569604085
+    },
+    "burma14": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.50063856960409
+    },
+    "factor_M65": {
+      "tts_x": 25.660000000000004,
+      "energy_x": 18.50063856960409
+    }
+  }
+}

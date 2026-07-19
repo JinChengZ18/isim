@@ -306,6 +306,43 @@ def panel_projection(ax):
     ax.set_title("Hardware projection, G22 (n = 2000)")
 
 
+def panel_corners(ax):
+    """RX-03: per-corner deviation of the 6-bit transfer from its endpoint
+    fit. Every number plotted/annotated is read from the committed per-corner
+    summaries — nothing hand-typed."""
+    styles = {"tt": (TP["dark"], 10), "ss": (TP["medium"], 22),
+              "ff": (TP["light"], 34), "fs": (TP["gray"], 46),
+              "sf": (TP["accent"], None)}
+    devs = {}
+    for c, (color, lx) in styles.items():
+        f = TB / ("update_chain_summary.json" if c == "tt"
+                  else f"update_chain_summary_{c}.json")
+        tr = jload(f)["per_bits"]["6"]["transfer"]
+        v = np.array([r["v_wr"] for r in tr]) * 1e3
+        codes = np.array([r["code"] for r in tr])
+        dev = v - np.linspace(v[0], v[-1], len(v))
+        devs[c] = dev
+        ax.plot(codes, dev, color=color, lw=1.8)
+        if lx is not None:
+            ax.annotate(c, xy=(lx, dev[lx]), xytext=(0, 5),
+                        textcoords="offset points", color=color, fontsize=11,
+                        ha="center")
+    imax = int(np.argmax(np.abs(devs["sf"])))
+    ax.annotate(f"sf: {devs['sf'][imax]:+.1f} mV "
+                f"({abs(devs['sf'][imax]) / VT_MV:.2f} $V_T$)",
+                xy=(imax, devs["sf"][imax]), xytext=(8, -4),
+                textcoords="offset points", color=TP["accent"], fontsize=11)
+    others = max(float(np.max(np.abs(devs[c]))) for c in ("tt", "ss", "ff",
+                                                          "fs"))
+    ax.annotate(f"tt/ss/ff/fs: max |dev| = {others:.1f} mV",
+                xy=(0.02, 0.05), xycoords="axes fraction", fontsize=11,
+                color=TP["gray"])
+    ax.axhline(0.0, color=TP["gray_lt"], lw=0.8, ls="--")
+    ax.set_xlabel("DAC code")
+    ax.set_ylabel("deviation from endpoint fit (mV)")
+    ax.set_title("Transfer nonlinearity across process corners (6-bit)")
+
+
 def panel_schematic(ax):
     img = plt.imread(HERE / "schematics" / "update_chain.png")
     ax.imshow(img)
@@ -317,6 +354,7 @@ PANELS = {
     "chain_schematic": (panel_schematic, (10.4, 5.9)),
     "chain_transfer": (panel_transfer, (5.2, 3.6)),
     "chain_waveform": (panel_waveform, (5.6, 3.6)),
+    "chain_corners": (panel_corners, (10.4, 3.2)),
     "abl_bits": (panel_bits, (5.2, 3.6)),
     "abl_span": (panel_span, (5.2, 3.6)),
     "abl_reset": (panel_reset, (5.2, 3.6)),
@@ -328,9 +366,10 @@ PANELS = {
 }
 
 COMPOSITES = {
-    "preview_09.png": [  # (a) schematic (b) transfer (c) waveform
+    "preview_09.png": [  # (a) schematic (b) transfer (c) waveform (d) corners
         ["chain_schematic", "chain_schematic"],
         ["chain_transfer", "chain_waveform"],
+        ["chain_corners", "chain_corners"],
     ],
     "preview_10.png": [  # (a) bits (b) span (c) reset (d) replay
         ["abl_bits", "abl_span"],

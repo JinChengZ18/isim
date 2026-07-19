@@ -1,0 +1,131 @@
+{
+  "_label": "MEASURED per corner (ngspice, sky130, schematic-level); MTJ compact model is corner-invariant by construction (ch2 calibration constants, ANALYTIC constancy)",
+  "corners": [
+    "tt",
+    "ss",
+    "ff",
+    "sf",
+    "fs"
+  ],
+  "per_corner": {
+    "tt": {
+      "lsb_mV": 3.0767,
+      "lsb_over_VT": 0.1314,
+      "range_mV": 193.834,
+      "monotonic": true,
+      "inl_lsb": 0.8542,
+      "buffer_offset_mV": 2.8836,
+      "u_min": -3.8814,
+      "u_max": 4.3972,
+      "p_buf_mW": 2.8684,
+      "t_settle_ns": 9.015,
+      "e_dev_mid_pJ": 0.8081,
+      "e_tg_mid_pJ": 0.2426,
+      "vwr_flat_mid_V": 0.90099,
+      "t_update_k3_ns": 14.015,
+      "e_update_gated_k3_pJ": 14.675,
+      "e_update_supply_true_k3_pJ": 40.397,
+      "read_ok": true
+    },
+    "ss": {
+      "lsb_mV": 3.0233,
+      "lsb_over_VT": 0.1291,
+      "range_mV": 190.467,
+      "monotonic": true,
+      "inl_lsb": 0.5204,
+      "buffer_offset_mV": 1.0647,
+      "u_min": -3.9161,
+      "u_max": 4.2186,
+      "p_buf_mW": 2.7125,
+      "t_settle_ns": 14.245,
+      "e_dev_mid_pJ": 0.8036,
+      "e_tg_mid_pJ": 0.3469,
+      "vwr_flat_mid_V": 0.89825,
+      "t_update_k3_ns": 19.245,
+      "e_update_gated_k3_pJ": 14.486,
+      "e_update_supply_true_k3_pJ": 52.432,
+      "read_ok": true
+    },
+    "ff": {
+      "lsb_mV": 3.1479,
+      "lsb_over_VT": 0.1344,
+      "range_mV": 198.319,
+      "monotonic": true,
+      "inl_lsb": 1.3169,
+      "buffer_offset_mV": 5.0716,
+      "u_min": -3.8424,
+      "u_max": 4.6277,
+      "p_buf_mW": 3.0514,
+      "t_settle_ns": 6.125,
+      "e_dev_mid_pJ": 0.8126,
+      "e_tg_mid_pJ": 0.1497,
+      "vwr_flat_mid_V": 0.90316,
+      "t_update_k3_ns": 11.125,
+      "e_update_gated_k3_pJ": 15.034,
+      "e_update_supply_true_k3_pJ": 34.121,
+      "read_ok": true
+    },
+    "sf": {
+      "lsb_mV": 4.2209,
+      "lsb_over_VT": 0.1803,
+      "range_mV": 265.918,
+      "monotonic": true,
+      "inl_lsb": 9.3239,
+      "buffer_offset_mV": 17.9567,
+      "u_min": -3.8178,
+      "u_max": 7.5395,
+      "p_buf_mW": 3.1065,
+      "t_settle_ns": 10.825,
+      "e_dev_mid_pJ": 0.8208,
+      "e_tg_mid_pJ": 0.2752,
+      "vwr_flat_mid_V": 0.90728,
+      "t_update_k3_ns": 15.825,
+      "e_update_gated_k3_pJ": 16.26,
+      "e_update_supply_true_k3_pJ": 49.37,
+      "read_ok": true
+    },
+    "fs": {
+      "lsb_mV": 2.9768,
+      "lsb_over_VT": 0.1271,
+      "range_mV": 187.539,
+      "monotonic": true,
+      "inl_lsb": 0.1289,
+      "buffer_offset_mV": 0.3558,
+      "u_min": -3.9165,
+      "u_max": 4.0932,
+      "p_buf_mW": 2.6722,
+      "t_settle_ns": 5.545,
+      "e_dev_mid_pJ": 0.8038,
+      "e_tg_mid_pJ": 0.1793,
+      "vwr_flat_mid_V": 0.89886,
+      "t_update_k3_ns": 10.545,
+      "e_update_gated_k3_pJ": 13.671,
+      "e_update_supply_true_k3_pJ": 28.351,
+      "read_ok": true
+    }
+  },
+  "monotonic_all_corners": true,
+  "worst_corner_by_gated_e_update": "sf",
+  "spread": {
+    "lsb_mV": [
+      2.9768,
+      4.2209
+    ],
+    "p_buf_mW": [
+      2.6722,
+      3.1065
+    ],
+    "t_settle_ns": [
+      5.545,
+      14.245
+    ],
+    "e_update_gated_k3_pJ": [
+      13.671,
+      16.26
+    ],
+    "t_update_k3_ns": [
+      10.545,
+      19.245
+    ]
+  }
+}
