@@ -175,7 +175,7 @@ item's Decision rule.
 - Artifacts: multi-seed + gset ablation CSVs, G1 device-ablation dir.
 
 ### RX-05 Harden the reset story (LLG correlation + mechanism controls + scale)
-- Status: open
+- Status: claimed 2026-07-20 session-e063faf4-loop
 - Effort: 2-4 days. Deps: none. Highest physics novelty; touches ch2 assets.
 - Objection: §3.5.2's headline "plateau downgraded to sticky residual,
   k=1-2 suffice" rests on (i) reset-failure INDEPENDENCE (0.28^k), admitted
