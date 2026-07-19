@@ -51,6 +51,9 @@ def main():
     ap.add_argument("--energy-json",
                     default=str(ROOT / "eda" / "testbenches" /
                                 "update_energy_summary.json"))
+    ap.add_argument("--outdir", default="results_reproject",
+                    help="output dir name under eda/interface/ (RX-03 "
+                         "worst-corner runs use results_reproject_<corner>)")
     args = ap.parse_args()
 
     ej = json.loads(Path(args.energy_json).read_text())
@@ -86,7 +89,7 @@ def main():
                     tts=p.hardware_tts(n, nsw, ps),
                     energy=p.energy_per_solution(n, nsw, ps)))
 
-    odir = HERE / "results_reproject"
+    odir = HERE / args.outdir
     odir.mkdir(exist_ok=True)
     with open(odir / "reproject_summary.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["instance", "n", "platform",
@@ -110,7 +113,7 @@ def main():
         k_reset=args.k,
         t_update_e2e_ns=row["t_update_ns"],
         e_update_e2e_pJ=row["e_update_gated_pJ"],
-        provenance="eda/testbenches/update_energy_summary.json",
+        provenance=str(Path(args.energy_json).name),
         device_only=dict(t_update_ns=SMTJ_ARRAY.t_update * 1e9,
                          e_update_pJ=SMTJ_ARRAY.e_update * 1e12),
         shifts=shifts), indent=2))

@@ -28,6 +28,13 @@ COMPARE = [
      / "compare_factor_summary.csv"),
     ("表3.3-tsp", ROOT / "results" / "results_compare_tsp"
      / "comapre_tsp_summary.csv"),
+    # RX-01 power reruns (seed-prefix-consistent with the canonical rows:
+    # SeedSequence(2024).spawn(N) children 0..199 are identical to the
+    # N=200 protocol, verified 8/2000 contains the original 4/200 hits)
+    ("RX01-N2000", ROOT / "results_rerun" / "results_compare_maxcut_N2000"
+     / "summary.csv"),
+    ("RX01-N1000", ROOT / "results_rerun" / "results_compare_maxcut_N1000_G1"
+     / "summary.csv"),
 ]
 SINGLE = [
     ("表3.2-maxcut", ROOT / "results" / "results_maxcut" / "summary.csv"),
@@ -76,7 +83,7 @@ def main():
                             speedup=r["ratio"], speedup_lo=r["lo"],
                             speedup_hi=r["hi"],
                             speedup_frac_undef=r["frac_undefined"]))
-            if inst in ("G1", "G22") or table.endswith("tsp"):
+            if inst in ("G1", "G22") or table.endswith("tsp") or table.startswith("RX01"):
                 verdicts.append(
                     f"{table} {inst}: k={ka}vs{kb}/{n}  "
                     f"p_s CI overlap={overlap}  "

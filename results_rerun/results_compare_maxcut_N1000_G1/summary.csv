@@ -1,0 +1,2 @@
+instance,n,target,ps_smtj,ps_sa,tts99_smtj,tts99_sa,speedup_sa_over_smtj,energy_min_smtj,energy_min_sa,energy_median_smtj,energy_median_sa,time_median_smtj,time_median_sa,n_trials,n_sweeps,update_mode,schedule
+G1,800,-2036.0,0.672,0.736,8.719225443928801,6.595935514123404,0.7564818178564423,-2036.0,-2036.0,-2036.0,-2036.0,2.11060254999029,1.9075315999943996,1000,10000,async_numba,geometric
