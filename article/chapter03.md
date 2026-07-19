@@ -546,7 +546,9 @@ $$
 $$
 E_\mathrm{sol}=\frac{\log(1-0.99)}{\log(1-p_s)}\cdot N_\mathrm{sweep}\cdot N_\mathrm{spin}\cdot e_\mathrm{update}
 $$
-计算，其中$p_s$与$N_\mathrm{sweep}$取自前述基准的实测数据，与硬件物理参数解耦。投影只改变扫数到时间/能耗的换算系数、不改变算法层成功概率，故硬件比较结果跨平台可比。
+计算，其中$p_s$与$N_\mathrm{sweep}$取自前述基准的实测数据，与硬件物理参数解耦。投影只改变扫数到时间/能耗的换算系数、不改变算法层成功概率，故硬件比较结果跨平台可比。$N_\parallel=64$隐含的并行更新语义已经数值验证：把64自旋固定块的同时更新与严格异步更新在同一种子协议下对照，$p_s$在置信区间内一致 ($\mathrm{G1}$为$0.690$对$0.685$，$N_\mathrm{trial}=200$；$\mathrm{G22}$为$0.003$对$0.004$，$N_\mathrm{trial}=2000$)，同时更新对耦合自旋的细致平衡破坏在该块宽下未产生可分辨的求解代价[^par-semantics]。
+
+[^par-semantics]: 对照在贪心图着色的独立集类更新 (保持Gibbs正确性的并行方式) 与忽略邻接的固定64块更新之间进行，退火调度、扫数与`SeedSequence`种子与主基准一致。着色统计同时给出保正确性的并行宽度参照：$\mathrm{G1}$需19个色类、平均类宽$42$，$\mathrm{G22}$需12个色类、平均类宽$167$；后者说明对$\mathrm{G22}$这类中等连接度图，$N_\parallel=64$相对染色调度反而保守。数据见仓库`eda/interface/parallel_semantics_summary.csv`。
 
 将该模型作用于前节三类基准 (Max-Cut $\mathrm{G1}/\mathrm{G14}/\mathrm{G22}$、整数分解九个半素数目标、TSP $\mathtt{burma14}/\mathtt{ulysses16}$) 的实测$p_s$得到图3.8(b)与图3.8(c)。$\mathrm{G14}$因$p_s=0$在所有平台上$\mathrm{TTS}_{99}$均不定义，记为n/a；其余十三个实例上四类平台的相对位置稳定。
 
