@@ -37,6 +37,9 @@ content OUT of here; this directory never ships.
 - 2026-07-13 (parallel session): de-AIGC pass over ch3 + panel letters +
   PPT compose workflow `eda/build_ppt_figs.py` (0885355); figs_make.py
   retargeted to clean panels + previews.
+- 2026-07-19: two-persona reviewer audit distilled into
+  `EXPERIMENTS_QUEUE.md` (RX-01..RX-15, claim protocol). Suggested first
+  wave: RX-01/02/03/05/08.
 - 2026-07-19: RX-01 DONE (commit eb81325) — G22 3.71x was low-count
   fluctuation (N=2000: 1.6x CI [0.5,7.0]); G1 SA significantly faster
   0.84x; 3.3.1/3.6 honestly rewritten, Peskun ref added, CI convention
@@ -55,6 +58,28 @@ content OUT of here; this directory never ships.
 - 2026-07-20: three-auditor verification of the whole RX wave applied
   37 fixes (e066e03) incl. a HIGH k-guidance contradiction in 3.5.4;
   TRIAL_LOG now grounds both new process footnotes. RX-04 claimed next.
-- 2026-07-19: two-persona reviewer audit distilled into
-  `EXPERIMENTS_QUEUE.md` (RX-01..RX-15, claim protocol). Suggested first
-  wave: RX-01/02/03/05/08. Nothing claimed yet.
+- 2026-07-21: independent spot-acceptance of RX-01/02/03/05/08 (audit
+  wf_822c7f8a, user-requested): ALL headline numbers recomputed from
+  committed raw artifacts and traced into the chapter — accepted. Fixed
+  the stale RX-08 status line (work was in 108425a by e063faf4-loop;
+  the 2026-07-19 e9b0f4b0 claim delivered nothing). RX-04 confirmed
+  alive (d515357 landed mid-audit).
+
+## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
+## when no session is actively editing chapter03.md; each is one line)
+
+1. 表3.2/3.4/3.5 notes: RX-01's decision rule wanted a CI note at each
+   table; only the §3.3 preamble sentence + 表3.3 note exist. Add one
+   short CI sentence per note (or record the preamble as the chosen
+   implementation in RX-01's Status line).
+2. [^process-g22-power]: "逐一复现" overstates — first-200 energy
+   MULTISETS are identical but stored per-index order differs (parallel
+   completion-order storage). Suggest "结果集精确复现原4对1命中".
+3. eda/interface/ci_audit.py comment: scope the prefix-identity claim to
+   G22 (G1 N=1000 rerun has 1-of-200 prefix divergence; headline 0.84x
+   unaffected — uses full-1000 counts, independently reproduced).
+4. [^par-semantics] (§3.4.3): add half a sentence on why G14 is absent
+   (all three schedules p_s=0 at this budget — comparison void; its
+   artifacts ARE committed).
+5. `article/figs/Chapter03_local_03(1).png`: untracked user file, likely
+   an accidental "(1)" duplicate — ask user / recycle, never commit.

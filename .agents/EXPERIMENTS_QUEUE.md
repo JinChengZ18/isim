@@ -281,7 +281,7 @@ item's Decision rule.
 - Artifacts: run_fullstack.py + csv; backend extension.
 
 ### RX-08 Adversarial boundary for the beta-scaled 3-bit speedup
-- Status: claimed 2026-07-19 session-e9b0f4b0-loop
+- Status: done 2026-07-20 -> eda/interface/{run_betascaled_boundary.py,betascaled_boundary_summary.csv,betascaled_boundary_config.json,results_betascaled_boundary/}, §3.5.2 boundary sentence + 3.5.5/3.6 (commit 108425a, session-e063faf4-loop; supersedes the undelivered 2026-07-19 claim by session-e9b0f4b0-loop — that commit 426d970 contained no RX-08 artifacts). OUTCOME: boundary established — G14 3-bit median-cut deficit 42~44 vs 36~37 (6-bit); planted reg3 n=16 degrades 2.5~2.6x (6-bit CIs straddle 1); factoring M=65 indifferent; ER14 wiring check reconfirms 0.156x. Independently re-verified 2026-07-21 (audit wf_822c7f8a).
 - Effort: ~1 day. Deps: none.
 - Objection: §3.5.2 reports 0.16x TTS for beta-scaled 3-bit and refuses to
   generalize, but never shows where it HURTS — unfalsifiable as written.
