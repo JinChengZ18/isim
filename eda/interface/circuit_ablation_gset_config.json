@@ -1,0 +1,46 @@
+{
+  "_label": "RX-04(b) circuit-constraint ablation on G-set landscapes; G-set protocol (T=1e4, beta 0.1->10, N=200, seed 2024), block mode; all rows MEASURED; bits=6 row deduplicated from the identical span_6b@4 config (same seed chain); beta-scaled axis deliberately absent (RX-08 owns it)",
+  "instances": [
+    "G1",
+    "G22",
+    "G14"
+  ],
+  "bks": {
+    "G1": 11624,
+    "G14": 3064,
+    "G22": 13359
+  },
+  "trials": 200,
+  "sweeps": 10000,
+  "beta": [
+    0.1,
+    10.0
+  ],
+  "master_seed": 2024,
+  "update_mode": "block",
+  "span_axis": [
+    2.0,
+    4.0,
+    6.0,
+    8.0,
+    10.0
+  ],
+  "bits_axis": [
+    4,
+    6
+  ],
+  "reset_axis": [
+    1,
+    3
+  ],
+  "r_reset": 0.72,
+  "reset_model": "rho = (1-0.72)^k independence model (NOT the RX-05 LLG-informed chain; this axis generalizes the canonical ER14 rule across landscapes)",
+  "boot_B": 10000,
+  "boot_seed": 20260720,
+  "metric_notes": {
+    "G1": "p_s/TTS primary (ideal p_s~0.7 at N=200)",
+    "G22": "energy_median primary (ideal p_s~0.004; N=200 hit counts 0-2, Wilson CIs wide by design)",
+    "G14": "energy_median only (p_s=0 regime at T=1e4)"
+  },
+  "total_wall_s": 770.028905300016
+}

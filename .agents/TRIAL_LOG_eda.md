@@ -120,3 +120,25 @@ Correction applied: 3.3.1/3.3小结/3.6 rewritten (grounds [^process-g22-power])
 N=1000 control simultaneously showed SA significantly faster (0.84x [0.75, 0.94]),
 consistent with the Peskun ordering — the chapter's Gibbs value proposition was moved from
 algorithmic speed to physical sampling realization.
+
+## 2026-07-20 RX-04: the ±6V_T rail rule and the "2-bit is better" reading were both single-instance artifacts
+
+Tried: generalizing the §3.5.2 circuit-constraint sweeps (bits / rail span / reset-k), which had
+been calibrated on one 14-spin ER instance with one instance-seed, to five ER seeds x n in {14,20}
+and to the G-set instances G1/G14/G22 (new drivers run_circuit_ablation_multi.py and
+run_circuit_ablation_gset.py).
+Symptom 1 (rail span): the ±6V_T saturation point does not transfer. Pooled over five ER seeds the
+cost at ±6V_T is 1.38x (n=14) and 1.59x (n=20) — already not saturated — and on G1 (n=800, mean
+degree 47.9) ±6V_T degrades 63x, ±8V_T still 3.0x, with ±10V_T the first workable point (p_s 0.635
+vs baseline 0.720). G22 (n=2000) has zero hits in 200 trials at ±8V_T and below. The published rule
+was therefore ~2 orders of magnitude optimistic at array scale.
+Symptom 2 (bit width): the canonical run's "2-bit is better than 8-bit" (1.36x vs 2.30x) is a
+seed-0 artifact — per-seed 2-bit ratios are 1.36 / 5.83 / 6.52 / 2.37 / 3.51, geometric mean 3.36x,
+i.e. WORSE than 8-bit (3.09x).
+Confound found while checking: the G-set bits axis had been run at span=4, where every bit width
+fails on G1/G22 (p_s=0) because the clip alone is fatal — bit width cannot be assessed there. Added
+a bits sweep at span=10 on G1: 4/6/8 bit give p_s 0.610/0.635/0.620, Wilson intervals overlapping.
+Fix: §3.5.2 rewritten — the rail-span rule is restated as size-dependent (with the mechanism: the
+clip caps single-update certainty at sigma(u_clip) and anti-field flips accumulate with N*T), the
+2-bit claim is deleted, and the design conclusion is inverted to "trade resolution for range"
+(±10V_T at 4 bit beats ±4V_T at 6 bit by an unbounded margin at G-set scale). §3.6 updated.

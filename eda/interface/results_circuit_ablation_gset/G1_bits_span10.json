@@ -1,0 +1,32 @@
+[
+  {
+    "instance": "G1",
+    "axis": "bits_span10",
+    "value": 4,
+    "p_s": 0.61,
+    "tts99_sweeps": 48907.481092730966,
+    "energy_median": -2036.0,
+    "n_trials": 200,
+    "n_sweeps": 10000
+  },
+  {
+    "instance": "G1",
+    "axis": "bits_span10",
+    "value": 6,
+    "p_s": 0.635,
+    "tts99_sweeps": 45692.652405962916,
+    "energy_median": -2036.0,
+    "n_trials": 200,
+    "n_sweeps": 10000
+  },
+  {
+    "instance": "G1",
+    "axis": "bits_span10",
+    "value": 8,
+    "p_s": 0.62,
+    "tts99_sweeps": 47594.524723401286,
+    "energy_median": -2036.0,
+    "n_trials": 200,
+    "n_sweeps": 10000
+  }
+]
