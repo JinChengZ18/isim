@@ -254,7 +254,7 @@ item's Decision rule.
 ## P2 — completeness / boundary-setting
 
 ### RX-07 Full-stack realistic point + interactions + joint PDK mismatch
-- Status: open
+- Status: claimed 2026-07-22 session-1b46cb68-loop
 - Effort: 2-3 days. Deps: RX-01.
 - Objection: §3.4.2 is one-factor-at-a-time; a real array carries all five
   device knobs at measured values PLUS the circuit constraints
