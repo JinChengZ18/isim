@@ -220,7 +220,7 @@ item's Decision rule.
   ablation rows; scale-check csv.
 
 ### RX-06 Read-decision offset MC -> misread channel (the 6th non-ideality)
-- Status: open
+- Status: claimed 2026-07-21 session-1b46cb68-loop
 - Effort: 1-2 days. Deps: none. WSL for the MC, Windows for the solver leg.
 - Objection: §3.5.4's read energy claims `correct=True` at tt/nominal only.
   Margin is ~14-20 mV (vsen 0.080/0.114 V vs 0.100 V reference) on small
@@ -298,7 +298,7 @@ item's Decision rule.
 - Artifacts: rows appended to a `betascaled_boundary_summary.csv`.
 
 ### RX-09 IR predistortion on a fully-populated >=64-spin array
-- Status: open
+- Status: claimed 2026-07-21 session-1b46cb68-loop
 - Effort: 0.5-1 day. Deps: none.
 - Objection: §3.5.3's 3.04x -> 1.06x recovery was shown with 14 spins
   spread over 64 rows (most rows empty, offsets never couple through a
