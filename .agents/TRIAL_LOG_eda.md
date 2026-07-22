@@ -235,3 +235,40 @@ with `alter` between sweeps. ngspice retains one plot per `tran`; by ~5000 sweep
 had grown to 1.18 GB RSS and had not finished 120 samples in 32 minutes. Adding `destroy $curplot`
 inside the sweep loop made the same arm 4.9x faster (73 s -> 15 s on the 4-sample smoke) with
 bit-identical output (mean −2.000 mV, σ 15.706 mV before and after).
+
+## 2026-07-22 RX-07: the product-of-singles test was unfalsifiable at the chapter's 200-trial baseline
+
+Tried: testing whether the chapter's channel-by-channel decomposition composes, by running every
+non-ideality together and comparing the resulting TTS_99 ratio against the product of the
+one-at-a-time ratios, each measured against the same 200-trial ideal baseline that Section 3.4.2
+and Section 3.5.2 use.
+Symptom: the comparison could not have failed. On ER14 the product of the five live channels came
+out 4.22x with a bootstrap interval of [1.40, 12.84] — a factor of 9 wide — and the full-stack
+point sat at 2.62x [1.50, 5.16], so any composition rule from strongly sub- to strongly
+super-multiplicative was consistent with the data. Diagnosis: the product references the ideal
+baseline once per channel while the full-stack ratio references it once, so with m live channels
+the baseline's own sampling error enters the comparison to the power m-1. At p_s = 0.185 with
+N = 200 the baseline's Wilson interval already spans +/-18% in ln(1-p_s); raised to the fourth
+power that alone is a factor of ~4 of spurious width, which is more than any interaction the test
+was built to detect.
+Fix: two changes. (i) The decision statistic became the INTERACTION FACTOR — full-stack ratio
+divided by the product — formed inside each bootstrap replicate against a COMMON baseline draw, so
+the shared reference cancels instead of compounding; it excludes 1 exactly when the composition is
+resolvably non-multiplicative. (ii) The ideal arm is run at N = 1000 rather than 200, since the
+m-1 unshared copies of the baseline survive the cancellation. Measured effect of the fix on the
+ER14 interaction interval: hi/lo width 25.2 (N=200) -> 9.6 (N=1000) -> 7.5 (N=5000), so N = 1000
+is where the baseline stops being the limiting term and the single-channel arms' own noise takes
+over; going deeper buys 1.3x for 5x the compute. The first 200 seeds of
+SeedSequence(2024).spawn(1000) are the same objects as spawn(200), so the deeper arm is a strict
+superset of the committed baseline row and no published number moves.
+
+Second correction, same item (design stage, forced by RX-04's result rather than by a new failure):
+the interaction screen was specified with a +/-6 V_T low rail level. RX-04 had already measured
+63x for that rail ALONE on G1 (4/200 hits), so all eight low-rail cells of the 16-run design would
+have landed at or near zero hits and the factorial would have been censored on half its runs. The
+rail factor was moved to +/-8 vs +/-12 V_T, which brackets the +/-10 knee and keeps every corner
+measurable. For the same reason the measured 6-bit DAC grid — an as-built +/-4 V_T design — had to
+be re-referenced to the wider rails to appear in any G-set-scale arm: its tap deviation is carried
+in absolute V_T units (Section 3.5.1 attributes it to the buffer's code-dependent offset, which
+does not follow the reference voltage) and the arm is run beside an ideal-grid control at the same
+rails so the extrapolation is bounded rather than assumed.
