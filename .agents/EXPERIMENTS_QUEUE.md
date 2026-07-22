@@ -338,7 +338,22 @@ item's Decision rule.
 - Artifacts: reproject extension + `energy_caliber_summary.csv`.
 
 ### RX-11 Density/scale sweep for the Gibbs-vs-Metropolis prediction
-- Status: open
+- Status: claimed 2026-07-23 session-1b46cb68-loop (RE-SCOPED — see note)
+- RE-SCOPE NOTE (2026-07-23): RX-01 DELETED the monotonic-growth prediction this
+  item was written to defend, so the original objection is moot. The protocol is
+  retained because it now defends the OPPOSITE, and currently central, claim:
+  3.3.1/3.6 assert that the single-step rule provides NO algorithmic speedup
+  (Peskun ordering; G1 SA faster at 0.84x; G22 unresolved). That is a NEGATIVE
+  claim resting on 14 instances of which only one is resolved, and the obvious
+  reviewer question — "does the Gibbs advantage appear at higher connectivity?"
+  — is exactly what the deleted prediction asserted. The controlled synthetic
+  degree ladder answers it directly. The real-G-set ladder is DROPPED (it needs
+  BKS values transcribed from published tables, is error-prone, and the low-p_s
+  instances repeat the G22 power problem the synthetic ladder avoids).
+- Revised decision rule: SA >= Gibbs across the whole degree range -> the new
+  3.3.1 claim is substantiated on a controlled axis, add one sentence + the CI
+  band. Gibbs overtakes at high degree -> the deleted prediction was right and
+  must be restored WITH intervals, and 3.3.1/3.6 rewritten again.
 - Effort: 1-2 days. Deps: RX-01 (CIs mandatory here).
 - Objection: §3.3.1 predicts the Gibbs advantage grows monotonically with
   scale/|h_eff| variance from ONE supporting point (G22); G1 (same n
