@@ -317,7 +317,7 @@ item's Decision rule.
   driver script.
 
 ### RX-10 Same-caliber energy comparison (synapse term + N_par sensitivity)
-- Status: open
+- Status: claimed 2026-07-22 session-1b46cb68-loop
 - Effort: 1-2 days. Deps: RX-03 (worst-corner numbers useful, not required).
 - Objection: §3.5.4 defends the post-correction energy loss to CMOS p-bit
   as an accounting-boundary issue but never QUANTIFIES the fairness: the
