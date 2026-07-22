@@ -1,0 +1,69 @@
+{
+  "_label": "RX-10 correction: parity under the sharing model the measured circuit supports (only the DAC string amortises)",
+  "p_buf_mW": 2.8684000000000003,
+  "p_string_uW": 5.4822,
+  "amortisable_fraction_of_static": 0.0019075938464005238,
+  "cmos_e_update_pJ": 5.0,
+  "cmos_uncertainty_note": "hardware_metrics annotates the 5 pJ CMOS figure as carrying factor 2-3 absolute uncertainty; every ratio below inherits it",
+  "per_k": {
+    "1": {
+      "e_gated_pJ": 7.3,
+      "e_gated_share_inf_pJ": 7.2907,
+      "ratio_vs_cmos": 1.46,
+      "p_buf_for_parity_mW": 1.5155,
+      "p_buf_reduction_needed": 1.893
+    },
+    "2": {
+      "e_gated_pJ": 10.987,
+      "e_gated_share_inf_pJ": 10.973,
+      "ratio_vs_cmos": 2.1974,
+      "p_buf_for_parity_mW": 0.5205,
+      "p_buf_reduction_needed": 5.511
+    },
+    "3": {
+      "e_gated_pJ": 14.675,
+      "e_gated_share_inf_pJ": 14.6564,
+      "ratio_vs_cmos": 2.935,
+      "p_buf_for_parity_mW": 0.023,
+      "p_buf_reduction_needed": 124.936
+    },
+    "4": {
+      "e_gated_pJ": 18.362,
+      "e_gated_share_inf_pJ": 18.3387,
+      "ratio_vs_cmos": 3.6724,
+      "p_buf_for_parity_mW": null,
+      "p_buf_reduction_needed": null
+    },
+    "5": {
+      "e_gated_pJ": 22.049,
+      "e_gated_share_inf_pJ": 22.021,
+      "ratio_vs_cmos": 4.4098,
+      "p_buf_for_parity_mW": null,
+      "p_buf_reduction_needed": null
+    }
+  },
+  "same_caliber": {
+    "G22": {
+      "deg_mean": 19.99,
+      "synapse_pJ": 7.3315,
+      "ratio_vs_cmos_by_k": {
+        "1": 1.1865,
+        "2": 1.4855,
+        "3": 1.7846,
+        "4": 2.0836,
+        "5": 2.3826
+      }
+    },
+    "G1": {
+      "deg_mean": 47.94,
+      "synapse_pJ": 17.5824,
+      "ratio_vs_cmos_by_k": {
+        "1": 1.1018,
+        "2": 1.2651,
+        "3": 1.4284,
+        "4": 1.5917,
+        "5": 1.755
+      }
+    }
+  }
+}
