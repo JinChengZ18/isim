@@ -70,6 +70,11 @@ content OUT of here; this directory never ships.
   => design inverted to "trade resolution for range"; device ranking ends
   invariant but middle reorders (CV(Delta) up, h_off/g_dev down, both
   max|J|-relative). Acceptance-audit polish backlog cleared in 94c34ac.
+- 2026-07-22: RX-09 DONE (2085e7a) — predistortion validated on a fully
+  populated 64-spin array (claim strengthened; compatible with RX-04's
+  resolution-for-range), but the uncompensated 3.04x anchor is
+  landscape-signed at N=64 and was replaced by the N-scaling. Fig 3.11(b)
+  replotted. RX-06 still running in the same session.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)

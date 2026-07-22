@@ -298,7 +298,7 @@ item's Decision rule.
 - Artifacts: rows appended to a `betascaled_boundary_summary.csv`.
 
 ### RX-09 IR predistortion on a fully-populated >=64-spin array
-- Status: claimed 2026-07-21 session-1b46cb68-loop
+- Status: done 2026-07-22 -> eda/extraction/writeline_ir/{ir_fullarray_impact.py,ir_fullarray_summary.csv,ir_fullarray_config.json}, 3.5.3 rewritten + 3.6 clause + fig 3.11(b) replotted (commit 2085e7a). OUTCOME: predistortion claim STRENGTHENED (all arms [0.83,1.14], CIs contain 1, N in {64,128,256}, two matched instances, 1000 trials, with/without DAC grid; |m|<=0.014 vs 0.378 uncompensated). Residual sawtooth is N-independent and survives a 10x coarser step: 4bit@±10V_T recovers and needs 4/15 codes vs 41/63 => RX-04's resolution-for-range and predistortion are COMPATIBLE (the "separate fine-step offset path" hedge is retired). What died: the uncompensated 3.04x anchor — at full occupancy N=64 is 1.87x [1.39,2.54] frustrated but 0.87x [0.76,0.98] on the matched planted instance (landscape-signed); honest statement is the N-scaling 1.9x/16.6x/total-failure. NOTE: writeline_ir/README.md still says 43/63 codes at N=256 (JSON+formula give 41/63) and a slightly-off residual column — README-only, no thesis number depends on it.
 - Effort: 0.5-1 day. Deps: none.
 - Objection: §3.5.3's 3.04x -> 1.06x recovery was shown with 14 spins
   spread over 64 rows (most rows empty, offsets never couple through a
