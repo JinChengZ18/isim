@@ -142,3 +142,21 @@ Fix: §3.5.2 rewritten — the rail-span rule is restated as size-dependent (wit
 clip caps single-update certainty at sigma(u_clip) and anti-field flips accumulate with N*T), the
 2-bit claim is deleted, and the design conclusion is inverted to "trade resolution for range"
 (±10V_T at 4 bit beats ±4V_T at 6 bit by an unbounded margin at G-set scale). §3.6 updated.
+
+## 2026-07-21 RX-04 (device knobs): the §3.4.2 sensitivity ranking reorders in its middle at array scale
+
+Tried: rerunning the five-knob behavioural ablation (bench_device_ablation.py, already wired for
+G-set mode but never exercised for the thesis) on G1 (n=800, mean degree 47.9, G-set protocol
+T=1e4 / beta_f=10 / 200 trials / block mode), to test whether the ER14-derived ranking transfers.
+Result: the two ends hold, the middle reorders. p_max stays the dominant threat and gets WORSE with
+scale (0.9 -> 0/200 hits on G1, vs 10x on ER14; energy median -2036 -> -1171.5); sigma_C2C stays the
+most tolerated (sigma=2 -> 1.04x, inside the baseline Wilson interval). But CV(Delta) rises to the
+number-two constraint (CV=0.30 -> 1.66x with non-overlapping intervals on G1, vs an unremarkable
+1.3x on ER14), while h_off's ER14 catastrophe does NOT reproduce (h_off=0.2 -> 40x on ER14 but
+1.25x, statistically unresolved, on G1) and the g_dev>1 acceleration does not transfer either
+(1.5x gain -> 0.62x on ER14, 1.16x and unresolved on G1).
+Diagnosis (not a bug — a scoping error in the original reading): h_off and g_dev are specified in
+units of max|J|, so a fixed offset/gain error is a much smaller perturbation relative to the typical
+|h_eff| of a degree-48 graph than of a degree-4 one; only p_max and CV(Delta) act on the update
+distribution in a size-independent way. Fix: §3.4.2 gained a generalization paragraph and §3.6's
+device-priority sentence now states the invariant ends plus the degree-dependent middle.

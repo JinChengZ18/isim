@@ -1,0 +1,88 @@
+{
+  "_label": "RX-04(a) multi-seed/multi-size ER robustness of the circuit-ablation axes A/C/E; Section 3.4.2 protocol (T=2000, beta 0.1->5, N=200, seed 2024), block mode; er_seed=0/n=14 rows merged from the canonical committed CSV, all other rows MEASURED here; bits=6 rows deduplicated from the identical span@4 config",
+  "er_p": 0.3,
+  "combos": [
+    [
+      14,
+      1
+    ],
+    [
+      14,
+      2
+    ],
+    [
+      14,
+      3
+    ],
+    [
+      14,
+      4
+    ],
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      1
+    ],
+    [
+      20,
+      2
+    ],
+    [
+      20,
+      3
+    ],
+    [
+      20,
+      4
+    ]
+  ],
+  "canonical_merge": "eda\\interface\\results_circuit_ablation\\circuit_ablation_summary.csv",
+  "sweeps": 2000,
+  "beta": [
+    0.1,
+    5.0
+  ],
+  "trials": 200,
+  "master_seed": 2024,
+  "update_mode": "block",
+  "bits_axis": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    8
+  ],
+  "span_axis": [
+    2.0,
+    3.0,
+    4.0,
+    6.0,
+    8.0
+  ],
+  "reset_axis": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "r_reset": 0.72,
+  "reset_model": "rho=(1-0.72)^k independence model (canonical rule under test; RX-05 LLG-informed chain is separate)",
+  "targets": {
+    "ER14_p0.3_s0": -6.877554338927609,
+    "ER14_p0.3_s1": -6.797095245275903,
+    "ER14_p0.3_s2": -7.3421235819381305,
+    "ER14_p0.3_s3": -8.72723550198506,
+    "ER14_p0.3_s4": -5.4563622079208525,
+    "ER20_p0.3_s0": -15.953545212538145,
+    "ER20_p0.3_s1": -14.293926760034157,
+    "ER20_p0.3_s2": -20.08691183227218,
+    "ER20_p0.3_s3": -11.955070534610577,
+    "ER20_p0.3_s4": -13.606216893776928
+  },
+  "total_wall_s": 2085.0768356000044
+}

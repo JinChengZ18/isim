@@ -28,9 +28,11 @@ COMPARE = [
      / "compare_factor_summary.csv"),
     ("表3.3-tsp", ROOT / "results" / "results_compare_tsp"
      / "comapre_tsp_summary.csv"),
-    # RX-01 power reruns (seed-prefix-consistent with the canonical rows:
-    # SeedSequence(2024).spawn(N) children 0..199 are identical to the
-    # N=200 protocol, verified 8/2000 contains the original 4/200 hits)
+    # RX-01 power reruns. For G22 the prefix identity was verified: the
+    # first 200 trials of the N=2000 rerun reproduce the canonical 4-vs-1
+    # hit set exactly (stored order differs — parallel completion order).
+    # The G1 N=1000 rerun has one prefix trial diverging; its headline
+    # 0.84x uses the full 1000-trial counts and is unaffected.
     ("RX01-N2000", ROOT / "results_rerun" / "results_compare_maxcut_N2000"
      / "summary.csv"),
     ("RX01-N1000", ROOT / "results_rerun" / "results_compare_maxcut_N1000_G1"
