@@ -80,6 +80,14 @@ content OUT of here; this directory never ships.
   8.2e-4 misread rate; tolerance ~1e-5 at G1). Read margin, not write
   precision, is now the stated binding constraint at array scale. Fig
   3.10 gained panel (e). RX-06+RX-09 both closed this session.
+- 2026-07-22: RX-07 DONE (76c1705) — decomposition valid at the operating
+  point but super-multiplicative off-nominal (>400x on G1); rail x h_off
+  synergy FALSIFIED RX-04's h_off-relief claim (it was an unclipped-drive
+  artefact); joint PDK mismatch found the model's missing channel
+  (per-device V_th shift, 6.0 V_T, needs 57/63 trim codes competing with
+  IR predistortion). Also: 35 audit fixes on RX-06/09 landed in 554b299,
+  which promoted the read path to its own subsection 3.5.5 (old 3.5.5 ->
+  3.5.6). Queue: only RX-10, RX-11 and the four P3 items remain open.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
