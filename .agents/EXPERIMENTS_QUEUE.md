@@ -317,7 +317,7 @@ item's Decision rule.
   driver script.
 
 ### RX-10 Same-caliber energy comparison (synapse term + N_par sensitivity)
-- Status: claimed 2026-07-22 session-1b46cb68-loop
+- Status: done 2026-07-23 -> eda/testbenches/{synapse_accum_energy.py,_summary.json}, eda/interface/{graph_degrees.py/.json,energy_caliber.py,energy_caliber_summary.csv,energy_caliber_config.json}, reproject_hw.py extended (--synapse-fj/--share/--n-par/--rail-vt, defaults byte-reproduce the committed csv), 3.5.4 + [^process-synapse] + 3.5.6 + 3.6 + fig 3.11(e) (commit 22ea83b). OUTCOME: synapse term MEASURED in-flow (sky130_fd_sc_hd cells ARE present in this WSL image): 12-bit adder 995 fJ, popcount counter 469 fJ, of which 389 fJ is clock+register overhead. THE QUEUE SPEC WAS WRONG to suggest reusing the sibling's 19.4 fJ — same op measures 367 fJ here; a data-toggle estimate omits the fixed overhead and understates the correction ~20x. Same-caliber ratio sMTJ-e2e vs CMOS: 2.94x -> 1.79x (G22), 1.43x (G1), 1.13-1.15x (TSP). Crossover is synapse-INVARIANT (cancels) and N_par-neutral; parity needs sharing S>=1.9 (k=1), 5.5 (k=2), 102 (k=3), unreachable k>=4, at 2.4x/7.8x/29.5x time cost. TENSION: RX-05 recommends k~2-3 but k=3 needs S>=102 => k<=2 is where energy and reliability optima coexist. If RX-06's comparator grows for margin (area ~30x, e_read 0.12->3.23 pJ) NO (k,S) reaches parity; autozero first keeps k<=2 feasible. P_string at ±10V_T = 34-137 uW (~1% of P_buf, negligible).
 - Effort: 1-2 days. Deps: RX-03 (worst-corner numbers useful, not required).
 - Objection: §3.5.4 defends the post-correction energy loss to CMOS p-bit
   as an accounting-boundary issue but never QUANTIFIES the fairness: the

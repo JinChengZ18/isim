@@ -88,6 +88,13 @@ content OUT of here; this directory never ships.
   IR predistortion). Also: 35 audit fixes on RX-06/09 landed in 554b299,
   which promoted the read path to its own subsection 3.5.5 (old 3.5.5 ->
   3.5.6). Queue: only RX-10, RX-11 and the four P3 items remain open.
+- 2026-07-23: RX-10 DONE (22ea83b) — synapse term measured in-flow (the
+  sibling's 19.4 fJ would have been ~20x wrong); same-caliber gap
+  1.1-1.8x, and the sharing crossover is now a curve (k=1 S>=2, k=2
+  S>=6, k=3 S>=102) exposing a k-tension with RX-05. Also: 21 audit
+  fixes on RX-07 landed in 26f8cc2 — my falsification of RX-04's h_off
+  relief was itself over-stated (it fails only below the rail the
+  chapter prescribes). Queue: only RX-11 + four P3 items remain.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
