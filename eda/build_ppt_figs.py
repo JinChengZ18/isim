@@ -45,8 +45,8 @@ FIGURES = [
     {"num": 9,  "rows": [["chain_schematic"],
                          ["chain_transfer", "chain_waveform"],
                          ["chain_corners"]]},
-    {"num": 10, "rows": [["abl_bits", "abl_span"],
-                         ["abl_reset", "abl_traj"]]},
+    {"num": 10, "rows": [["abl_bits", "abl_span", "abl_reset"],
+                         ["abl_traj", "abl_readflip"]]},
     {"num": 11, "rows": [["ir_profile", "ir_impact"],
                          ["energy_stack", "hw_projection"]]},
 ]

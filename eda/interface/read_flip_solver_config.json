@@ -1,0 +1,59 @@
+{
+  "_label": "RX-06 solver leg: read-decision misread channel (circuit_backends.CircuitChainSpin p_read_flip) on the Section 3.4.2 (ER14) and Section 3.3 (G1) protocols; all rows MEASURED solver output, the flip rate itself is derived from the RX-06 offset MC",
+  "p_read_flip_bases": {
+    "as_committed": {
+      "value": 0.0008230995366729776,
+      "source": "read_offset_mc_summary.json:misread_channel.as_committed.p_read_flip [effective margins measured on the as-committed deck (C_node=0 fF) with the in-situ offset statistics at that C_node]"
+    },
+    "conservative": {
+      "value": 0.18194261193564404,
+      "source": "read_offset_mc_summary.json:misread_channel.conservative.p_read_flip [static divider margins with the MC-IDEAL offset statistics; corresponds to a decoupled reference / damped sense node, i.e. no kickback help]"
+    }
+  },
+  "multipliers": [
+    1,
+    3,
+    10
+  ],
+  "p_flip_cap": 0.5,
+  "p_flip_cap_note": "0.5 is the maximum-entropy point of a binary flip channel (the reported state carries no information); requested multiples above it are capped, so a capped row is the worst physically meaningful case rather than the literal multiple",
+  "protocols": {
+    "ER14": {
+      "sweeps": 2000,
+      "beta0": 0.1,
+      "betaf": 5.0
+    },
+    "G1": {
+      "sweeps": 10000,
+      "beta0": 0.1,
+      "betaf": 10.0
+    }
+  },
+  "instances": {
+    "ER14": {
+      "kind": "random_er_maxcut",
+      "n": 14,
+      "p": 0.3,
+      "seed": 0,
+      "target": -6.87755433892761,
+      "target_kind": "ENUM",
+      "published_anchor": -6.877554338927609
+    },
+    "G1": {
+      "kind": "gset",
+      "n": 800,
+      "bks": 11624,
+      "target": -2036.0,
+      "target_kind": "BKS"
+    }
+  },
+  "trials": 200,
+  "master_seed": 2024,
+  "update_mode": "block",
+  "read_flip_arms_mode": "none (no DAC quantization, no rail clip) so the degradation is attributable to the misread channel alone",
+  "dac_combined_note": "RX-04 constraint: combining the read-flip channel with the DAC backend on G-set-scale instances requires rail half-width >= +/-10 V_T; +/-4 V_T sits in the p_s=0 regime. Arms use u_span=10, nbits=6, run as a no-flip / flip pair so the marginal cost of the misread is isolated.",
+  "stats": "Wilson 95% CI on p_s; parametric-bootstrap 95% CI on TTS ratio vs the same-instance ideal arm (stats.py, RX-01 convention); bootstrap CI on the energy-median shift",
+  "boot_B": 10000,
+  "boot_seed": 20260721,
+  "total_wall_s": 335.7
+}

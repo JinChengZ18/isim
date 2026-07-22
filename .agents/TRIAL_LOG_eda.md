@@ -204,3 +204,34 @@ for N=256; the committed JSON and the formula both give 41/63 (round(126.84/3.07
 The README's residual column (0.063 u for every N) is likewise slightly off from the JSON
 (0.0648/0.0655 u) — §3.5.3's 0.066 V_T is the correct one. The README numbers need fixing;
 no thesis number depends on them.
+
+## 2026-07-22 RX-06: the read comparator's real decision margin is not the divider margin — and it is undamped-node artefact in both directions
+
+Tried: extracting the §3.5.4 read path (0.2 V rail, Rref = 7350 Ω, PMOS-input StrongARM) from
+update_energy.py into a standalone Pelgrom mismatch Monte-Carlo, on the assumption that the static
+divider margins (−20.0 mV at P, +14.3 mV at AP against the 0.100 V midpoint) are the margins the
+comparator actually has to beat.
+Symptom: at zero mismatch the real deck does not flip at those values. Sweeping a trim source in
+series with the sense input, the decision flips at +67 mV (st=0) and −43 mV (st=1) — 3x the static
+margins, and asymmetric between states. Diagnosis: the sense node is resistively terminated with a
+STATE-DEPENDENT Thevenin impedance (Rref‖Rp = 2940 Ω at P, Rref‖Rap = 4200 Ω at AP) against a fixed
+Rref/2 = 3675 Ω reference, and neither node carries any capacitance in the committed schematic. The
+comparator's kickback during regeneration therefore displaces the two inputs unequally, and because
+the higher-impedance state is also the higher-voltage state, the displacement reinforces the correct
+decision. Believing the static margin would have overstated the misread rate by three orders of
+magnitude; believing the as-committed threshold would have understated it by the same factor, since
+the help is an artefact of leaving both nodes undamped — a real reference would be decoupled.
+Fix: the harness measures the zero-mismatch threshold as a function of an added node capacitance
+instead of assuming it. The threshold collapses back onto the static margin by 50 fF (+21/−15 mV vs
+static 20.0/14.29 mV) and is flat from there to 1 pF, so the damped case is the conservative design
+case and both bounds are reported. Running the full N=120 mismatch MC at C_node = 0 and 200 fF then
+validated the tail model rather than assuming it: the MEASURED damped misread rates, 18/120 = 0.150
+[0.097, 0.225] at P and 30/120 = 0.250 [0.181, 0.334] at AP, bracket the Gaussian-tail predictions
+0.132 and 0.232 computed from the independently measured σ_off = 18.53 mV.
+
+Second correction, same run (throughput, no effect on any number): the sky130 `.lib` parse dominates
+a one-ngspice-process-per-sample harness, so all samples of an arm were batched into a single session
+with `alter` between sweeps. ngspice retains one plot per `tran`; by ~5000 sweep points the session
+had grown to 1.18 GB RSS and had not finished 120 samples in 32 minutes. Adding `destroy $curplot`
+inside the sweep loop made the same arm 4.9x faster (73 s -> 15 s on the 4-sample smoke) with
+bit-identical output (mean −2.000 mV, σ 15.706 mV before and after).

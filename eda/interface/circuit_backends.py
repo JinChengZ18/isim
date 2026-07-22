@@ -47,6 +47,13 @@ Two constraints measured/derived from the eda/ workspace are modeled:
        behavioral_smtj p_max=0.72 symmetric clip} separates asymmetry
        from two-step structure as the source of the reset benignity.
 
+4. Read-decision misread (RX-06, p_read_flip): the state written into the
+   device is recovered by a clocked comparator against a resistive midpoint
+   reference, and the two decision margins are only -20.0 mV and +14.3 mV
+   (eda/testbenches/read_offset_mc.py). A comparator offset comparable to
+   those margins makes the decision report the wrong state with some
+   probability per read.
+
 Backends are registered for the block update mode (the JIT path bypasses
 sample_batch, same constraint as device_model.BehavioralSMTJSpin).
 """
@@ -111,13 +118,52 @@ class CircuitChainSpin(SpinBackend):
         (bypasses the (1-r_reset)**n_reset independence formula) — for
         feeding a MEASURED conditional failure chain, e.g. the RX-05a
         LLG P(still AP after k pulses), into the solver.
+    p_read_flip : float
+        Per-read probability that the comparator reports the opposite of
+        the state the device actually holds (RX-06). Implemented by
+        flipping the RETURNED sample: the sampled state is drawn from the
+        correct write distribution, then inverted with probability
+        p_read_flip before it is handed back to the solver.
+
+        Modeling assumption, stated precisely. What a misread physically
+        corrupts is the value the REST OF THE ARRAY sees: the neighbours'
+        h_eff is accumulated from the reported state, so a misread spin
+        contributes the wrong sign to every neighbour's field for that
+        sweep. Flipping the returned sample reproduces exactly that, since
+        the solver stores the returned value and builds all subsequent
+        h_eff from it.
+
+        This conflates "the stored state is wrong" with "the reported
+        state is wrong": in the real chain the magnetisation is unchanged
+        and only the readout errs, so the NEXT update of the same spin
+        starts from the true state, whereas here the corrupted value is
+        also the s_cur fed to the sticky-reset branch on the following
+        update. The conflation is adequate and conservative in this
+        regime. Adequate: h_eff enters the update only through the
+        reported neighbour states, so the algorithmic channel — wrong
+        field seen by neighbours — is modeled exactly; the stored/reported
+        distinction only matters through s_cur, which is used solely by
+        the sticky-reset branch (inactive whenever n_reset=0, as in the
+        pure read-flip runs). Conservative: a corrupted stored value
+        persists for one extra update instead of being corrected at the
+        next read, so the model can only overstate the damage.
+
+        A second, opposite-signed caveat that this parameter cannot
+        capture: the measured misread rate comes from STATIC device
+        mismatch, so it is a population average. A real array has a small
+        fraction of spins whose comparator offset exceeds the margin and
+        which therefore misread on EVERY read (a per-spin stuck/inverted
+        channel, closer to a large h_off on those rows), while the rest
+        never misread. The i.i.d. per-read flip modeled here reproduces
+        the average corruption rate but not that stickiness, and unlike
+        sigma_C2C the static channel does not average away over sweeps.
     """
 
     kind = "circuit_chain"
 
     def __init__(self, u_grid=None, nbits=6, u_span=4.0, mode="fixed_u",
                  n_reset=0, r_reset=R_RESET, u_offset=0.0,
-                 write_ceiling=1.0, rho=None):
+                 write_ceiling=1.0, rho=None, p_read_flip=0.0):
         if mode not in ("fixed_u", "beta_scaled", "none"):
             raise ValueError(f"bad mode: {mode}")
         self.mode = mode
@@ -137,6 +183,9 @@ class CircuitChainSpin(SpinBackend):
         self.write_ceiling = float(write_ceiling)
         if not 0.0 < self.write_ceiling <= 1.0:
             raise ValueError(f"bad write_ceiling: {write_ceiling}")
+        self.p_read_flip = float(p_read_flip)
+        if not 0.0 <= self.p_read_flip <= 1.0:
+            raise ValueError(f"bad p_read_flip: {p_read_flip}")
 
     # -- drive path ---------------------------------------------------------
     def _p_plus(self, h_eff_arr, beta, idx=None):
@@ -157,20 +206,34 @@ class CircuitChainSpin(SpinBackend):
         return p
 
     # -- SpinBackend API ----------------------------------------------------
+    def _readback(self, s, rng, shape=None):
+        """Apply the read-decision misread channel to the returned sample(s).
+
+        RNG is only drawn when the channel is active, so p_read_flip=0 keeps
+        every previously committed result bit-identical.
+        """
+        if self.p_read_flip <= 0.0:
+            return s
+        if shape is None:
+            return -s if rng.random() < self.p_read_flip else s
+        flip = rng.random(size=shape) < self.p_read_flip
+        return np.where(flip, -s, s).astype(np.int8)
+
     def sample(self, h_eff, s_cur, beta, rng):
         p = float(self._p_plus(np.array([h_eff]), beta)[0])
         if self.rho > 0.0 and s_cur == 1 and rng.random() < self.rho:
-            return 1                          # reset failed: stuck in AP
-        return 1 if rng.random() < p else -1
+            return self._readback(1, rng)     # reset failed: stuck in AP
+        return self._readback(1 if rng.random() < p else -1, rng)
 
     def sample_batch(self, h_eff_arr, s_cur_arr, beta, rng, idx=None):
         p = self._p_plus(h_eff_arr, beta, idx=idx)
         fresh = np.where(rng.random(size=p.shape) < p, 1, -1).astype(np.int8)
         if self.rho <= 0.0:
-            return fresh
+            return self._readback(fresh, rng, shape=p.shape)
         stuck = (np.asarray(s_cur_arr) == 1) & (rng.random(size=p.shape)
                                                 < self.rho)
-        return np.where(stuck, np.int8(1), fresh)
+        return self._readback(np.where(stuck, np.int8(1), fresh), rng,
+                              shape=p.shape)
 
 
 def _factory(**kwargs):

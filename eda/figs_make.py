@@ -158,6 +158,38 @@ def panel_span(ax):
     ax.set_title("Clip window vs instance scale")
 
 
+def panel_readflip(ax):
+    """RX-06: solver tolerance to the misread channel, and how far the
+    measured comparator sits from it. Tolerance tightens with instance
+    size, like the RX-04 rail rule."""
+    rows = cload(IF / "read_flip_solver_summary.csv")
+    mc = jload(TB / "read_offset_mc_summary.json")
+    for inst, color, lbl, lxy in (("ER14_p0.3", TP["gray"],
+                                   "ER $n$=14", (2.2e-3, 1.35)),
+                                  ("G1", TP["dark"], "G1 $n$=800",
+                                   (2.6e-5, 3.1))):
+        pts = [(float(r["p_read_flip"]), float(r["tts_ratio_vs_ideal"]))
+               for r in rows if r["instance"] == inst
+               and r["axis"] in ("tolerance", "read_flip")
+               and float(r["p_read_flip"]) > 0]
+        pts = sorted(p for p in pts if np.isfinite(p[1]))
+        ax.plot([p[0] for p in pts], [p[1] for p in pts], "o-", color=color,
+                lw=1.8, ms=5)
+        ax.annotate(lbl, xy=lxy, color=color, fontsize=11)
+    for key, style, lbl, ly in (("as_committed", "--", "as-committed", 30),
+                                ("conservative", ":", "decoupled ref", 30)):
+        p = mc["misread_channel"][key]["p_read_flip"]
+        ax.axvline(p, color=TP["accent"], lw=1.4, ls=style)
+        ax.annotate(lbl, xy=(p * 1.15, ly), color=TP["accent"], fontsize=11,
+                    rotation=90, va="top")
+    ax.axhline(1.0, color=TP["gray_lt"], lw=0.8, ls="--")
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.set_xlabel(r"misread probability $p_\mathrm{read}$")
+    ax.set_ylabel(r"TTS$_{99}$ ratio (vs ideal)")
+    ax.set_title("Read-error tolerance vs measured offset")
+
+
 def panel_reset(ax):
     rows = cload(IF / "results_circuit_ablation" / "circuit_ablation_summary.csv")
     rs = sorted((r for r in rows if r["axis"] == "reset_pulses"),
@@ -410,6 +442,7 @@ PANELS = {
     "abl_bits": (panel_bits, (5.2, 3.6)),
     "abl_span": (panel_span, (5.2, 3.6)),
     "abl_reset": (panel_reset, (5.2, 3.6)),
+    "abl_readflip": (panel_readflip, (5.2, 3.6)),
     "abl_traj": (panel_traj, (5.2, 3.6)),
     "ir_profile": (panel_ir_profile, (5.2, 3.6)),
     "ir_impact": (panel_ir_impact, (5.2, 3.6)),
@@ -423,9 +456,9 @@ COMPOSITES = {
         ["chain_transfer", "chain_waveform"],
         ["chain_corners", "chain_corners"],
     ],
-    "preview_10.png": [  # (a) bits (b) span (c) reset (d) replay
-        ["abl_bits", "abl_span"],
-        ["abl_reset", "abl_traj"],
+    "preview_10.png": [  # (a) bits (b) span (c) reset (d) replay (e) read
+        ["abl_bits", "abl_span", "abl_reset"],
+        ["abl_traj", "abl_readflip"],
     ],
     "preview_11.png": [  # (a) IR (b) impact (c) energy (d) projection
         ["ir_profile", "ir_impact"],
@@ -445,20 +478,21 @@ def main():
         print(f"panel  -> figs_raw/{name}.png")
 
     for out, grid in COMPOSITES.items():
+        # a row may be a full-width span (same key repeated) or hold 1..N
+        # panels; the grid is laid out on the least common column count
         nrow = len(grid)
-        spans = [row[0] == row[1] for row in grid]
+        spans = [len(set(row)) == 1 and len(row) > 1 for row in grid]
+        ncol = max(len(row) for row in grid)
         hr = [1.55 if s and grid[i][0] == "chain_schematic" else 1.0
               for i, s in enumerate(spans)]
-        fig = plt.figure(figsize=(11.0, 4.1 * sum(hr)))
-        gs = fig.add_gridspec(nrow, 2, height_ratios=hr)
-        seen = set()
+        fig = plt.figure(figsize=(4.6 * ncol, 4.1 * sum(hr)))
+        gs = fig.add_gridspec(nrow, ncol, height_ratios=hr)
         for i, row in enumerate(grid):
+            if spans[i]:
+                PANELS[row[0]][0](fig.add_subplot(gs[i, :]))
+                continue
             for j, key in enumerate(row):
-                if key in seen:
-                    continue
-                seen.add(key)
-                ax = fig.add_subplot(gs[i, :] if spans[i] else gs[i, j])
-                PANELS[key][0](ax)
+                PANELS[key][0](fig.add_subplot(gs[i, j]))
         fig.tight_layout()
         fig.savefig(RAW / out, dpi=300, bbox_inches="tight")
         plt.close(fig)
