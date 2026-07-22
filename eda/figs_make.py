@@ -254,22 +254,47 @@ def panel_ir_profile(ax):
 
 
 def panel_ir_impact(ax):
-    rows = cload(IR / "ir_solver_impact.csv")
-    labels = {"baseline": "no offset", "uncompensated": "uncompensated",
-              "predistorted": "predistorted"}
-    xs = np.arange(len(rows))
-    ys = [float(r["tts99_ratio"]) for r in rows]
-    colors = [TP["gray_lt"], TP["dark"], TP["accent"]]
-    ax.bar(xs, ys, 0.55, color=colors)
-    ax.set_ylim(0, max(ys) * 1.16)
-    for x, y, r in zip(xs, ys, rows):
-        ax.annotate(f"$p_s$ = {float(r['p_success']):.3f}", xy=(x, y),
-                    xytext=(0, 4), textcoords="offset points", ha="center",
-                    fontsize=11)
-    ax.set_xticks(xs)
-    ax.set_xticklabels([labels[r["scenario"]] for r in rows])
+    """RX-09: fully-populated 64-spin arrays, 1000 trials, mode=none.
+    Uncompensated cost grows with array height; predistortion recovers at
+    every height on both a frustrated and a matched planted instance."""
+    rows = [r for r in cload(IR / "ir_fullarray_summary.csv")
+            if r["block"] in ("primary", "crosscheck")
+            and r["n_trials"] == "1000" and r["dac_mode"] == "none"]
+    inst = {"ER64_p0.1": ("frustrated", TP["dark"], -0.17),
+            "PP64_p0.1_eta0.1_s0": ("planted", TP["medium"], 0.17)}
+    Ns = ["64", "128", "256"]
+    x = np.arange(len(Ns))
+    for key, (lbl, color, dx) in inst.items():
+        for scen, hatch, alpha in (("uncompensated", "", 1.0),
+                                   ("predistorted", "//", 0.45)):
+            y = []
+            for N in Ns:
+                m = [r for r in rows if r["instance"] == key
+                     and r["scenario"] == scen and r["n_profile"] == N]
+                v = float(m[0]["tts99_ratio"]) if m else np.nan
+                y.append(v)
+            yy = [min(v, 40) if np.isfinite(v) else 40 for v in y]
+            ax.bar(x + dx + (0.075 if scen == "predistorted" else -0.075),
+                   yy, 0.15, color=color, alpha=alpha, hatch=hatch,
+                   edgecolor=color)
+            for xi, v in zip(x, y):
+                if not np.isfinite(v):
+                    ax.annotate("$p_s{=}0$",
+                                xy=(xi + dx + 0.075 * (1 if scen ==
+                                    "predistorted" else -1), 41),
+                                ha="center", fontsize=10, color=color)
+        ax.annotate(lbl, xy=(0.02, 0.93 if dx < 0 else 0.84),
+                    xycoords="axes fraction", color=color, fontsize=11)
+    ax.axhline(1.0, color=TP["gray_lt"], lw=0.8, ls="--")
+    ax.annotate("solid: uncompensated    hatched: predistorted",
+                xy=(0.02, 0.74), xycoords="axes fraction",
+                color=TP["gray"], fontsize=10)
+    ax.set_yscale("log")
+    ax.set_ylim(0.5, 90)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"N = {n}" for n in Ns])
     ax.set_ylabel(r"TTS$_{99}$ ratio (vs no offset)")
-    ax.set_title("Solver impact of the N = 64 profile")
+    ax.set_title("IR offset on a fully-populated 64-spin array")
 
 
 def panel_energy(ax):

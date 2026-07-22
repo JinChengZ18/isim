@@ -164,3 +164,43 @@ grows from 0.53 (ER14) to 2.50 (G1), so the same absolute offset falls from 37% 
 typical local field. g_dev is dimensionless and needs its own account (both sides weaken on G1:
 0.5 -> 1.37x, 1.5 -> 1.16x); only p_max and CV(Delta) act size-independently. Fix: §3.4.2 gained a generalization paragraph and §3.6's
 device-priority sentence now states the invariant ends plus the degree-dependent middle.
+
+## 2026-07-22 RX-09: the planted 64-spin instance had to be re-tuned before it had a known optimum
+
+Tried: building the RX-09 fully-populated array instance as a planted-partition Max-Cut at
+n=64 (balanced random partition, edges w.p. 0.10, |N(0,1)| magnitudes, sign rewarding the
+planting, then a fraction eta of signs flipped to create frustration), so that the optimum
+would be known by construction and no long-run reference target would be needed.
+Symptom: at the first-choice frustration levels the planting is simply NOT the optimum. A
+200-trial ideal run at T=20000 beats the planted energy by 1.23 (eta=0.15), 3.84 (eta=0.20)
+and 13.56 (eta=0.30) energy units; using the planted energy as the target would have
+reported p_s=0 for every arm against a target the solver had already passed.
+Diagnosis: frustration and target certainty trade off directly — a planted state stays
+optimal only while the flipped edges are too sparse to pay for a domain wall, and the
+unfrustrated limit (eta=0) is gauge-equivalent to a ferromagnet, i.e. trivially solved
+(p_s -> 1) and useless for ratio measurement.
+Fix: the frustration level became a calibrated parameter rather than a free choice.
+eta=0.10 is the largest level that survives verification (long-run min == planted energy to
+the last digit, reached by 91/200 reference trials) while leaving the ideal baseline at
+p_s=0.465, i.e. away from both 0 and 1 where the TTS ratios have resolution. The verification
+is now an assertion inside eda/extraction/writeline_ir/ir_fullarray_impact.py (the run aborts
+if a long ideal run ever goes below the planted energy), and the whole scenario grid is
+repeated on ER64_p0.1 under the RX-05c LONGRUN_BEST convention so no conclusion depends on
+the planted target alone.
+
+## 2026-07-22 RX-09: the N=128 IR profile did not exist, and the README's N=256 code count is wrong
+
+Tried: reading the N in {64, 128, 256} per-row offset profiles out of the committed
+eda/extraction/writeline_ir/ir_drop_summary.json.
+Symptom: there is no N=128 entry — analyze_ir.py's N_LIST is (16, 64, 256), so only three
+profiles were ever written, and 128 was assumed to exist.
+Fix: rather than re-running the extraction flow and mutating a committed artifact that §3.5.3
+already cites, the driver imports analyze_ir.per_row_profile and calls it with the sheet
+resistance and DAC LSB read back from the committed provenance block. N=64 and N=256 are then
+asserted row-for-row equal to the committed JSON at run time (they are), and N=128 is labeled
+ANALYTIC EXTENSION of the same committed formula rather than a new measurement.
+Found while checking: writeline_ir/README.md's result table states 43/63 compensation codes
+for N=256; the committed JSON and the formula both give 41/63 (round(126.84/3.0767) = 41).
+The README's residual column (0.063 u for every N) is likewise slightly off from the JSON
+(0.0648/0.0655 u) — §3.5.3's 0.066 V_T is the correct one. The README numbers need fixing;
+no thesis number depends on them.
