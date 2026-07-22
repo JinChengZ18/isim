@@ -428,65 +428,120 @@ def panel_corners(ax):
 
 
 def panel_caliber(ax):
-    """RX-10: where driver sharing brings the end-to-end sMTJ update energy
-    back below the unit-level CMOS p-bit row, and how much of the apparent gap
-    is the h_eff accumulation term that both rows omit. Constants are read from
-    the committed update-energy and caliber summaries."""
+    """RX-10 (corrected): the same-caliber energy ratio versus reset-pulse
+    count, and the driver-static reduction each k needs for parity. The
+    original sharing curve was retracted — the power-gated static term is
+    pulse-window energy, which serialised column sharing does not amortise
+    (see sharing_rederive.json)."""
     d = jload(TB / "update_energy_summary.json")
-    cfg = jload(IF / "energy_caliber_config.json")
+    reder = jload(IF / "sharing_reredive.json")
     tbl = {r["k"]: r for r in d["table"]}
-    p_stat = d["buffer_static"]["p_buf_W"] + d["dac_static"]["p_string_W"]
-    pw = d["timing_model"]["pulse_window_ns"] * 1e-9
-    e_cmos = cfg["constants"]["cmos_pbit_row"]["e_update_J"] * 1e12
-    syn = cfg["synapse_per_instance"]["G22"]["synapse_pJ_per_update"]
+    ks = sorted(tbl)
+    cmos = reder["cmos_e_update_pJ"]
 
-    s = np.logspace(0, np.log2(160), 400, base=2.0)
-    colors = {1: TP["light"], 2: TP["medium"], 3: TP["dark"]}
-    curves, parity = {}, []
-    for k in (1, 2, 3):
-        fixed = tbl[k]["e_pulses_pJ"] + tbl[k]["e_read_pJ"]
-        curves[k] = fixed + p_stat * (k + 1) * pw * 1e12 / s
-        ax.plot(s, curves[k], color=colors[k], lw=1.8)
-        # anchored where the three loci have separated, so no label lands on a
-        # neighbouring curve
-        ax_, ha = ((1.0, "left") if k == 3 else (1.7, "right"))
-        jj = int(np.searchsorted(s, ax_))
-        ax.annotate(f"$k$ = {k}", xy=(s[jj], curves[k][jj]),
-                    xytext=(3 if ha == "left" else -3, 4),
-                    textcoords="offset points", color=colors[k], fontsize=11,
-                    ha=ha)
-        sx = cfg["crossover_share_min"][f"k={k},rail=4.0"]
-        parity.append(f"{sx:.0f}")
-        if np.isfinite(sx) and sx <= s[-1]:
-            ax.plot([sx], [e_cmos], "v", color=colors[k], ms=7)
-    # the same k = 3 locus with the h_eff summation added to BOTH rows: curve
-    # and reference move together, so the crossing does not move
-    ax.plot(s, curves[3] + syn, color=TP["gray"], lw=1.4, ls=":")
-    ax.axhline(e_cmos + syn, color=TP["gray"], lw=1.2, ls=":")
-    ax.axhline(e_cmos, color=TP["accent"], lw=1.5, ls="--")
+    for inst, color, lxy in (("G22", TP["dark"], (3.15, 1.83)),
+                             ("G1", TP["medium"], (3.15, 1.34))):
+        syn = reder["same_caliber"][inst]["synapse_pJ"]
+        y = [(tbl[k]["e_update_gated_pJ"] + syn) / (cmos + syn) for k in ks]
+        ax.plot(ks, y, "o-", color=color, lw=1.8, ms=5)
+        ax.annotate(f"{inst} (same caliber)", xy=lxy, color=color, fontsize=11)
+    y_unit = [tbl[k]["e_update_gated_pJ"] / cmos for k in ks]
+    ax.plot(ks, y_unit, "s--", color=TP["gray"], lw=1.6, ms=5)
+    ax.annotate("unit level (both rows\nomit the synapse term)",
+                xy=(1.15, 3.3), color=TP["gray"], fontsize=11)
+    ax.axhline(1.0, color=TP["accent"], lw=1.4, ls="--")
+    ax.annotate("parity with CMOS p-bit", xy=(1.1, 1.06), color=TP["accent"],
+                fontsize=11)
+    for k in (1, 2):
+        red = reder["per_k"][str(k)]["p_buf_reduction_needed"]
+        ax.annotate(f"parity needs {red:.1f}x less\ndriver static power",
+                    xy=(k, y_unit[k - 1]), xytext=(6, 14),
+                    textcoords="offset points", color=TP["darkest"],
+                    fontsize=10)
+    ax.set_xticks(ks)
+    ax.set_xlabel(r"reset pulses $k$")
+    ax.set_ylabel(r"$E_\mathrm{update}$ / CMOS p-bit")
+    ax.set_title("Energy caliber and the parity condition")
 
-    ax.annotate("CMOS p-bit, unit level", xy=(s[-1], e_cmos), xytext=(-2, -15),
-                textcoords="offset points", color=TP["accent"], fontsize=11,
-                ha="right")
-    ax.annotate(f"CMOS p-bit + $h^\\mathrm{{eff}}$ sum ({syn:.1f} pJ, G22)",
-                xy=(s[-1], e_cmos + syn), xytext=(-2, -15),
-                textcoords="offset points", color=TP["gray"], fontsize=11,
-                ha="right")
-    j = int(np.searchsorted(s, 2.5))
-    ax.annotate("$k$ = 3, same caliber", xy=(s[j], curves[3][j] + syn),
-                xytext=(4, 4), textcoords="offset points", color=TP["gray"],
-                fontsize=11)
-    ax.annotate(f"parity at $S$ = {', '.join(parity)} for $k$ = 1, 2, 3",
-                xy=(0.03, 0.04), xycoords="axes fraction", color=TP["gray"],
-                fontsize=11)
+def panel_density_sweep(ax):
+    """RX-11: the Gibbs-vs-Metropolis ordering on a controlled connectivity
+    axis: random d-regular +/-1 graphs at fixed n = 1000, 500 trials per arm.
+    The two real G-set anchors (measured mean degree from graph_degrees.json,
+    ratio + interval from the RX-01 audit) are overlaid at their own degree."""
+    rows = [r for r in cload(IF / "density_sweep_summary.csv")
+            if r["dynamics"] == "metropolis"]
+    deg = sorted({int(r["degree"]) for r in rows})
+
+    def series(rep, rung):
+        out = []
+        for d in deg:
+            m = [r for r in rows if int(r["degree"]) == d
+                 and int(r["rep"]) == rep and r["rung"] == rung]
+            if m:
+                out.append((d, float(m[0]["tts_ratio_sa_over_gibbs"]),
+                            float(m[0]["ratio_lo"]), float(m[0]["ratio_hi"])))
+        return out
+
+    prim = series(0, "selected")
+    x = [p[0] for p in prim]
+    y = [p[1] for p in prim]
+    ax.errorbar(x, y, yerr=[[p[1] - p[2] for p in prim],
+                            [p[3] - p[1] for p in prim]],
+                fmt="o-", color=TP["dark"], lw=1.8, ms=5, capsize=3,
+                elinewidth=1.2)
+    # the three synthetic series are labelled as a stacked colour key in the
+    # quiet upper-left region rather than beside their (interleaved) markers
+    ax.text(5.6, 6.2, r"first instance ($T = 10^4$)", color=TP["dark"],
+            fontsize=11)
+    for rep, rung, mk, color, lbl, dx, ly in (
+            (1, "selected", "s", TP["medium"], "second instance", 1.10, 4.0),
+            (0, "robustness", "^", TP["light"], r"same instance, $T$ tripled",
+             0.90, 2.6)):
+        s = series(rep, rung)
+        if not s:
+            continue
+        ax.plot([p[0] * dx for p in s], [p[1] for p in s], mk, color=color,
+                ms=5)
+        ax.text(5.6, ly, lbl, color=color, fontsize=11)
+
+    degs = jload(IF / "graph_degrees.json")["instances"]
+    audit = cload(IF / "ci_audit_summary.csv")
+    for inst, table, off, ha in (("G1", "RX01-N1000", (16, -34), "left"),
+                                 ("G22", "RX01-N2000", (9, -3), "left")):
+        a = [r for r in audit if r["instance"] == inst
+             and r["table"] == table][0]
+        xd = degs[inst]["deg_mean"]
+        r0 = float(a["speedup"])
+        ax.errorbar([xd], [r0],
+                    yerr=[[r0 - float(a["speedup_lo"])],
+                          [float(a["speedup_hi"]) - r0]],
+                    fmt="*", color=TP["accent"], ms=13, capsize=3,
+                    elinewidth=1.2)
+        ax.annotate(f"{inst} (G-set)", xy=(xd, r0), xytext=off,
+                    textcoords="offset points", color=TP["accent"],
+                    fontsize=11, ha=ha,
+                    arrowprops=(dict(arrowstyle="-", color=TP["accent"],
+                                     lw=0.8) if inst == "G1" else None))
+
+    ax.axhline(1.0, color=TP["gray_lt"], lw=1.0, ls="--")
+    ax.annotate("Gibbs faster", xy=(0.98, 0.965), xycoords="axes fraction",
+                color=TP["gray"], fontsize=10, va="top", ha="right")
+    ax.annotate("SA faster", xy=(0.98, 0.035), xycoords="axes fraction",
+                color=TP["gray"], fontsize=10, ha="right")
     ax.set_xscale("log", base=2)
-    ax.set_xlim(1, s[-1])
-    ax.set_ylim(0, 24)
-    ax.set_xticks([1, 2, 4, 8, 16, 32, 64, 128])
-    ax.set_xticklabels(["1", "2", "4", "8", "16", "32", "64", "128"])
-    ax.set_xlabel("columns sharing one DAC + buffer")
-    ax.set_ylabel("energy per spin update (pJ)")
-    ax.set_title("Driver sharing and the accounting caliber")
+    ax.set_yscale("log")
+    ax.set_ylim(0.1, 10)
+    ax.set_xlim(5, 130)
+    ax.set_xticks(deg)
+    ax.set_xticklabels([str(d) for d in deg])
+    ax.set_xlabel("mean coupling degree")
+    ax.set_ylabel(r"TTS$_{99}$ ratio SA / Gibbs")
+    var = {int(r["degree"]): float(r["heff_var"]) for r in rows}
+    sec = ax.secondary_xaxis("top")
+    sec.set_xticks(deg)
+    sec.set_xticklabels([f"{var[d]:.0f}" for d in deg])
+    sec.set_xlabel(r"measured Var($h^\mathrm{eff}$) under random states")
+    ax.set_title("Single-step rule vs connectivity ($n$ = 1000)")
 
 
 def panel_schematic(ax):
@@ -512,6 +567,9 @@ PANELS = {
     "hw_projection": (panel_projection, (5.2, 3.6)),
     # RX-10; not yet placed in a composite — the chapter session decides the slot
     "caliber_crossover": (panel_caliber, (5.2, 3.6)),
+    # RX-11; a Section 3.3 algorithm-layer panel, so it belongs to none of the
+    # three circuit composites; the chapter session decides its slot
+    "density_sweep": (panel_density_sweep, (5.6, 3.8)),
 }
 
 COMPOSITES = {

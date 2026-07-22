@@ -1,0 +1,608 @@
+{
+  "_label": "RX-11 controlled connectivity ladder for the Gibbs-vs-Metropolis single-step-rule claim of Section 3.3.1/3.6",
+  "n": 1000,
+  "degrees": [
+    6,
+    12,
+    24,
+    48,
+    96
+  ],
+  "reps": 2,
+  "extra_T": [
+    30000
+  ],
+  "weight_law": "uniform {-1,+1}",
+  "coupling_convention": "J_ij = -w_ij/2, h = 0 (as problems.load_gset)",
+  "schedule": "geometric",
+  "beta": [
+    0.1,
+    10.0
+  ],
+  "update_mode": "async_numba",
+  "n_trials": 500,
+  "master_seed": 2024,
+  "seeds": {
+    "instance": "SEED_BASE + degree + REP_STRIDE * rep",
+    "instance_base": 700,
+    "rep_stride": 10000,
+    "reference": 20260723,
+    "pilot": 7777,
+    "heff": 20260724
+  },
+  "reference": {
+    "T": 100000,
+    "trials_per_dynamics": 100,
+    "pooled_over_both_dynamics": true
+  },
+  "T_selection": {
+    "default": 10000,
+    "ladder": [
+      3000,
+      10000,
+      30000,
+      100000
+    ],
+    "band": [
+      0.05,
+      0.6
+    ],
+    "statistic": "geometric mean of the two arms' pilot p_s",
+    "pilot_trials": 100
+  },
+  "stats": "Wilson 95% CI on every p_s; parametric-bootstrap 95% CI on the TTS ratio (stats.py, RX-01 convention). Ratio is TTS_metropolis / TTS_gibbs, so > 1 means Gibbs faster.",
+  "note": "targets are long-run best energies, not certified ground states; p_success is the fraction of trials reaching or beating that energy",
+  "per_degree": {
+    "d6_rep0": {
+      "instance": {
+        "instance": "RR_n1000_d6_s706",
+        "n": 1000,
+        "degree": 6,
+        "seed": 706,
+        "n_edges": 3000,
+        "swap_accept_rate": 0.9877,
+        "triangles": 20.0,
+        "triangles_random_expect": 20.833333333333332,
+        "n_edges_positive": 1512,
+        "n_edges_negative": 1488,
+        "connected": true,
+        "build_s": 0.0,
+        "rep": 0
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 1.0,
+        "heff_abs_var": 0.6208283689559998,
+        "heff_abs_mean": 0.937138,
+        "heff_var": 1.4990559731040003,
+        "heff_var_analytic": 1.5,
+        "frac_zero_field": 0.312687
+      },
+      "target": -906.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 22,
+        "metropolis": 26
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.04,
+          "ps_metropolis": 0.1,
+          "geomean": 0.0632
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.2958853298420225,
+          "lo": 0.12053420390158068,
+          "hi": 0.5594197505503566,
+          "frac_undefined": 0.0
+        },
+        "T=30000": {
+          "rung": "robustness",
+          "ratio": 0.3621497781005529,
+          "lo": 0.2295609651139202,
+          "hi": 0.5364250662579909,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d6_rep1": {
+      "instance": {
+        "instance": "RR_n1000_d6_s10706",
+        "n": 1000,
+        "degree": 6,
+        "seed": 10706,
+        "n_edges": 3000,
+        "swap_accept_rate": 0.9885,
+        "triangles": 19.0,
+        "triangles_random_expect": 20.833333333333332,
+        "n_edges_positive": 1488,
+        "n_edges_negative": 1512,
+        "connected": true,
+        "build_s": 0.0,
+        "rep": 1
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 1.0,
+        "heff_abs_var": 0.620960726896,
+        "heff_abs_mean": 0.937348,
+        "heff_var": 1.4995783899999997,
+        "heff_var_analytic": 1.5,
+        "frac_zero_field": 0.312679
+      },
+      "target": -908.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 17,
+        "metropolis": 25
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.04,
+          "ps_metropolis": 0.11,
+          "geomean": 0.0663
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.7788105819849669,
+          "lo": 0.493645320510723,
+          "hi": 1.2055084679456483,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d12_rep0": {
+      "instance": {
+        "instance": "RR_n1000_d12_s712",
+        "n": 1000,
+        "degree": 12,
+        "seed": 712,
+        "n_edges": 6000,
+        "swap_accept_rate": 0.9763,
+        "triangles": 225.0,
+        "triangles_random_expect": 221.83333333333334,
+        "n_edges_positive": 3028,
+        "n_edges_negative": 2972,
+        "connected": true,
+        "build_s": 0.0,
+        "rep": 0
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 1.0,
+        "heff_abs_var": 1.1674058683999995,
+        "heff_abs_mean": 1.35146,
+        "heff_var": 2.9938499324000003,
+        "heff_var_analytic": 3.0,
+        "frac_zero_field": 0.225991
+      },
+      "target": -1298.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 4,
+        "metropolis": 7
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.07,
+          "ps_metropolis": 0.07,
+          "geomean": 0.07
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.42153507790251893,
+          "lo": 0.18338622349992578,
+          "hi": 0.7976971911735812,
+          "frac_undefined": 0.0
+        },
+        "T=30000": {
+          "rung": "robustness",
+          "ratio": 0.675589699910693,
+          "lo": 0.3961762572695411,
+          "hi": 1.1107416569329596,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d12_rep1": {
+      "instance": {
+        "instance": "RR_n1000_d12_s10712",
+        "n": 1000,
+        "degree": 12,
+        "seed": 10712,
+        "n_edges": 6000,
+        "swap_accept_rate": 0.9758,
+        "triangles": 239.0,
+        "triangles_random_expect": 221.83333333333334,
+        "n_edges_positive": 2952,
+        "n_edges_negative": 3048,
+        "connected": true,
+        "build_s": 0.0,
+        "rep": 1
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 1.0,
+        "heff_abs_var": 1.1654566015359997,
+        "heff_abs_mean": 1.352408,
+        "heff_var": 2.9944615288160006,
+        "heff_var_analytic": 3.0,
+        "frac_zero_field": 0.225651
+      },
+      "target": -1312.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 94,
+        "metropolis": 96
+      },
+      "T_selected": 3000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.73,
+          "ps_metropolis": 0.74,
+          "geomean": 0.735
+        },
+        {
+          "T": 3000,
+          "ps_gibbs": 0.42,
+          "ps_metropolis": 0.58,
+          "geomean": 0.4936
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=3000": {
+          "rung": "selected",
+          "ratio": 0.5031851628375551,
+          "lo": 0.41709205776757724,
+          "hi": 0.6020766180641474,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d24_rep0": {
+      "instance": {
+        "instance": "RR_n1000_d24_s724",
+        "n": 1000,
+        "degree": 24,
+        "seed": 724,
+        "n_edges": 12000,
+        "swap_accept_rate": 0.9528,
+        "triangles": 1982.0,
+        "triangles_random_expect": 2027.8333333333333,
+        "n_edges_positive": 6028,
+        "n_edges_negative": 5972,
+        "connected": true,
+        "build_s": 0.1,
+        "rep": 0
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 2.0,
+        "heff_abs_var": 2.254911106176,
+        "heff_abs_mean": 1.935232,
+        "heff_var": 6.000033877499998,
+        "heff_var_analytic": 6.0,
+        "frac_zero_field": 0.160737
+      },
+      "target": -1834.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 50,
+        "metropolis": 54
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.18,
+          "ps_metropolis": 0.28,
+          "geomean": 0.2245
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.523321202454713,
+          "lo": 0.4000355312329091,
+          "hi": 0.6792718074117629,
+          "frac_undefined": 0.0
+        },
+        "T=30000": {
+          "rung": "robustness",
+          "ratio": 0.7146461775495235,
+          "lo": 0.5830962453917843,
+          "hi": 0.8684827472129925,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d24_rep1": {
+      "instance": {
+        "instance": "RR_n1000_d24_s10724",
+        "n": 1000,
+        "degree": 24,
+        "seed": 10724,
+        "n_edges": 12000,
+        "swap_accept_rate": 0.9527,
+        "triangles": 1956.0,
+        "triangles_random_expect": 2027.8333333333333,
+        "n_edges_positive": 6036,
+        "n_edges_negative": 5964,
+        "connected": true,
+        "build_s": 0.1,
+        "rep": 1
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 2.0,
+        "heff_abs_var": 2.252632151804,
+        "heff_abs_mean": 1.933986,
+        "heff_var": 5.992933979264,
+        "heff_var_analytic": 6.0,
+        "frac_zero_field": 0.160765
+      },
+      "target": -1836.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 73,
+        "metropolis": 74
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.41,
+          "ps_metropolis": 0.63,
+          "geomean": 0.5082
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.6404138905128037,
+          "lo": 0.5319508061953304,
+          "hi": 0.7659604468831971,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d48_rep0": {
+      "instance": {
+        "instance": "RR_n1000_d48_s748",
+        "n": 1000,
+        "degree": 48,
+        "seed": 748,
+        "n_edges": 24000,
+        "swap_accept_rate": 0.9056,
+        "triangles": 17468.0,
+        "triangles_random_expect": 17303.833333333332,
+        "n_edges_positive": 11921,
+        "n_edges_negative": 12079,
+        "connected": true,
+        "build_s": 0.2,
+        "rep": 0
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 2.0,
+        "heff_abs_var": 4.425737380464001,
+        "heff_abs_mean": 2.745244,
+        "heff_var": 11.962101976284007,
+        "heff_var_analytic": 12.0,
+        "frac_zero_field": 0.115042
+      },
+      "target": -2609.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 14,
+        "metropolis": 13
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.12,
+          "ps_metropolis": 0.07,
+          "geomean": 0.0917
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.9594376379871196,
+          "lo": 0.6412177048404201,
+          "hi": 1.4215600475553354,
+          "frac_undefined": 0.0
+        },
+        "T=30000": {
+          "rung": "robustness",
+          "ratio": 0.8956651582877612,
+          "lo": 0.6191124325843835,
+          "hi": 1.304624342002948,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d48_rep1": {
+      "instance": {
+        "instance": "RR_n1000_d48_s10748",
+        "n": 1000,
+        "degree": 48,
+        "seed": 10748,
+        "n_edges": 24000,
+        "swap_accept_rate": 0.9068,
+        "triangles": 17078.0,
+        "triangles_random_expect": 17303.833333333332,
+        "n_edges_positive": 11952,
+        "n_edges_negative": 12048,
+        "connected": true,
+        "build_s": 0.2,
+        "rep": 1
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 2.0,
+        "heff_abs_var": 4.440211212223999,
+        "heff_abs_mean": 2.753576,
+        "heff_var": 12.0223638039,
+        "heff_var_analytic": 12.0,
+        "frac_zero_field": 0.114369
+      },
+      "target": -2610.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 21,
+        "metropolis": 34
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.09,
+          "ps_metropolis": 0.18,
+          "geomean": 0.1273
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.6433140146053602,
+          "lo": 0.4422332199331342,
+          "hi": 0.9155311779115902,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d96_rep0": {
+      "instance": {
+        "instance": "RR_n1000_d96_s796",
+        "n": 1000,
+        "degree": 96,
+        "seed": 796,
+        "n_edges": 48000,
+        "swap_accept_rate": 0.8175,
+        "triangles": 143639.0,
+        "triangles_random_expect": 142895.83333333334,
+        "n_edges_positive": 23990,
+        "n_edges_negative": 24010,
+        "connected": true,
+        "build_s": 0.4,
+        "rep": 0
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 3.0,
+        "heff_abs_var": 8.814411367676,
+        "heff_abs_mean": 3.899518,
+        "heff_var": 24.020633561563994,
+        "heff_var_analytic": 24.0,
+        "frac_zero_field": 0.081391
+      },
+      "target": -3714.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 43,
+        "metropolis": 51
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.14,
+          "ps_metropolis": 0.37,
+          "geomean": 0.2276
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.5460523124510501,
+          "lo": 0.4209156691778414,
+          "hi": 0.7022233509166206,
+          "frac_undefined": 0.0
+        },
+        "T=30000": {
+          "rung": "robustness",
+          "ratio": 0.791975277267125,
+          "lo": 0.6476319379970464,
+          "hi": 0.9621864501176104,
+          "frac_undefined": 0.0
+        }
+      }
+    },
+    "d96_rep1": {
+      "instance": {
+        "instance": "RR_n1000_d96_s10796",
+        "n": 1000,
+        "degree": 96,
+        "seed": 10796,
+        "n_edges": 48000,
+        "swap_accept_rate": 0.818,
+        "triangles": 143149.0,
+        "triangles_random_expect": 142895.83333333334,
+        "n_edges_positive": 24026,
+        "n_edges_negative": 23974,
+        "connected": true,
+        "build_s": 0.4,
+        "rep": 1
+      },
+      "heff": {
+        "n_configs": 1000,
+        "seed": 20260724,
+        "heff_abs_median": 3.0,
+        "heff_abs_var": 8.798100986044002,
+        "heff_abs_mean": 3.902866,
+        "heff_var": 24.030425634364,
+        "heff_var_analytic": 24.0,
+        "frac_zero_field": 0.081079
+      },
+      "target": -3714.0,
+      "target_kind": "LONGRUN_BEST(T=100000,trials=100/dynamics,both dynamics,seed=20260723)",
+      "ref_hits_at_best": {
+        "gibbs": 58,
+        "metropolis": 67
+      },
+      "T_selected": 10000,
+      "T_pilot_trace": [
+        {
+          "T": 10000,
+          "ps_gibbs": 0.4,
+          "ps_metropolis": 0.55,
+          "geomean": 0.469
+        }
+      ],
+      "tts_ratio_sa_over_gibbs": {
+        "T=10000": {
+          "rung": "selected",
+          "ratio": 0.7358384787314833,
+          "lo": 0.6099590323110868,
+          "hi": 0.8888151202904357,
+          "frac_undefined": 0.0
+        }
+      }
+    }
+  }
+}

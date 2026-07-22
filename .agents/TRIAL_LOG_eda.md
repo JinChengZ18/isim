@@ -306,3 +306,57 @@ is not a discrepancy in the DFF constant — an all-zero-addend control arm isol
 clock-tree and register-internal energy that every accumulate pays regardless of operand, which the
 data-toggle estimate omits by construction. The analytic constant is a data-activity figure, not a
 per-cycle cost, and using it as the synapse term would understate the caliber correction by ~20x.
+
+## 2026-07-23 RX-11: a 100-trial pilot cannot place a 500-trial hit rate inside the band
+
+Tried: pre-registering the sweep budget of the connectivity ladder with a pilot run at a master
+seed disjoint from the reporting seed, so that tuning T on the hit rate could not be accused of
+using the data it then reports. The rule keeps the G-set budget T = 10^4 when the geometric mean
+of the two arms' pilot p_s lands inside [0.05, 0.6] (a statistic symmetric in the two dynamics, so
+the tuning cannot favour either) and walks a fixed ladder otherwise.
+Symptom: the rule declared "in band" at degrees 6 and 12 on pilot geometric means of 0.063 and
+0.070, but the 500-trial reporting runs realized 0.036 and 0.037 -- both under the 0.05 floor the
+pilot was there to enforce. The other eight cells reproduced their pilots to within 10%.
+Diagnosis: the two misses are the two lowest-p_s cells, where the 100-trial pilot rests on 4 and 7
+hits. The Wilson interval on 4/100 is [0.016, 0.098]: it straddles the band floor by a factor of
+six, so the pilot statistic has no resolution at exactly the edge it is being asked to test.
+Deepening the pilot to the reporting depth would have destroyed its purpose, since the selecting
+and the reported sample would then be the same data.
+Fix: the pre-registered selection was left as it fired, and a second budget was run and reported on
+the same instances against the same targets (T = 3x10^4, `rung = robustness` in
+density_sweep_summary.csv). It lands both low degrees inside the band (degree 6: p_s 0.062 Gibbs /
+0.162 Metropolis; degree 12: 0.052 / 0.076) and doubles as the test of whether the measured
+ordering is a budget artefact. The ordering is the same on both rungs at every degree, so no
+reported ratio rests on the out-of-band cells.
+
+## 2026-07-23 RX-11: the one unresolved rung of the degree ladder was the instance, not the degree
+
+Tried: one fixed random d-regular instance per degree (instance seed = 700 + degree), n = 1000,
++/-1 weights, 500 trials per arm, as the controlled connectivity axis for the Section 3.3.1 claim
+that the single-spin update rule provides no algorithmic speedup.
+Symptom: degrees 6, 12, 24 and 96 each resolved a Metropolis advantage (TTS ratios SA/Gibbs of
+0.296, 0.422, 0.523, 0.546, intervals entirely below 1), but degree 48 returned 0.959
+[0.641, 1.422] -- the single unresolved rung, sitting exactly where the deleted Section 3.3.1
+prediction had claimed the Gibbs advantage should appear, and breaking an otherwise smooth
+progression. Quoted alone it reads as "the advantage disappears at high connectivity".
+Diagnosis: the degree-48 instance is unrepresentative of its degree rather than informative about
+it. Its long-run reference best is reached by 14/100 reference trials against 43-54/100 at the
+neighbouring degrees, so its target sits deep in the tail and holds both arms near p_s = 0.10, and
+at that depth the two arms happened to return near-equal counts (50 against 52 hits of 500). A
+bootstrap interval on a ratio built from two ~10% arms spans roughly +/-40%, which cannot separate
+1 from the ~0.64 the replicate instance returns at the same degree. Low p_s is not by itself the
+culprit: the first degree-12 instance sits even deeper in its tail (4/100 reference hits) and still
+resolves at 0.422 [0.183, 0.798], because there the two arms differ by a factor 2.3.
+Fix: a second independent instance per degree (seed + 10000, identical protocol, own reference and
+own pilot). The degree-48 replicate gives 0.643 [0.442, 0.916], resolved, and its reference best is
+reached by 21/100. Across the ten (degree, instance) cells the between-instance scatter at fixed
+degree -- 0.296 vs 0.779 at degree 6, 0.959 vs 0.643 at degree 48 -- is as wide as the entire
+across-degree range, so no per-degree ratio may be quoted from a single instance and the ladder is
+reported with both instances throughout.
+
+One integrity observation from the same runs, not a failure: at degree 24 the replicate's 500-trial
+T = 10^4 arms both reached -1838, two units below the -1836 best of the independent 200-run
+T = 10^5 reference that defines that instance's target. The LONGRUN_BEST label is load-bearing
+rather than decorative -- p_success here is a threshold-hit rate at a reference energy, not a
+ground-state success probability -- and both dynamics beat the reference symmetrically, so the
+comparison itself is unaffected.
