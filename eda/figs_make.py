@@ -427,6 +427,68 @@ def panel_corners(ax):
     ax.set_title("Transfer nonlinearity across process corners (6-bit)")
 
 
+def panel_caliber(ax):
+    """RX-10: where driver sharing brings the end-to-end sMTJ update energy
+    back below the unit-level CMOS p-bit row, and how much of the apparent gap
+    is the h_eff accumulation term that both rows omit. Constants are read from
+    the committed update-energy and caliber summaries."""
+    d = jload(TB / "update_energy_summary.json")
+    cfg = jload(IF / "energy_caliber_config.json")
+    tbl = {r["k"]: r for r in d["table"]}
+    p_stat = d["buffer_static"]["p_buf_W"] + d["dac_static"]["p_string_W"]
+    pw = d["timing_model"]["pulse_window_ns"] * 1e-9
+    e_cmos = cfg["constants"]["cmos_pbit_row"]["e_update_J"] * 1e12
+    syn = cfg["synapse_per_instance"]["G22"]["synapse_pJ_per_update"]
+
+    s = np.logspace(0, np.log2(160), 400, base=2.0)
+    colors = {1: TP["light"], 2: TP["medium"], 3: TP["dark"]}
+    curves, parity = {}, []
+    for k in (1, 2, 3):
+        fixed = tbl[k]["e_pulses_pJ"] + tbl[k]["e_read_pJ"]
+        curves[k] = fixed + p_stat * (k + 1) * pw * 1e12 / s
+        ax.plot(s, curves[k], color=colors[k], lw=1.8)
+        # anchored where the three loci have separated, so no label lands on a
+        # neighbouring curve
+        ax_, ha = ((1.0, "left") if k == 3 else (1.7, "right"))
+        jj = int(np.searchsorted(s, ax_))
+        ax.annotate(f"$k$ = {k}", xy=(s[jj], curves[k][jj]),
+                    xytext=(3 if ha == "left" else -3, 4),
+                    textcoords="offset points", color=colors[k], fontsize=11,
+                    ha=ha)
+        sx = cfg["crossover_share_min"][f"k={k},rail=4.0"]
+        parity.append(f"{sx:.0f}")
+        if np.isfinite(sx) and sx <= s[-1]:
+            ax.plot([sx], [e_cmos], "v", color=colors[k], ms=7)
+    # the same k = 3 locus with the h_eff summation added to BOTH rows: curve
+    # and reference move together, so the crossing does not move
+    ax.plot(s, curves[3] + syn, color=TP["gray"], lw=1.4, ls=":")
+    ax.axhline(e_cmos + syn, color=TP["gray"], lw=1.2, ls=":")
+    ax.axhline(e_cmos, color=TP["accent"], lw=1.5, ls="--")
+
+    ax.annotate("CMOS p-bit, unit level", xy=(s[-1], e_cmos), xytext=(-2, -15),
+                textcoords="offset points", color=TP["accent"], fontsize=11,
+                ha="right")
+    ax.annotate(f"CMOS p-bit + $h^\\mathrm{{eff}}$ sum ({syn:.1f} pJ, G22)",
+                xy=(s[-1], e_cmos + syn), xytext=(-2, -15),
+                textcoords="offset points", color=TP["gray"], fontsize=11,
+                ha="right")
+    j = int(np.searchsorted(s, 2.5))
+    ax.annotate("$k$ = 3, same caliber", xy=(s[j], curves[3][j] + syn),
+                xytext=(4, 4), textcoords="offset points", color=TP["gray"],
+                fontsize=11)
+    ax.annotate(f"parity at $S$ = {', '.join(parity)} for $k$ = 1, 2, 3",
+                xy=(0.03, 0.04), xycoords="axes fraction", color=TP["gray"],
+                fontsize=11)
+    ax.set_xscale("log", base=2)
+    ax.set_xlim(1, s[-1])
+    ax.set_ylim(0, 24)
+    ax.set_xticks([1, 2, 4, 8, 16, 32, 64, 128])
+    ax.set_xticklabels(["1", "2", "4", "8", "16", "32", "64", "128"])
+    ax.set_xlabel("columns sharing one DAC + buffer")
+    ax.set_ylabel("energy per spin update (pJ)")
+    ax.set_title("Driver sharing and the accounting caliber")
+
+
 def panel_schematic(ax):
     img = plt.imread(HERE / "schematics" / "update_chain.png")
     ax.imshow(img)
@@ -448,6 +510,8 @@ PANELS = {
     "ir_impact": (panel_ir_impact, (5.2, 3.6)),
     "energy_stack": (panel_energy, (5.2, 3.6)),
     "hw_projection": (panel_projection, (5.2, 3.6)),
+    # RX-10; not yet placed in a composite — the chapter session decides the slot
+    "caliber_crossover": (panel_caliber, (5.2, 3.6)),
 }
 
 COMPOSITES = {
@@ -460,9 +524,9 @@ COMPOSITES = {
         ["abl_bits", "abl_span", "abl_reset"],
         ["abl_traj", "abl_readflip"],
     ],
-    "preview_11.png": [  # (a) IR (b) impact (c) energy (d) projection
-        ["ir_profile", "ir_impact"],
-        ["energy_stack", "hw_projection"],
+    "preview_11.png": [  # (a) IR (b) impact (c) energy (d) proj (e) caliber
+        ["ir_profile", "ir_impact", "energy_stack"],
+        ["hw_projection", "caliber_crossover"],
     ],
 }
 

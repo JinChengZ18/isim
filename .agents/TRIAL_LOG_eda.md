@@ -272,3 +272,37 @@ be re-referenced to the wider rails to appear in any G-set-scale arm: its tap de
 in absolute V_T units (Section 3.5.1 attributes it to the buffer's code-dependent offset, which
 does not follow the reference voltage) and the arm is run beside an ideal-grid control at the same
 rails so the extrapolation is bounded rather than assumed.
+
+## 2026-07-22 RX-10: the synapse accumulator reported a plausible energy while computing the wrong sum
+
+Tried: measuring the per-accumulate energy of the h_eff summation datapath (sky130_fd_sc_hd
+xor2/fa/dfrtp cells, ngspice, tt) by integrating the supply current over sixteen identical
+accumulate cycles driven by a recorded-seed random weight/sign stream.
+Symptom: the first deck returned 725 fJ per accumulate for an 8-bit datapath — an entirely
+plausible number, of the right order for a 130 nm 1.8 V adder-plus-register, and one that would
+have gone straight into the projection. The functional self-check written alongside it (final
+register word compared against the software accumulator) reported 54 against an expected 246: the
+low six bits were right and the top two were wrong. Diagnosis: the clock source was declared with
+`PULSE(... td = t0 - TCLK/2 ...)`, so the first rising edge landed half a cycle earlier than the
+data-source timing assumed, leaving the ripple carry only TCLK/4 = 1 ns of settling instead of the
+intended 3*TCLK/4. Eight bits of ripple carry do not resolve in 1 ns, so the top of the carry chain
+was still moving when the register captured it — and a carry chain that is cut short still burns
+energy, which is exactly why the number looked reasonable.
+Fix: the clock edge was moved to t0 and the datapath self-check was made a hard abort rather than a
+printed warning, so no energy number can be emitted from a datapath that did not compute the sum.
+
+Second correction, same testbench: the leakage baseline was first taken from a window between the
+last capture edge and the following clock fall. That window is inside the ripple-carry settling
+tail, so the "leakage" it returned varied from 7 fJ to 741 fJ across arms and one arm came out with
+a NEGATIVE dynamic energy after subtraction. Fix: the clock was rebuilt as a finite PWL train of
+exactly the intended number of edges and then held low, giving a genuinely quiescent tail; the
+baseline dropped to 0.0-2.1 fJ per accumulate across every arm and width, i.e. leakage is a
+sub-percent term and the earlier values were entirely switching activity misread as leakage.
+
+Third item, a measurement disagreement rather than a failure: the sibling repo's committed
+`e_count_inc = 19.4 fJ` (04PBNNSim/.../dac_counter_energy.py) is an analytic two-DFF-toggle
+estimate. Measuring the same operation here gives 367 fJ for an 8-bit enabled up-counter. The gap
+is not a discrepancy in the DFF constant — an all-zero-addend control arm isolates 265 fJ of
+clock-tree and register-internal energy that every accumulate pays regardless of operand, which the
+data-toggle estimate omits by construction. The analytic constant is a data-activity figure, not a
+per-cycle cost, and using it as the synapse term would understate the caliber correction by ~20x.

@@ -47,8 +47,8 @@ FIGURES = [
                          ["chain_corners"]]},
     {"num": 10, "rows": [["abl_bits", "abl_span", "abl_reset"],
                          ["abl_traj", "abl_readflip"]]},
-    {"num": 11, "rows": [["ir_profile", "ir_impact"],
-                         ["energy_stack", "hw_projection"]]},
+    {"num": 11, "rows": [["ir_profile", "ir_impact", "energy_stack"],
+                         ["hw_projection", "caliber_crossover"]]},
 ]
 
 

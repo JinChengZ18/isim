@@ -1,0 +1,231 @@
+{
+  "_label": "RX-10 same-caliber energy comparison \u2014 constants and provenance for energy_caliber_summary.csv",
+  "constants": {
+    "e_accum": {
+      "value": "per instance, see synapse_per_instance",
+      "provenance": "MEASURED \u2014 eda/testbenches/synapse_accum_energy.py (ngspice, sky130 tt, sky130_fd_sc_hd cell netlists); widths outside {8,12,16} read off the measured linear fit",
+      "clock_floor_fJ_b12": 389.22525,
+      "arms_fJ_b12": {
+        "weighted adder": 994.79025,
+        "binary popcount": 468.54,
+        "weighted adder + weight register": 1564.7624999999998
+      }
+    },
+    "deg_mean": {
+      "provenance": "MEASURED from the Problem objects \u2014 eda/interface/graph_degrees.py"
+    },
+    "e_pulses, e_read, P_buf, t_settle": {
+      "provenance": "MEASURED \u2014 eda/testbenches/update_energy.py (sky130 tt, schematic level)",
+      "p_buf_W": 0.0028684,
+      "t_settle_ns": 9.015
+    },
+    "P_string": {
+      "provenance": "ANALYTIC \u2014 (rail span)^2 / (2^b * R_unit), the committed formula of update_energy_summary.json re-evaluated per rail span",
+      "V_T_V": 0.023414,
+      "R_unit_ohm": 100.0,
+      "W_at_rail_vt": {
+        "+/-4V_T, 6bit": 5.4821539600000005e-06,
+        "+/-4V_T, 4bit": 2.1928615840000002e-05,
+        "+/-10V_T, 6bit": 3.426346225e-05,
+        "+/-10V_T, 4bit": 0.000137053849
+      }
+    },
+    "cmos_pbit_row": {
+      "t_update_s": 5e-09,
+      "e_update_J": 5e-12,
+      "provenance": "LITERATURE \u2014 Camsari 2020 doi:10.1109/JPROC.2020.2966869, unit-level, peripherals excluded (the caliber this item corrects)"
+    },
+    "fpga_cpu_rows": {
+      "provenance": "LITERATURE (Goto 2021 doi:10.1126/sciadv.abe7953) and runtime measurement; both ALREADY contain the weighted sum, so the synapse term is not added to them"
+    }
+  },
+  "assumptions": [
+    "one spin update needs exactly one pass over its neighbours, so the synapse cost per update is deg_mean x e_accum",
+    "sharing factor S: S columns share one DAC + class-A buffer, so the analog static power is amortised over S updates and the shared front-end settles S codes per parallel block (t_update = S*t_settle + (k+1)*(t_w+t_gap) + t_read)",
+    "the synapse accumulate is assumed pipelined behind the update, so it enters the energy axis only; at the measured 4 ns accumulate clock a degree-48 sum is 192 ns and would NOT hide behind a 14 ns update on a single accumulator",
+    "the class-A buffer static power is held at its as-built value when the rail span is widened to +/-10 V_T; only the DAC string is re-evaluated, so the wide-rail driver power is a lower bound"
+  ],
+  "synapse_per_instance": {
+    "G1": {
+      "arm": "count_core",
+      "b_accum": 8,
+      "e_accum_fJ": 366.759,
+      "provenance": "MEASURED",
+      "deg_mean": 47.94,
+      "synapse_pJ_per_update": 17.582426459999997
+    },
+    "G14": {
+      "arm": "count_core",
+      "b_accum": 9,
+      "e_accum_fJ": 390.3053906249997,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 11.735,
+      "synapse_pJ_per_update": 4.580233758984372
+    },
+    "G22": {
+      "arm": "count_core",
+      "b_accum": 8,
+      "e_accum_fJ": 366.759,
+      "provenance": "MEASURED",
+      "deg_mean": 19.99,
+      "synapse_pJ_per_update": 7.331512409999999
+    },
+    "factor_M15": {
+      "arm": "rand_core",
+      "b_accum": 8,
+      "e_accum_fJ": 681.48225,
+      "provenance": "MEASURED",
+      "deg_mean": 4.0,
+      "synapse_pJ_per_update": 2.7259290000000003
+    },
+    "factor_M21": {
+      "arm": "rand_core",
+      "b_accum": 9,
+      "e_accum_fJ": 758.4167812499992,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 4.0,
+      "synapse_pJ_per_update": 3.033667124999997
+    },
+    "factor_M33": {
+      "arm": "rand_core",
+      "b_accum": 11,
+      "e_accum_fJ": 923.4255937499994,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 6.0,
+      "synapse_pJ_per_update": 5.540553562499997
+    },
+    "factor_M35": {
+      "arm": "rand_core",
+      "b_accum": 10,
+      "e_accum_fJ": 840.9211874999993,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 7.0,
+      "synapse_pJ_per_update": 5.886448312499995
+    },
+    "factor_M51": {
+      "arm": "rand_core",
+      "b_accum": 12,
+      "e_accum_fJ": 994.79025,
+      "provenance": "MEASURED",
+      "deg_mean": 8.0,
+      "synapse_pJ_per_update": 7.958322000000002
+    },
+    "factor_M65": {
+      "arm": "rand_core",
+      "b_accum": 13,
+      "e_accum_fJ": 1088.4344062499995,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 10.0,
+      "synapse_pJ_per_update": 10.884344062499995
+    },
+    "factor_M77": {
+      "arm": "rand_core",
+      "b_accum": 13,
+      "e_accum_fJ": 1088.4344062499995,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 10.0,
+      "synapse_pJ_per_update": 10.884344062499995
+    },
+    "factor_M91": {
+      "arm": "rand_core",
+      "b_accum": 14,
+      "e_accum_fJ": 1170.9388124999996,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 10.0,
+      "synapse_pJ_per_update": 11.709388124999997
+    },
+    "factor_M143": {
+      "arm": "rand_core",
+      "b_accum": 15,
+      "e_accum_fJ": 1253.4432187499997,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 14.0,
+      "synapse_pJ_per_update": 17.5482050625
+    },
+    "burma14": {
+      "arm": "rand_core",
+      "b_accum": 14,
+      "e_accum_fJ": 1170.9388124999996,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 52.0,
+      "synapse_pJ_per_update": 60.888818249999986
+    },
+    "ulysses16": {
+      "arm": "rand_core",
+      "b_accum": 14,
+      "e_accum_fJ": 1170.9388124999996,
+      "provenance": "ANALYTIC (measured linear fit in b)",
+      "deg_mean": 60.0,
+      "synapse_pJ_per_update": 70.25632874999998
+    }
+  },
+  "crossover_share_min": {
+    "k=1,rail=4.0": 1.8894044856921886,
+    "k=1,rail=10.0": 1.908326463029459,
+    "k=2,rail=4.0": 5.4645786726323635,
+    "k=2,rail=10.0": 5.519305246314334,
+    "k=3,rail=4.0": 101.78125000000044,
+    "k=3,rail=10.0": 102.80056720838184,
+    "k=4,rail=4.0": Infinity,
+    "k=4,rail=10.0": Infinity,
+    "k=5,rail=4.0": Infinity,
+    "k=5,rail=10.0": Infinity
+  },
+  "read_path_growth": {
+    "device_growth_only": {
+      "sigma_meas_mV": 18.5308,
+      "sigma_required_mV": 3.349605110723149,
+      "z_at_1e_5": 4.264890793922825,
+      "margin_mV": 14.2857,
+      "prescale": 1.0,
+      "area_factor": 30.605615408686923,
+      "e_read_pJ": 3.229063842528474,
+      "delta_pJ": 3.109933842528474
+    },
+    "autozero_plus_growth": {
+      "sigma_meas_mV": 18.5308,
+      "sigma_required_mV": 3.349605110723149,
+      "z_at_1e_5": 4.264890793922825,
+      "margin_mV": 14.2857,
+      "prescale": 2.36,
+      "area_factor": 5.49511911244738,
+      "e_read_pJ": 0.5914573115714727,
+      "delta_pJ": 0.47232731157147273
+    },
+    "_provenance": "ANALYTIC \u2014 Pelgrom area scaling on MEASURED sigma_off (read_offset_mc_summary.json) and MEASURED e_sa (update_energy_summary.json); the autozero suppression is the Section 3.5.5 cross-reference to the chapter-4 comparator family, not reproduced here, and its own overhead is not priced",
+    "_e_read_committed_pJ": 0.11913
+  },
+  "crossover_share_min_with_read_growth": {
+    "device_growth_only,k=1": Infinity,
+    "device_growth_only,k=2": Infinity,
+    "device_growth_only,k=3": Infinity,
+    "autozero_plus_growth,k=1": 2.3116161867203013,
+    "autozero_plus_growth,k=2": 8.435858635381665,
+    "autozero_plus_growth,k=3": Infinity
+  },
+  "grid": {
+    "k": [
+      1,
+      2,
+      3
+    ],
+    "n_par": [
+      16,
+      64,
+      256
+    ],
+    "share": [
+      1.0,
+      4.0,
+      16.0
+    ],
+    "rail_vt": [
+      4.0,
+      10.0
+    ],
+    "instances": [
+      "G1",
+      "G22"
+    ]
+  }
+}

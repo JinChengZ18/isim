@@ -1,0 +1,318 @@
+{
+  "_label": "RX-10 MEASURED (ngspice, sky130 tt, sky130_fd_sc_hd cell netlists, schematic-level, no extracted parasitics) energy of one local-field accumulate q <- q +/- w",
+  "method": {
+    "datapath": "b x (xor2_1 conditional negate + fa_1 ripple carry + dfrtp_1 accumulator bit) + inv_2/inv_N clock tree",
+    "supply_V": 1.8,
+    "corner": "tt",
+    "tclk_s": 4e-09,
+    "cycles_measured": 16,
+    "cycles_discarded": 2,
+    "arms": {
+      "rand_core": "general weighted graph: a fresh uniform random (b-2)-bit weight word and a random sign bit per neighbour; weights from ideal sources",
+      "rand_wreg": "rand_core plus a b-bit local weight register reloaded every cycle (weight read charged to the synapse) -> upper bound",
+      "unit_core": "binary +/-J coupling (all G-set Max-Cut instances) run through the SAME general adder: |w| = 1, only the sign toggles",
+      "count_core": "binary +/-J coupling on the datapath it actually needs \u2014 an enabled synchronous up-counter (prefix AND chain + toggle XOR + register) computing h_eff = 2*n_aligned - deg; random enable stream -> the cheap regime",
+      "clock_floor": "the adder datapath clocked with an all-zero addend: no data node toggles, so this isolates the clock-tree + register-internal energy that every accumulate pays regardless of operand"
+    },
+    "rng_seed_base": 2024,
+    "selfcheck": "final register word == software accumulator mod 2^b",
+    "included": [
+      "conditional negate",
+      "ripple-carry adder",
+      "accumulator register",
+      "local clock tree (2 stages)",
+      "carry-chain glitch power",
+      "cell leakage over the accumulate window"
+    ],
+    "excluded": [
+      "weight memory array read (core arms)",
+      "global clock distribution above the local tree",
+      "address decode",
+      "extracted layout parasitics",
+      "the write-DAC recode (already in update_energy_summary.json)"
+    ]
+  },
+  "b_canonical": 12,
+  "b_canonical_rationale": "6-bit weight magnitude matching the measured 6-bit write-DAC grid + sign + 6 bits of headroom for a degree-64 tile",
+  "e_accum_fJ": {
+    "rand_core": {
+      "8": 681.48225,
+      "12": 994.79025,
+      "16": 1341.5175000000002
+    },
+    "rand_wreg": {
+      "8": 1001.6639999999999,
+      "12": 1564.7624999999998,
+      "16": 1955.8237500000002
+    },
+    "unit_core": {
+      "8": 683.3925,
+      "12": 670.6665,
+      "16": 942.7308750000001
+    },
+    "count_core": {
+      "8": 366.759,
+      "12": 468.54,
+      "16": 615.893625
+    },
+    "clock_floor": {
+      "8": 265.404375,
+      "12": 389.22525,
+      "16": 519.0075
+    }
+  },
+  "fit_a_s_fJ": {
+    "rand_core": {
+      "intercept_fJ": 15.87712499999839,
+      "slope_fJ_per_bit": 82.50440625000009
+    },
+    "rand_wreg": {
+      "intercept_fJ": 76.17712499999773,
+      "slope_fJ_per_bit": 119.26996875000016
+    },
+    "unit_core": {
+      "intercept_fJ": 376.5890624999992,
+      "slope_fJ_per_bit": 32.41729687500006
+    },
+    "count_core": {
+      "intercept_fJ": 110.02893749999936,
+      "slope_fJ_per_bit": 31.14182812500004
+    },
+    "clock_floor": {
+      "intercept_fJ": 10.807687499999284,
+      "slope_fJ_per_bit": 31.700390625000043
+    }
+  },
+  "e_accum_fJ_canonical": 994.79025,
+  "e_accum_fJ_canonical_upper": 1564.7624999999998,
+  "e_accum_fJ_canonical_unit": 670.6665,
+  "e_accum_fJ_canonical_count": 468.54,
+  "e_accum_fJ_canonical_clock_floor": 389.22525,
+  "rows": [
+    {
+      "b": 8,
+      "arm": "rand-core",
+      "wmode": "rand",
+      "wreg": false,
+      "e_accum_J": 6.8148225e-13,
+      "e_accum_dyn_J": 6.8065356e-13,
+      "e_accum_leak_J": 8.286899999999972e-16,
+      "i_leak_A": 1.1509583333333293e-07,
+      "q_window_C": 6.05762e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 246,
+      "ok": true
+    },
+    {
+      "b": 8,
+      "arm": "rand-wreg",
+      "wmode": "rand",
+      "wreg": true,
+      "e_accum_J": 1.0016639999999999e-12,
+      "e_accum_dyn_J": 1.0013118093749998e-12,
+      "e_accum_leak_J": 3.521906249999988e-16,
+      "i_leak_A": 4.891536458333316e-08,
+      "q_window_C": 8.90368e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 251,
+      "ok": true
+    },
+    {
+      "b": 8,
+      "arm": "unit-core",
+      "wmode": "unit",
+      "wreg": false,
+      "e_accum_J": 6.833925e-13,
+      "e_accum_dyn_J": 6.82690935e-13,
+      "e_accum_leak_J": 7.015649999999976e-16,
+      "i_leak_A": 9.7439583333333e-08,
+      "q_window_C": 6.0746e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 254,
+      "ok": true
+    },
+    {
+      "b": 8,
+      "arm": "count-core",
+      "wmode": "count",
+      "wreg": false,
+      "e_accum_J": 3.66759e-13,
+      "e_accum_dyn_J": 3.664130145e-13,
+      "e_accum_leak_J": 3.4598549999999877e-16,
+      "i_leak_A": 4.8053541666666497e-08,
+      "q_window_C": 3.26008e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 10,
+      "ok": true
+    },
+    {
+      "b": 8,
+      "arm": "idle-core",
+      "wmode": "idle",
+      "wreg": false,
+      "e_accum_J": 2.65404375e-13,
+      "e_accum_dyn_J": 2.6511041175000003e-13,
+      "e_accum_leak_J": 2.93963249999999e-16,
+      "i_leak_A": 4.082822916666653e-08,
+      "q_window_C": 2.35915e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 0,
+      "ok": true
+    },
+    {
+      "b": 12,
+      "arm": "rand-core",
+      "wmode": "rand",
+      "wreg": false,
+      "e_accum_J": 9.9479025e-13,
+      "e_accum_dyn_J": 9.947567898e-13,
+      "e_accum_leak_J": 3.346019999999989e-17,
+      "i_leak_A": 4.647249999999984e-09,
+      "q_window_C": 8.84258e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 708,
+      "ok": true
+    },
+    {
+      "b": 12,
+      "arm": "rand-wreg",
+      "wmode": "rand",
+      "wreg": true,
+      "e_accum_J": 1.5647625e-12,
+      "e_accum_dyn_J": 1.5637203787499998e-12,
+      "e_accum_leak_J": 1.0421212499999967e-15,
+      "i_leak_A": 1.4473906249999952e-07,
+      "q_window_C": 1.3909e-11,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 345,
+      "ok": true
+    },
+    {
+      "b": 12,
+      "arm": "unit-core",
+      "wmode": "unit",
+      "wreg": false,
+      "e_accum_J": 6.706665e-13,
+      "e_accum_dyn_J": 6.697231387500001e-13,
+      "e_accum_leak_J": 9.433612499999968e-16,
+      "i_leak_A": 1.3102239583333287e-07,
+      "q_window_C": 5.96148e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 2,
+      "ok": true
+    },
+    {
+      "b": 12,
+      "arm": "count-core",
+      "wmode": "count",
+      "wreg": false,
+      "e_accum_J": 4.6854e-13,
+      "e_accum_dyn_J": 4.6719259125e-13,
+      "e_accum_leak_J": 1.3474087499999954e-15,
+      "i_leak_A": 1.8714010416666601e-07,
+      "q_window_C": 4.1648e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 8,
+      "ok": true
+    },
+    {
+      "b": 12,
+      "arm": "idle-core",
+      "wmode": "idle",
+      "wreg": false,
+      "e_accum_J": 3.8922525000000003e-13,
+      "e_accum_dyn_J": 3.8780584500000003e-13,
+      "e_accum_leak_J": 1.4194049999999951e-15,
+      "i_leak_A": 1.9713958333333264e-07,
+      "q_window_C": 3.45978e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 0,
+      "ok": true
+    },
+    {
+      "b": 16,
+      "arm": "rand-core",
+      "wmode": "rand",
+      "wreg": false,
+      "e_accum_J": 1.3415175e-12,
+      "e_accum_dyn_J": 1.3405692000000002e-12,
+      "e_accum_leak_J": 9.482999999999967e-16,
+      "i_leak_A": 1.3170833333333287e-07,
+      "q_window_C": 1.19246e-11,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 54498,
+      "ok": true
+    },
+    {
+      "b": 16,
+      "arm": "rand-wreg",
+      "wmode": "rand",
+      "wreg": true,
+      "e_accum_J": 1.95582375e-12,
+      "e_accum_dyn_J": 1.953705105e-12,
+      "e_accum_leak_J": 2.118644999999993e-15,
+      "i_leak_A": 2.94256249999999e-07,
+      "q_window_C": 1.73851e-11,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 46341,
+      "ok": true
+    },
+    {
+      "b": 16,
+      "arm": "unit-core",
+      "wmode": "unit",
+      "wreg": false,
+      "e_accum_J": 9.42730875e-13,
+      "e_accum_dyn_J": 9.4189180875e-13,
+      "e_accum_leak_J": 8.390662499999972e-16,
+      "i_leak_A": 1.1653697916666626e-07,
+      "q_window_C": 8.37983e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 65530,
+      "ok": true
+    },
+    {
+      "b": 16,
+      "arm": "count-core",
+      "wmode": "count",
+      "wreg": false,
+      "e_accum_J": 6.158936250000001e-13,
+      "e_accum_dyn_J": 6.148672237500001e-13,
+      "e_accum_leak_J": 1.0264012499999967e-15,
+      "i_leak_A": 1.425557291666662e-07,
+      "q_window_C": 5.47461e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 12,
+      "ok": true
+    },
+    {
+      "b": 16,
+      "arm": "idle-core",
+      "wmode": "idle",
+      "wreg": false,
+      "e_accum_J": 5.190075e-13,
+      "e_accum_dyn_J": 5.179171275e-13,
+      "e_accum_leak_J": 1.0903724999999966e-15,
+      "i_leak_A": 1.514406249999995e-07,
+      "q_window_C": 4.6134e-12,
+      "n_cycles": 16,
+      "tclk_s": 4e-09,
+      "selfcheck_word": 0,
+      "ok": true
+    }
+  ]
+}
