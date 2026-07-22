@@ -220,7 +220,7 @@ item's Decision rule.
   ablation rows; scale-check csv.
 
 ### RX-06 Read-decision offset MC -> misread channel (the 6th non-ideality)
-- Status: claimed 2026-07-21 session-1b46cb68-loop
+- Status: done 2026-07-22 -> eda/testbenches/{read_offset_mc.py,read_offset_mc_summary.json}, eda/interface/{run_read_flip.py,read_flip_solver_summary.csv,results_read_flip/}, circuit_backends p_read_flip, new 3.5.4 paragraph + 3.5.5 caveats + 3.6 + fig 3.10(e) (commit 6050d9c). OUTCOME: the §3.5.4 "read decision correct" claim FAILS under mismatch. sigma_off=18.53 mV = 0.79 V_T = 0.54x the 34.3 mV separation, EXCEEDS the AP margin (14.3 mV). Two bases (as-committed deck has an undecoupled reference whose kickback helps: p=8.2e-4; decoupled: p=0.18) — conclusion holds on both: optimistic rate costs 5.87x [4.17,8.72] on G1 (disjoint), conservative erases the solver. Tolerance size-dependent like RX-04 (ER14 ~1e-3, G1 ~1e-5). Physical channel is WORSE than modelled (static offset = defect map, ~13%/23% of cells, not i.i.d.). Autozero (2.36x) insufficient vs the 5.6x needed. NOTE for RX-07: read-flip and clip channels compose approximately MULTIPLICATIVELY (measured 8.78x vs product 7.4x, inside CI). NOTE for RX-10: the read path may need a bigger/faster comparator, which changes the energy account.
 - Effort: 1-2 days. Deps: none. WSL for the MC, Windows for the solver leg.
 - Objection: §3.5.4's read energy claims `correct=True` at tt/nominal only.
   Margin is ~14-20 mV (vsen 0.080/0.114 V vs 0.100 V reference) on small

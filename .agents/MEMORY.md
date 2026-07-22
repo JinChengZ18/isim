@@ -75,6 +75,11 @@ content OUT of here; this directory never ships.
   resolution-for-range), but the uncompensated 3.04x anchor is
   landscape-signed at N=64 and was replaced by the N-scaling. Fig 3.11(b)
   replotted. RX-06 still running in the same session.
+- 2026-07-22: RX-06 DONE (6050d9c) — read decision fails under mismatch
+  (sigma_off 18.5 mV > AP margin; 5.87x on G1 even at the optimistic
+  8.2e-4 misread rate; tolerance ~1e-5 at G1). Read margin, not write
+  precision, is now the stated binding constraint at array scale. Fig
+  3.10 gained panel (e). RX-06+RX-09 both closed this session.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
