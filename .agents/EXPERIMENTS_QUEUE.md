@@ -146,7 +146,7 @@ item's Decision rule.
 ## P1 — turns single-instance anecdotes into design rules; real novelty
 
 ### RX-04 Generalize the §3.4.2 + §3.5.2/3 rules beyond ER14
-- Status: claimed 2026-07-20 session-e063faf4-loop
+- Status: done 2026-07-21 -> eda/interface/{run_circuit_ablation_multi.py,run_circuit_ablation_gset.py,circuit_ablation_{multi,gset}_summary.csv,results_circuit_ablation_{multi,gset}/}, results_rerun/results_dev_ablation_G1/ (commits d515357, 94c34ac). OUTCOME: two published rules FALSIFIED, one confirmed-with-reorder. (1) rail span: +/-6V_T is ~2 orders optimistic at array scale (G1 63x at +/-6, 3.0x at +/-8, 1.26x at +/-10; G22 0/200 at +/-8); requirement grows with N*T, restated as size-dependent + [^process-span-scale]. (2) "2-bit better" = seed-0 artifact (per-seed 1.36-6.52, geomean 3.36x vs 8-bit 3.09x) — deleted. Gap found: the G-set bits axis was confounded at span=4 (all bit widths fail); rerun at span=10 gives 4/6/8 bit -> 0.610/0.635/0.620 (CIs overlap) => DESIGN INVERSION "trade resolution for range" now in 3.5.2/3.6. (3) device ranking: ends invariant (p_max worst — 0/200 at 0.9 on G1; sigma_C2C most tolerated), middle reorders (CV(Delta) -> #2 at 1.66x CIs-disjoint; h_off 40x catastrophe and g_dev>1 acceleration are both ER14-only, both max|J|-relative). NOTE for RX-07/RX-09/RX-10: use the G-set-scale rails (>=+/-10V_T), NOT +/-4V_T, or the runs will sit in the p_s=0 regime.
 - Effort: 2-3 days (compute-bound sweeps). Deps: RX-01 stats helper.
 - Objection: sensitivity ranking (§3.4.2), rail-span >=6V_T and >=4-bit
   rules, measured-grid==ideal-grid equivalence, IR 3.04x (§3.5.2/3.5.3)

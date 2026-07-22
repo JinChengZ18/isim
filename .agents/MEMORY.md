@@ -64,6 +64,12 @@ content OUT of here; this directory never ships.
   the stale RX-08 status line (work was in 108425a by e063faf4-loop;
   the 2026-07-19 e9b0f4b0 claim delivered nothing). RX-04 confirmed
   alive (d515357 landed mid-audit).
+- 2026-07-21: RX-04 DONE (d515357, 94c34ac) — falsified the +/-6V_T rail
+  rule (G1 needs >=+/-10V_T) and the "2-bit better" reading (seed
+  artifact); found the bits axis was confounded at span=4 and refilled it
+  => design inverted to "trade resolution for range"; device ranking ends
+  invariant but middle reorders (CV(Delta) up, h_off/g_dev down, both
+  max|J|-relative). Acceptance-audit polish backlog cleared in 94c34ac.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
