@@ -155,8 +155,12 @@ number-two constraint (CV=0.30 -> 1.66x with non-overlapping intervals on G1, vs
 1.3x on ER14), while h_off's ER14 catastrophe does NOT reproduce (h_off=0.2 -> 40x on ER14 but
 1.25x, statistically unresolved, on G1) and the g_dev>1 acceleration does not transfer either
 (1.5x gain -> 0.62x on ER14, 1.16x and unresolved on G1).
-Diagnosis (not a bug — a scoping error in the original reading): h_off and g_dev are specified in
-units of max|J|, so a fixed offset/gain error is a much smaller perturbation relative to the typical
-|h_eff| of a degree-48 graph than of a degree-4 one; only p_max and CV(Delta) act on the update
-distribution in a size-independent way. Fix: §3.4.2 gained a generalization paragraph and §3.6's
+Diagnosis (corrected 2026-07-21 after an audit caught the first version): the original diagnosis
+blamed max|J| units and was WRONG — neither run normalizes J (load_gset/random_er_maxcut default
+normalize=False), and max|J| is 0.5 on G1 versus 1.125 on ER14, so in those units the G1
+perturbation is the LARGER one. The actual driver is the local field itself: h_off is an absolute
+additive field of the same dimension as h_i, and the median |h_eff| under random configurations
+grows from 0.53 (ER14) to 2.50 (G1), so the same absolute offset falls from 37% to 8% of the
+typical local field. g_dev is dimensionless and needs its own account (both sides weaken on G1:
+0.5 -> 1.37x, 1.5 -> 1.16x); only p_max and CV(Delta) act size-independently. Fix: §3.4.2 gained a generalization paragraph and §3.6's
 device-priority sentence now states the invariant ends plus the degree-dependent middle.
