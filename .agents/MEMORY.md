@@ -95,6 +95,15 @@ content OUT of here; this directory never ships.
   fixes on RX-07 landed in 26f8cc2 — my falsification of RX-04's h_off
   relief was itself over-stated (it fails only below the rail the
   chapter prescribes). Queue: only RX-11 + four P3 items remain.
+- 2026-07-23: RX-11 DONE (21c0b21) — re-scoped (its premise had been
+  deleted by RX-01) and it SUBSTANTIATES the replacement claim: no Gibbs
+  advantage at any degree 6-96, no degree trend. Earlier the same day
+  RX-10's sharing model was RETRACTED (69ef38b) after an audit showed it
+  contradicted this repo's own W3 trial-log measurement; parity is now
+  stated as a driver-static-power target (1.9x at k=1, 5.5x at k=2) with
+  a switching-mode driver as the lever, and fig 3.11(e) was replotted.
+  ALL P0/P1/P2 QUEUE ITEMS ARE NOW CLOSED; only the four P3 items
+  (RX-12..RX-15, future-work grade) remain open.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)

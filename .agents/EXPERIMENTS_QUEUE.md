@@ -338,7 +338,7 @@ item's Decision rule.
 - Artifacts: reproject extension + `energy_caliber_summary.csv`.
 
 ### RX-11 Density/scale sweep for the Gibbs-vs-Metropolis prediction
-- Status: claimed 2026-07-23 session-1b46cb68-loop (RE-SCOPED — see note)
+- Status: done 2026-07-23 -> eda/interface/{run_density_sweep.py,density_sweep_summary.csv,density_sweep_config.json,results_density_sweep/}, figs_make panel_density_sweep (rendered to figs_raw/, in NO composite — it is a 3.3 algorithm-layer panel and those composites are user-side), 3.3.1 ladder paragraph + 3.6 (commit 21c0b21). OUTCOME: first branch of the revised rule — the no-speedup claim is SUBSTANTIATED on a controlled axis. d-regular n=1000, +/-1 couplings, degree 6->96 (Var(h_eff) 1.5->24.0), 2 instances/rung, 500 trials/arm, LONGRUN_BEST pooled over both dynamics. All 15 cells below 1, 11 resolve, NO resolved Gibbs advantage anywhere (sign test p=9.8e-4); no degree trend (Spearman rho=0.44, p=0.20); at degree 96 (2x G1) all three cells resolve SA-faster. CAUTIONS in text: between-instance scatter at fixed degree matches the whole across-degree range (no single-instance ratio represents a degree); margin is landscape-dependent (0.30-0.78 signed vs G1's 0.84 all-positive). Integrity note: at degree 24 the replicate beat its LONGRUN_BEST reference by 2 units, so p_success there is a threshold-hit rate.
 - RE-SCOPE NOTE (2026-07-23): RX-01 DELETED the monotonic-growth prediction this
   item was written to defend, so the original objection is moot. The protocol is
   retained because it now defends the OPPOSITE, and currently central, claim:
