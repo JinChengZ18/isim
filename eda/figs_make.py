@@ -118,17 +118,44 @@ def panel_bits(ax):
 
 
 def panel_span(ax):
-    rows = cload(IF / "results_circuit_ablation" / "circuit_ablation_summary.csv")
-    rs = sorted((r for r in rows if r["axis"] == "dac_span_6b"),
-                key=lambda r: float(r["value"]))
-    x = [float(r["value"]) for r in rs]
-    y = [float(r["tts99_ratio"]) for r in rs]
-    ax.plot(x, y, "o-", color=TP["dark"], lw=1.8, ms=5)
+    """RX-04: the clip-window requirement is not a V_T constant — it moves
+    right with instance size/connectivity. ER curves are 5-seed geometric
+    means; G-set curves are single runs at the G-set protocol."""
+    rows = cload(IF / "circuit_ablation_multi_summary.csv")
+    gset = cload(IF / "circuit_ablation_gset_summary.csv")
+    series = []
+    for n, color, lbl, lxy in (("14", TP["gray"], "ER $n$=14 (deg 4)",
+                                (3.2, 2.1)),
+                               ("20", TP["accent"], "ER $n$=20 (deg 6)",
+                                (5.2, 8.0))):
+        rs = sorted((r for r in rows if r["scope"] == "pooled"
+                     and r["n"] == n and r["axis"] == "span"),
+                    key=lambda r: float(r["value"]))
+        series.append(([float(r["value"]) for r in rs],
+                       [float(r["ratio_geomean"]) for r in rs], color, lbl,
+                       lxy))
+    rs = sorted((r for r in gset if r["instance"] == "G1"
+                 and r["axis"] == "span_6b"), key=lambda r: float(r["value"]))
+    x1 = [float(r["value"]) for r in rs]
+    y1 = [float(r["tts_ratio_vs_ideal"]) for r in rs]
+    series.append((x1, y1, TP["dark"], "G1 $n$=800 (deg 48)", (7.4, 30)))
+    for x, y, color, lbl, lxy in series:
+        xf = [xi for xi, yi in zip(x, y) if np.isfinite(yi)]
+        yf = [yi for yi in y if np.isfinite(yi)]
+        ax.plot(xf, yf, "o-", color=color, lw=1.8, ms=5)
+        ax.annotate(lbl, xy=lxy, color=color, fontsize=11)
+        miss = [xi for xi, yi in zip(x, y) if not np.isfinite(yi)]
+        if miss:
+            ax.plot(miss, [160] * len(miss), "v", color=color, ms=7)
+    ax.annotate("G1: $p_s=0$", xy=(2.3, 150), color=TP["dark"], fontsize=11,
+                va="center")
+    ax.set_ylim(0.8, 260)
     ax.axhline(1.0, color=TP["gray_lt"], lw=0.8, ls="--")
     ax.set_yscale("log")
-    ax.set_xlabel(r"rail span $\pm u_\mathrm{clip}$ ($V_T$ units)")
+    ax.set_xlim(1.5, 12.5)
+    ax.set_xlabel(r"rail half-width $\pm u_\mathrm{clip}$ ($V_T$ units)")
     ax.set_ylabel(r"TTS$_{99}$ ratio (vs ideal)")
-    ax.set_title("Probability clip window (6-bit)")
+    ax.set_title("Clip window vs instance scale")
 
 
 def panel_reset(ax):
