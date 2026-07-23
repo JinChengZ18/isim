@@ -360,3 +360,24 @@ T = 10^5 reference that defines that instance's target. The LONGRUN_BEST label i
 rather than decorative -- p_success here is a threshold-hit rate at a reference energy, not a
 ground-state success probability -- and both dynamics beat the reference symmetrically, so the
 comparison itself is unaffected.
+
+## 2026-07-23 RX-13: write-line settling read out over a window that included the post-pulse fall
+
+Tried: rc_transient.py measured the met2 far-node settling by driving a 0.75 ns PULSE into the
+distributed RC ladder, running the transient to 2*TW = 1.5 ns, and taking the flat-top DC value as
+the mean of v(far) over t >= TW - 50 ps.
+Symptom: t_settle came back 699.5 ps for BOTH capacitance models at BOTH N (64, 256) with a settling
+margin of only ~1.1x -- while the 10-90 rise time was 6-7 ps. A line whose edge resolves in 7 ps
+cannot take 699 ps to settle; the two numbers are inconsistent by two orders of magnitude, and the
+699.5 ps ~ TW - TR was the tell. Diagnosis: the PULSE plateau is only [TR, TR+TW] = [50, 800] ps, but
+the transient ran to 1500 ps, so v(far) had already fallen back to ~0 over [850, 1500] ps. The
+"final value" averaged over t >= 700 ps therefore mixed the plateau with the post-pulse low level,
+placing the whole plateau outside the +/-0.1*VT band and reporting a near-full-pulse settling time.
+The number was plausible enough (just under the pulse width) that it would have flipped the verdict
+toward "the line barely settles / bandwidth qualifier needed".
+Fix: bound the measurement to the plateau -- run the transient to TR+TW, take v_final over the last
+50 ps of the plateau [TR+TW-50ps, TR+TW], and search for the last out-of-band instant only within
+t <= TR+TW. Corrected settling is <= 5.75 ps beyond the input edge (N=256, MEASURED 45.8 fF), i.e.
+>= 130x margin inside the 0.75 ns pulse; the earlier 699.5 ps was entirely the windowing artefact.
+Multi-cell (checkerboard) settling then confirmed 0 ps beyond the edge, so the occupancy-dependent
+sag is a steady resistive IR effect reached inside the pulse, not an RC-bandwidth tail.

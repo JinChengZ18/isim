@@ -1,0 +1,309 @@
+{
+  "_label": "RX-13 write-line RC transient: settling of the met2 column line vs the 0.75 ns pulse, and data/position dependence of the far-row delivered voltage under simultaneous multi-row drive. R is committed MEASURED 0.125 ohm/sq; C is MEASURED (.ext node C, high/coupling-contaminated) and ANALYTIC (techfile areacap, low/plate-only) as bounds. No RNG.",
+  "constants": {
+    "VTH_V": 0.895783,
+    "VT_V": 0.023414,
+    "RSOT_ohm": 776.0,
+    "r_per_row_ohm": 0.5,
+    "areacap_aF_um2": 17.5,
+    "ext_node_C_aF": {
+      "64": 9596.36,
+      "256": 45793.2
+    },
+    "tw_ns": 0.75,
+    "tr_ns": 0.05,
+    "settle_tol_mV": 2.3414
+  },
+  "rng": {
+    "seeds": [],
+    "note": "deterministic RC network; no stochastic element"
+  },
+  "settling": {
+    "64": {
+      "MEASURED": {
+        "v_final_V": 0.860306,
+        "t_settle_ns": 0.0,
+        "t_rise_1090_ns": 0.04,
+        "pulse_ns": 0.75,
+        "settle_margin_x": Infinity,
+        "C_total_fF": 9.5964,
+        "C_source": "MEASURED"
+      },
+      "ANALYTIC": {
+        "v_final_V": 0.860306,
+        "t_settle_ns": 0.0,
+        "t_rise_1090_ns": 0.04,
+        "pulse_ns": 0.75,
+        "settle_margin_x": Infinity,
+        "C_total_fF": 2.24,
+        "C_source": "ANALYTIC"
+      }
+    },
+    "256": {
+      "MEASURED": {
+        "v_final_V": 0.768946,
+        "t_settle_ns": 0.00575,
+        "t_rise_1090_ns": 0.0405,
+        "pulse_ns": 0.75,
+        "settle_margin_x": 130.4,
+        "C_total_fF": 45.7932,
+        "C_source": "MEASURED"
+      },
+      "ANALYTIC": {
+        "v_final_V": 0.768946,
+        "t_settle_ns": 0.00035,
+        "t_rise_1090_ns": 0.04,
+        "pulse_ns": 0.75,
+        "settle_margin_x": 2142.9,
+        "C_total_fF": 8.96,
+        "C_source": "ANALYTIC"
+      }
+    }
+  },
+  "dc_crosscheck": {
+    "64": {
+      "v_far_V": 0.860306,
+      "dV_meas_mV": 35.4766,
+      "dV_static_ref_mV": 35.47655,
+      "abs_err_uV": 0.0455
+    },
+    "256": {
+      "v_far_V": 0.768946,
+      "dV_meas_mV": 126.8365,
+      "dV_static_ref_mV": 126.83653,
+      "abs_err_uV": 0.031
+    }
+  },
+  "coupling": {
+    "64": {
+      "static_far_dV_mV": 35.476554455445545,
+      "static_far_u_off": 1.5151855494766184,
+      "patterns": {
+        "write_midcode": {
+          "v_drv_V": 0.895783,
+          "dV_static_ref_mV": 35.4766,
+          "occupancy": [
+            {
+              "pattern": "far_only",
+              "n_active": 1,
+              "v_far_V": 0.860306,
+              "dV_far_mV": 35.4766,
+              "extra_over_static_mV": 0.0,
+              "extra_over_static_u": 0.0,
+              "worst_row": 64,
+              "worst_row_V": 0.860306,
+              "worst_dV_mV": 35.4766
+            },
+            {
+              "pattern": "sparse_1_in_8",
+              "n_active": 8,
+              "v_far_V": 0.751994,
+              "dV_far_mV": 143.7891,
+              "extra_over_static_mV": 108.3125,
+              "extra_over_static_u": 4.62597,
+              "worst_row": 64,
+              "worst_row_V": 0.751994,
+              "worst_dV_mV": 143.7891
+            },
+            {
+              "pattern": "checker_1_in_2",
+              "n_active": 32,
+              "v_far_V": 0.508683,
+              "dV_far_mV": 387.1,
+              "extra_over_static_mV": 351.6234,
+              "extra_over_static_u": 15.01766,
+              "worst_row": 64,
+              "worst_row_V": 0.508683,
+              "worst_dV_mV": 387.1
+            },
+            {
+              "pattern": "all_rows",
+              "n_active": 64,
+              "v_far_V": 0.335823,
+              "dV_far_mV": 559.9604,
+              "extra_over_static_mV": 524.4838,
+              "extra_over_static_u": 22.40044,
+              "worst_row": 64,
+              "worst_row_V": 0.335823,
+              "worst_dV_mV": 559.9604
+            }
+          ]
+        },
+        "reset_topcode": {
+          "v_drv_V": 0.989439,
+          "dV_static_ref_mV": 39.1857,
+          "occupancy": [
+            {
+              "pattern": "far_only",
+              "n_active": 1,
+              "v_far_V": 0.950253,
+              "dV_far_mV": 39.1857,
+              "extra_over_static_mV": 0.0,
+              "extra_over_static_u": 0.0,
+              "worst_row": 64,
+              "worst_row_V": 0.950253,
+              "worst_dV_mV": 39.1857
+            },
+            {
+              "pattern": "sparse_1_in_8",
+              "n_active": 8,
+              "v_far_V": 0.830616,
+              "dV_far_mV": 158.8225,
+              "extra_over_static_mV": 119.6368,
+              "extra_over_static_u": 5.10963,
+              "worst_row": 64,
+              "worst_row_V": 0.830616,
+              "worst_dV_mV": 158.8225
+            },
+            {
+              "pattern": "checker_1_in_2",
+              "n_active": 32,
+              "v_far_V": 0.561867,
+              "dV_far_mV": 427.5721,
+              "extra_over_static_mV": 388.3864,
+              "extra_over_static_u": 16.58779,
+              "worst_row": 64,
+              "worst_row_V": 0.561867,
+              "worst_dV_mV": 427.5721
+            },
+            {
+              "pattern": "all_rows",
+              "n_active": 64,
+              "v_far_V": 0.370934,
+              "dV_far_mV": 618.5054,
+              "extra_over_static_mV": 579.3197,
+              "extra_over_static_u": 24.74245,
+              "worst_row": 64,
+              "worst_row_V": 0.370934,
+              "worst_dV_mV": 618.5054
+            }
+          ]
+        }
+      },
+      "multicell_settle_check": {
+        "pattern": "checker_1_in_2",
+        "n_active": 32,
+        "C_source": "MEASURED",
+        "v_final_V": 0.508683,
+        "t_settle_ns": 0.0,
+        "settle_margin_x": Infinity,
+        "note": "checkerboard far-node reaches its (sagged) DC value inside the pulse -> the data-dependence is a steady IR/resistive effect, not an RC-bandwidth one; the sag itself is what the row-sequential schedule exists to avoid"
+      }
+    },
+    "256": {
+      "static_far_dV_mV": 126.83653097345132,
+      "static_far_u_off": 5.4171235574208305,
+      "patterns": {
+        "write_midcode": {
+          "v_drv_V": 0.895783,
+          "dV_static_ref_mV": 126.8365,
+          "occupancy": [
+            {
+              "pattern": "far_only",
+              "n_active": 1,
+              "v_far_V": 0.768946,
+              "dV_far_mV": 126.8365,
+              "extra_over_static_mV": 0.0,
+              "extra_over_static_u": 0.0,
+              "worst_row": 256,
+              "worst_row_V": 0.768946,
+              "worst_dV_mV": 126.8365
+            },
+            {
+              "pattern": "sparse_1_in_8",
+              "n_active": 32,
+              "v_far_V": 0.172304,
+              "dV_far_mV": 723.4794,
+              "extra_over_static_mV": 596.6429,
+              "extra_over_static_u": 25.48231,
+              "worst_row": 256,
+              "worst_row_V": 0.172304,
+              "worst_dV_mV": 723.4794
+            },
+            {
+              "pattern": "checker_1_in_2",
+              "n_active": 128,
+              "v_far_V": 0.017784,
+              "dV_far_mV": 877.9994,
+              "extra_over_static_mV": 751.1629,
+              "extra_over_static_u": 32.08179,
+              "worst_row": 256,
+              "worst_row_V": 0.017784,
+              "worst_dV_mV": 877.9994
+            },
+            {
+              "pattern": "all_rows",
+              "n_active": 256,
+              "v_far_V": 0.002665,
+              "dV_far_mV": 893.118,
+              "extra_over_static_mV": 766.2815,
+              "extra_over_static_u": 32.72749,
+              "worst_row": 256,
+              "worst_row_V": 0.002665,
+              "worst_dV_mV": 893.118
+            }
+          ]
+        },
+        "reset_topcode": {
+          "v_drv_V": 0.989439,
+          "dV_static_ref_mV": 140.0976,
+          "occupancy": [
+            {
+              "pattern": "far_only",
+              "n_active": 1,
+              "v_far_V": 0.849341,
+              "dV_far_mV": 140.0976,
+              "extra_over_static_mV": 0.0,
+              "extra_over_static_u": 0.0,
+              "worst_row": 256,
+              "worst_row_V": 0.849341,
+              "worst_dV_mV": 140.0976
+            },
+            {
+              "pattern": "sparse_1_in_8",
+              "n_active": 32,
+              "v_far_V": 0.190318,
+              "dV_far_mV": 799.1208,
+              "extra_over_static_mV": 659.0232,
+              "extra_over_static_u": 28.14654,
+              "worst_row": 256,
+              "worst_row_V": 0.190318,
+              "worst_dV_mV": 799.1208
+            },
+            {
+              "pattern": "checker_1_in_2",
+              "n_active": 128,
+              "v_far_V": 0.019643,
+              "dV_far_mV": 969.7961,
+              "extra_over_static_mV": 829.6985,
+              "extra_over_static_u": 35.436,
+              "worst_row": 256,
+              "worst_row_V": 0.019643,
+              "worst_dV_mV": 969.7961
+            },
+            {
+              "pattern": "all_rows",
+              "n_active": 256,
+              "v_far_V": 0.002944,
+              "dV_far_mV": 986.4954,
+              "extra_over_static_mV": 846.3978,
+              "extra_over_static_u": 36.14922,
+              "worst_row": 256,
+              "worst_row_V": 0.002944,
+              "worst_dV_mV": 986.4954
+            }
+          ]
+        }
+      },
+      "multicell_settle_check": {
+        "pattern": "checker_1_in_2",
+        "n_active": 128,
+        "C_source": "MEASURED",
+        "v_final_V": 0.017784,
+        "t_settle_ns": 0.0,
+        "settle_margin_x": Infinity,
+        "note": "checkerboard far-node reaches its (sagged) DC value inside the pulse -> the data-dependence is a steady IR/resistive effect, not an RC-bandwidth one; the sag itself is what the row-sequential schedule exists to avoid"
+      }
+    }
+  }
+}
