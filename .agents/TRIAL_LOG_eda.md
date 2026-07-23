@@ -361,6 +361,34 @@ rather than decorative -- p_success here is a threshold-hit rate at a reference 
 ground-state success probability -- and both dynamics beat the reference symmetrically, so the
 comparison itself is unaffected.
 
+## 2026-07-23 RX-14: reusing the precision write buffer for the reverse reset path leaves the level drifting across the pulse
+
+Tried: driving the bipolar-reset H-bridge (two CMOS-inverter half-bridges around the SOT branch,
+reset = com HIGH / wr LOW) from the SAME regulated two-stage write buffer + current-steering that
+update_energy.py uses for the forward write, with the feedback node steered com<->wrr instead of
+wr<->wrr. The write path settles its flat top to within +3..8 mV inside the 0.75 ns pulse (the W6
+trial-log entry), so the reverse path was expected to do the same.
+Symptom: the delivered reverse level does NOT settle within 0.75 ns -- it drifts monotonically
+UPWARD across the whole plateau. At 8 fingers/switch it starts at |V_sot| = 0.891 V and ramps to
+0.989 V (drift +98 mV); at 16 fingers it starts at 0.971 V and ramps to 1.087 V (drift +116 mV,
+overshooting the DC target). The DC operating point is clean (v_com regulates to 0.998 V, v_sot =
+0.985 V), so the loop is stable but its settling time exceeds the pulse. Diagnosis: the reverse
+current path has TWO series switches (right-leg high-side HS_R + left-leg low-side LS_L) and BOTH
+the com and wr nodes swing, versus the write path's single enable TG with com hard-grounded. The
+extra high-impedance node (com) adds a pole the write compensation (Ccm = 2 pF Miller cap sized for
+the one-node write load) does not cover, so phase margin drops and the closed loop needs > 0.75 ns
+to settle -- more fingers lower R and raise loop gain, turning the slow ramp into an overshoot.
+Fix (design correction, not a typo): a reset only has to SATURATE the AP->P transition, not deliver
+the write's analog sigmoid voltage, so the H-bridge is driven from a FIXED reverse rail instead of
+the precision feedback buffer. Auto-tuning the rail (secant on Vrail; V_sot is sub-linear in Vrail
+because the HS_R PMOS source-degenerates as the rail drops) to Vrail = 1.206 V delivers |V_sot| =
+0.9985 V FLAT (settle 0.089 ns, plateau spread < 0.1 mV). E_dev = 0.9885 pJ then matches the proxy
+top-code device Ohmic 0.9943 pJ (the SOT branch is polarity-symmetric), and the reset energy is
+cleanly separable into device / two-switch conduction / right-leg shoot-through / gate drive. The
+shared write buffer static P_buf is unchanged (it is still on for the write); the reverse-rail
+reset energy is ADDED to the supply-true accounting rather than being contained in P_buf as the
+positive proxy was via steering.
+
 ## 2026-07-23 RX-13: write-line settling read out over a window that included the post-pulse fall
 
 Tried: rc_transient.py measured the met2 far-node settling by driving a 0.75 ns PULSE into the

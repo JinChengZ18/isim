@@ -1,0 +1,210 @@
+{
+  "_label": "RX-14 MEASURED (ngspice tran, sky130 tt, schematic-level, first-cut sizing): bipolar H-bridge AP->P reset (fixed reverse rail) replacing the same-amplitude positive Ohmic proxy of update_energy.py. Write pulse / read / statics / timing carried over unchanged. Shape matches update_energy_summary.json so reproject_hw --energy-json consumes it.",
+  "rng": {
+    "seeds": [],
+    "note": "deterministic transients; no stochastic element"
+  },
+  "provenance": {
+    "reused_update_energy": "update_energy_summary.json",
+    "fingers_per_switch": 8,
+    "v_target_V": 0.9985,
+    "note": "H-bridge = two CMOS-inverter half-bridges around the SOT branch; reset drives com HIGH, wr LOW; only the right leg toggles per reset. Driven from a fixed reverse rail (a reset needs saturation, not the write's analog precision). The device Ohmic branch is polarity-symmetric so E_dev equals the proxy at matched magnitude; overhead = second series switch + right-leg shoot-through + gate drive."
+  },
+  "buffered_drift": {
+    "label": "DOCUMENTED_FAILURE",
+    "note": "Naive reuse of the update_energy precision write buffer + steering for the reverse path leaves the delivered level DRIFTING across the 0.75 ns plateau (write loop mistuned for the 2-switch reverse path). See .agents/TRIAL_LOG_eda.md. Reset therefore driven from a fixed rail.",
+    "runs": [
+      {
+        "fingers": 8,
+        "vsot_start_V": 0.8906,
+        "vsot_end_V": 0.98855,
+        "vsot_flat_mean_V": 0.94114,
+        "plateau_drift_mV": 97.95
+      },
+      {
+        "fingers": 16,
+        "vsot_start_V": 0.97064,
+        "vsot_end_V": 1.08677,
+        "vsot_flat_mean_V": 1.04675,
+        "plateau_drift_mV": 116.12
+      }
+    ]
+  },
+  "proxy": {
+    "reset_per_pulse_pJ": 1.2445,
+    "e_dev_top_pJ": 0.9943,
+    "e_tg_top_pJ": 0.2502,
+    "e_drvstage_top_pJ": 0.5881,
+    "delivered_vwr_V": 0.99852
+  },
+  "hbridge_reset": {
+    "label": "MEASURED",
+    "primary": {
+      "vrail": 1.20566,
+      "fingers": 8,
+      "e_dev_pJ": 0.9885,
+      "e_hs_pJ": 0.1778,
+      "e_ls_pJ": 0.0258,
+      "e_switch_pJ": 0.2036,
+      "e_rail_pJ": 1.3132,
+      "e_gate_pJ": 0.16995,
+      "e_shoot_pJ": 0.1212,
+      "vsot_flat_mean_V": 0.99854,
+      "vsot_flat_min_V": 0.99853,
+      "vsot_flat_max_V": 0.99854,
+      "vcom_flat_mean_V": 1.02458,
+      "vwr_flat_mean_V": 0.02605,
+      "u_flat_mean": 4.388,
+      "reset_settle_ns": 0.089,
+      "i_rail_flat_mA": 1.3913,
+      "i_rail_idle_uA": 0.0,
+      "p_bridge_idle_uW": 0.0
+    },
+    "size_variant_f16": {
+      "vrail": 1.11913,
+      "fingers": 16,
+      "e_dev_pJ": 0.9939,
+      "e_hs_pJ": 0.0985,
+      "e_ls_pJ": 0.0128,
+      "e_switch_pJ": 0.1113,
+      "e_rail_pJ": 1.2633,
+      "e_gate_pJ": 0.35049,
+      "e_shoot_pJ": 0.1581,
+      "vsot_flat_mean_V": 0.99858,
+      "vsot_flat_min_V": 0.99854,
+      "vsot_flat_max_V": 0.99858,
+      "vcom_flat_mean_V": 1.01143,
+      "vwr_flat_mean_V": 0.01285,
+      "u_flat_mean": 4.39,
+      "reset_settle_ns": 0.107,
+      "i_rail_flat_mA": 1.3901,
+      "i_rail_idle_uA": 0.0,
+      "p_bridge_idle_uW": 0.0
+    },
+    "reset_per_pulse_gated_pJ": 1.4832,
+    "reset_ratio_vs_proxy": 1.1918,
+    "overhead_breakdown": {
+      "e_dev_pJ": 0.9885,
+      "e_switch_pJ": 0.2036,
+      "e_shoot_pJ": 0.1212,
+      "e_gate_pJ": 0.16995,
+      "second_switch_vs_single_tg": "proxy single enable TG E_tg=0.2502 pJ; H-bridge two series switches E_switch=0.2036 pJ"
+    },
+    "note": "E_dev matches proxy (Ohmic, polarity-symmetric). E_shoot is the right-leg crowbar drawn from the rail during the wep edges; E_gate is the switch gate-charge from VDD."
+  },
+  "write_pulse": {
+    "label": "CARRIED_FROM_UPDATE_ENERGY",
+    "top": {
+      "code": 63,
+      "e_dev_pJ": 0.9943,
+      "e_tg_pJ": 0.2502,
+      "e_drvstage_pJ": 0.5881,
+      "vwr_flat_mean_V": 0.99852,
+      "vwr_flat_min_V": 0.9919,
+      "vwr_flat_max_V": 1.00565,
+      "u_flat_mean": 4.388,
+      "i_vdd_idle_mA": 1.8784,
+      "i_vdd_pulse_mA": 1.8761
+    },
+    "mid": {
+      "code": 32,
+      "e_dev_pJ": 0.8081,
+      "e_tg_pJ": 0.2426,
+      "e_drvstage_pJ": 0.5972,
+      "vwr_flat_mean_V": 0.90099,
+      "vwr_flat_min_V": 0.8974,
+      "vwr_flat_max_V": 0.90431,
+      "u_flat_mean": 0.222,
+      "i_vdd_idle_mA": 1.5935,
+      "i_vdd_pulse_mA": 1.5932
+    },
+    "e_write_pulse_pJ": 1.0507,
+    "note": "reset only; write pulse kept unipolar per RX-14 spec"
+  },
+  "buffer_static": {
+    "label": "CARRIED",
+    "p_buf_W": 0.0028684,
+    "note": "write buffer static unchanged (shared, on for the write)"
+  },
+  "dac_static": {
+    "label": "CARRIED",
+    "p_string_W": 5.4822e-06,
+    "formula": "(Vhi-Vlo)^2/(2^6*R_unit) with rails [0.802127,0.989439] V, R_unit=100 ohm"
+  },
+  "read": {
+    "label": "CARRIED",
+    "e_read_pJ": 0.11913
+  },
+  "timing_model": {
+    "formula": "t_update = (k+1)*(TW+t_gap) + t_settle + t_read (unchanged)",
+    "tw_ns": 0.75,
+    "t_gap_ns": 0.25,
+    "t_read_ns": 1.0,
+    "t_settle_ns": 9.015,
+    "pulse_window_ns": 0.85,
+    "note": "fixed-rail reset settles within the 0.75 ns pulse (reset_settle_ns=0.089), so no extra t_update; DAC-recode settle unchanged"
+  },
+  "update_energy_model": {
+    "formula": "e_update(k) = k*(bipolar reset per pulse) + (write pulse) + E_read + statics; reset per pulse = E_dev+E_switch+E_shoot+E_gate (gated); supply-true = (P_buf+P_string)*t_update + E_read",
+    "reset_per_pulse_proxy_pJ": 1.2445,
+    "reset_per_pulse_hbridge_pJ": 1.4832,
+    "e_read_used": "carried from update_energy read.e_read_pJ"
+  },
+  "table": [
+    {
+      "k": 1,
+      "t_update_ns": 12.015,
+      "e_pulses_pJ": 2.5339,
+      "e_read_pJ": 0.1191,
+      "statics_always_on_pJ": 34.53,
+      "statics_gated_pJ": 4.886,
+      "e_update_always_on_pJ": 37.183,
+      "e_update_gated_pJ": 7.539,
+      "e_update_supply_true_pJ": 35.962
+    },
+    {
+      "k": 2,
+      "t_update_ns": 13.015,
+      "e_pulses_pJ": 4.0172,
+      "e_read_pJ": 0.1191,
+      "statics_always_on_pJ": 37.404,
+      "statics_gated_pJ": 7.328,
+      "e_update_always_on_pJ": 41.54,
+      "e_update_gated_pJ": 11.465,
+      "e_update_supply_true_pJ": 40.149
+    },
+    {
+      "k": 3,
+      "t_update_ns": 14.015,
+      "e_pulses_pJ": 5.5004,
+      "e_read_pJ": 0.1191,
+      "statics_always_on_pJ": 40.277,
+      "statics_gated_pJ": 9.771,
+      "e_update_always_on_pJ": 45.897,
+      "e_update_gated_pJ": 15.391,
+      "e_update_supply_true_pJ": 44.336
+    },
+    {
+      "k": 4,
+      "t_update_ns": 15.015,
+      "e_pulses_pJ": 6.9837,
+      "e_read_pJ": 0.1191,
+      "statics_always_on_pJ": 43.151,
+      "statics_gated_pJ": 12.214,
+      "e_update_always_on_pJ": 50.254,
+      "e_update_gated_pJ": 19.317,
+      "e_update_supply_true_pJ": 48.523
+    },
+    {
+      "k": 5,
+      "t_update_ns": 16.015,
+      "e_pulses_pJ": 8.467,
+      "e_read_pJ": 0.1191,
+      "statics_always_on_pJ": 46.025,
+      "statics_gated_pJ": 14.657,
+      "e_update_always_on_pJ": 54.611,
+      "e_update_gated_pJ": 23.243,
+      "e_update_supply_true_pJ": 52.71
+    }
+  ]
+}
