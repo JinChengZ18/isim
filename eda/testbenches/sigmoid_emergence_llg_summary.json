@@ -1,0 +1,281 @@
+{
+  "_label": "RX-12 sigmoid emergence under the real transient write pulse; macrospin LLG (vendored Chapter-2 vgsot_llg.va, Linux-recompiled OSDI) + Brown-1963 thermal field via hx/hy/hz; ALL P_sw SIMULATED (macrospin), compared to the harness-assumed STATIC sigmoid sigma((V_flat-Vth)/VT) at the same DC flat-top.",
+  "direction": "P->AP (write), positive V(sot_p,sot_n)",
+  "flat_tops_source": "update_chain_summary.json per_bits['6'].transfer (DC .op MEASURED v_wr)",
+  "anchors": {
+    "vth": 0.895783,
+    "vt": 0.023414,
+    "inv_vt_per_V": 42.709,
+    "r_sot": 776.0
+  },
+  "pulse": {
+    "tw_ns": 0.75,
+    "tr_ns": 0.05,
+    "tail_ns": 1.5,
+    "t_pulse_end_ns": 1.05,
+    "t_end_ns": 2.55,
+    "ic": "P state: mx=0.141 my=0 mz=+0.99",
+    "classify": "P: mz>+0.2, AP: mz<-0.2; P_sw = frac ending AP (final sample)"
+  },
+  "n_seeds": 800,
+  "master_seed": 20260723,
+  "h_th_per_axis_Apm": 25567.428900702584,
+  "t_step_s": 1e-12,
+  "wall_total_s": 956.8,
+  "n_failed_runs": 0,
+  "per_code": [
+    {
+      "code": 7,
+      "v_wr": 0.8257677,
+      "u": -2.99032,
+      "i_sot_mA": 1.0641,
+      "n": 800,
+      "n_ambiguous": 7,
+      "n_switched": 49,
+      "p_sw_emp": 0.0612,
+      "ci": [
+        0.0466,
+        0.0801
+      ],
+      "sigma_static": 0.0479,
+      "dev_prob": 0.0134,
+      "u_emp_equiv": -2.7296,
+      "dev_u": 0.2607,
+      "p_sw_pulse_end": 0.02,
+      "p_sw_early_relax": 0.0612
+    },
+    {
+      "code": 11,
+      "v_wr": 0.8377154,
+      "u": -2.48004,
+      "i_sot_mA": 1.0795,
+      "n": 800,
+      "n_ambiguous": 9,
+      "n_switched": 51,
+      "p_sw_emp": 0.0638,
+      "ci": [
+        0.0488,
+        0.0829
+      ],
+      "sigma_static": 0.0773,
+      "dev_prob": -0.0135,
+      "u_emp_equiv": -2.6869,
+      "dev_u": -0.2069,
+      "p_sw_pulse_end": 0.0312,
+      "p_sw_early_relax": 0.0525
+    },
+    {
+      "code": 15,
+      "v_wr": 0.8496857,
+      "u": -1.96879,
+      "i_sot_mA": 1.095,
+      "n": 800,
+      "n_ambiguous": 11,
+      "n_switched": 56,
+      "p_sw_emp": 0.07,
+      "ci": [
+        0.0543,
+        0.0898
+      ],
+      "sigma_static": 0.1225,
+      "dev_prob": -0.0525,
+      "u_emp_equiv": -2.5867,
+      "dev_u": -0.6179,
+      "p_sw_pulse_end": 0.0238,
+      "p_sw_early_relax": 0.0675
+    },
+    {
+      "code": 20,
+      "v_wr": 0.864686,
+      "u": -1.32814,
+      "i_sot_mA": 1.1143,
+      "n": 800,
+      "n_ambiguous": 12,
+      "n_switched": 76,
+      "p_sw_emp": 0.095,
+      "ci": [
+        0.0766,
+        0.1173
+      ],
+      "sigma_static": 0.2095,
+      "dev_prob": -0.1145,
+      "u_emp_equiv": -2.2541,
+      "dev_u": -0.9259,
+      "p_sw_pulse_end": 0.0238,
+      "p_sw_early_relax": 0.0887
+    },
+    {
+      "code": 24,
+      "v_wr": 0.8767221,
+      "u": -0.81408,
+      "i_sot_mA": 1.1298,
+      "n": 800,
+      "n_ambiguous": 13,
+      "n_switched": 109,
+      "p_sw_emp": 0.1363,
+      "ci": [
+        0.1142,
+        0.1618
+      ],
+      "sigma_static": 0.307,
+      "dev_prob": -0.1708,
+      "u_emp_equiv": -1.8468,
+      "dev_u": -1.0327,
+      "p_sw_pulse_end": 0.0338,
+      "p_sw_early_relax": 0.1225
+    },
+    {
+      "code": 30,
+      "v_wr": 0.894851,
+      "u": -0.03981,
+      "i_sot_mA": 1.1532,
+      "n": 800,
+      "n_ambiguous": 22,
+      "n_switched": 150,
+      "p_sw_emp": 0.1875,
+      "ci": [
+        0.162,
+        0.216
+      ],
+      "sigma_static": 0.49,
+      "dev_prob": -0.3025,
+      "u_emp_equiv": -1.4663,
+      "dev_u": -1.4265,
+      "p_sw_pulse_end": 0.0462,
+      "p_sw_early_relax": 0.1663
+    },
+    {
+      "code": 34,
+      "v_wr": 0.9069996,
+      "u": 0.47906,
+      "i_sot_mA": 1.1688,
+      "n": 800,
+      "n_ambiguous": 19,
+      "n_switched": 196,
+      "p_sw_emp": 0.245,
+      "ci": [
+        0.2165,
+        0.276
+      ],
+      "sigma_static": 0.6175,
+      "dev_prob": -0.3725,
+      "u_emp_equiv": -1.1255,
+      "dev_u": -1.6045,
+      "p_sw_pulse_end": 0.075,
+      "p_sw_early_relax": 0.2213
+    },
+    {
+      "code": 39,
+      "v_wr": 0.9222766,
+      "u": 1.13153,
+      "i_sot_mA": 1.1885,
+      "n": 800,
+      "n_ambiguous": 29,
+      "n_switched": 228,
+      "p_sw_emp": 0.285,
+      "ci": [
+        0.2548,
+        0.3173
+      ],
+      "sigma_static": 0.7561,
+      "dev_prob": -0.4711,
+      "u_emp_equiv": -0.9198,
+      "dev_u": -2.0513,
+      "p_sw_pulse_end": 0.0725,
+      "p_sw_early_relax": 0.2612
+    },
+    {
+      "code": 45,
+      "v_wr": 0.940789,
+      "u": 1.92218,
+      "i_sot_mA": 1.2124,
+      "n": 800,
+      "n_ambiguous": 27,
+      "n_switched": 293,
+      "p_sw_emp": 0.3663,
+      "ci": [
+        0.3336,
+        0.4002
+      ],
+      "sigma_static": 0.8724,
+      "dev_prob": -0.5061,
+      "u_emp_equiv": -0.5483,
+      "dev_u": -2.4705,
+      "p_sw_pulse_end": 0.0788,
+      "p_sw_early_relax": 0.3375
+    },
+    {
+      "code": 51,
+      "v_wr": 0.9595844,
+      "u": 2.72493,
+      "i_sot_mA": 1.2366,
+      "n": 800,
+      "n_ambiguous": 47,
+      "n_switched": 318,
+      "p_sw_emp": 0.3975,
+      "ci": [
+        0.3642,
+        0.4318
+      ],
+      "sigma_static": 0.9385,
+      "dev_prob": -0.541,
+      "u_emp_equiv": -0.4159,
+      "dev_u": -3.1408,
+      "p_sw_pulse_end": 0.0688,
+      "p_sw_early_relax": 0.3875
+    },
+    {
+      "code": 57,
+      "v_wr": 0.9788141,
+      "u": 3.54622,
+      "i_sot_mA": 1.2614,
+      "n": 800,
+      "n_ambiguous": 53,
+      "n_switched": 371,
+      "p_sw_emp": 0.4637,
+      "ci": [
+        0.4294,
+        0.4984
+      ],
+      "sigma_static": 0.972,
+      "dev_prob": -0.5082,
+      "u_emp_equiv": -0.1453,
+      "dev_u": -3.6915,
+      "p_sw_pulse_end": 0.0688,
+      "p_sw_early_relax": 0.435
+    },
+    {
+      "code": 63,
+      "v_wr": 0.9987386,
+      "u": 4.39718,
+      "i_sot_mA": 1.287,
+      "n": 800,
+      "n_ambiguous": 50,
+      "n_switched": 454,
+      "p_sw_emp": 0.5675,
+      "ci": [
+        0.5329,
+        0.6014
+      ],
+      "sigma_static": 0.9878,
+      "dev_prob": -0.4203,
+      "u_emp_equiv": 0.2717,
+      "dev_u": -4.1255,
+      "p_sw_pulse_end": 0.0737,
+      "p_sw_early_relax": 0.535
+    }
+  ],
+  "deviation": {
+    "max_abs_dev_prob": 0.541,
+    "max_abs_dev_prob_code": 51,
+    "max_abs_dev_u": 4.1255,
+    "mean_dev_prob": -0.2883,
+    "all_dev_prob_same_sign": false,
+    "affine_fit": {
+      "slope_a": 0.431,
+      "intercept_b": -1.5356,
+      "max_abs_resid_u": 0.2036,
+      "note": "u_emp = a*u + b; a~1,b!=0 => pure Vth shift (b*VT), a!=1 => VT (window) rescale, poor fit / saturation => finite-time plateau not recalibratable"
+    }
+  }
+}
