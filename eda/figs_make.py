@@ -551,6 +551,52 @@ def panel_schematic(ax):
 
 
 # ------------------------------------------------------------- assembly ---
+# ---- figure 3.3: sMTJ-Gibbs vs classical SA, TTS_99 (results_rerun batch,
+# the same numbers as 表3.3; warm purple + orange to match the neighbouring
+# user-composed figures 3.1-3.8) ------------------------------------------
+RR = ROOT / "results_rerun"
+TTS_PURPLE = TP["primary"]
+TTS_ORANGE = TP["accent_lt"]
+
+
+def _tts_bars(ax, csv_path, labels, title, log=True):
+    rows = {r["instance"]: r for r in cload(csv_path)}
+    keys = [k for k, _ in labels if k in rows
+            and rows[k]["tts99_smtj"] not in ("inf", "")]
+    x = np.arange(len(keys))
+    smtj = [float(rows[k]["tts99_smtj"]) for k in keys]
+    sa = [float(rows[k]["tts99_sa"]) for k in keys]
+    ax.bar(x - 0.2, smtj, 0.38, color=TTS_PURPLE, label="sMTJ-Gibbs")
+    ax.bar(x + 0.2, sa, 0.38, color=TTS_ORANGE,
+           label="Classical SA (Metropolis)")
+    if log:
+        ax.set_yscale("log")
+    ax.set_xticks(x)
+    ax.set_xticklabels([dict(labels)[k] for k in keys])
+    ax.set_ylabel(r"TTS$_{99}$ (s)")
+    ax.set_title(title)
+    ax.legend(frameon=False, fontsize=11)
+
+
+def panel_tts_factor(ax):
+    lab = [(f"factor_M{m}", f"M={m}")
+           for m in (15, 21, 33, 35, 51, 65, 77, 91, 143)]
+    _tts_bars(ax, RR / "results_compare_factor" / "summary.csv", lab,
+              "Integer factoring targets")
+
+
+def panel_tts_maxcut(ax):
+    lab = [("G1", "G1"), ("G22", "G22")]      # G14 is inf, dropped
+    _tts_bars(ax, RR / "results_compare_maxcut" / "summary.csv", lab,
+              "Max-Cut instances")
+
+
+def panel_tts_tsp(ax):
+    lab = [("burma14", "burma14"), ("ulysses16", "ulysses16")]
+    _tts_bars(ax, RR / "results_compare_tsp" / "summary.csv", lab,
+              "TSP instances", log=False)
+
+
 PANELS = {
     "chain_schematic": (panel_schematic, (10.4, 5.9)),
     "chain_transfer": (panel_transfer, (5.2, 3.6)),
@@ -570,9 +616,17 @@ PANELS = {
     # RX-11; a Section 3.3 algorithm-layer panel, so it belongs to none of the
     # three circuit composites; the chapter session decides its slot
     "density_sweep": (panel_density_sweep, (5.6, 3.8)),
+    "tts_factor": (panel_tts_factor, (10.6, 3.4)),
+    "tts_maxcut": (panel_tts_maxcut, (5.2, 3.6)),
+    "tts_tsp": (panel_tts_tsp, (5.2, 3.6)),
 }
 
 COMPOSITES = {
+    "preview_07.png": [  # (a) factoring (b) maxcut (c) tsp (d) density
+        ["tts_factor", "tts_factor"],
+        ["tts_maxcut", "tts_tsp"],
+        ["density_sweep", "density_sweep"],
+    ],
     "preview_09.png": [  # (a) schematic (b) transfer (c) waveform (d) corners
         ["chain_schematic", "chain_schematic"],
         ["chain_transfer", "chain_waveform"],

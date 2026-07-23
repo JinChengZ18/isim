@@ -42,6 +42,12 @@ CROP_PAD = 8
 # one slide per figure; panels named <key>.png in figs_raw/, letters assigned
 # left-to-right, top-to-bottom in caption reading order.
 FIGURES = [
+    # figure 3.3 lives in image file Chapter03_local_07.png (the number->file
+    # map is scrambled for the user-composed 3.1-3.8); rebuilt here with a new
+    # RX-11 density panel (d).
+    {"num": 7,  "rows": [["tts_factor"],
+                         ["tts_maxcut", "tts_tsp"],
+                         ["density_sweep"]]},
     {"num": 9,  "rows": [["chain_schematic"],
                          ["chain_transfer", "chain_waveform"],
                          ["chain_corners"]]},
