@@ -104,6 +104,10 @@ content OUT of here; this directory never ships.
   a switching-mode driver as the lever, and fig 3.11(e) was replotted.
   ALL P0/P1/P2 QUEUE ITEMS ARE NOW CLOSED; only the four P3 items
   (RX-12..RX-15, future-work grade) remain open.
+- 2026-07-23: RX-15 DONE (a3ddd07) — §3.3.2 bit-budget confirmed on 3
+  more semiprimes; §3.3.3 permutation p_s=1 shown to be n<=17 only
+  (best still hits/near-hits opt at n=48-100, per-trial p_s 0.08-0.24).
+  Fourth P3 item (RX-12/13/14) still running as background agents.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)

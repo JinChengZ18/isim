@@ -398,7 +398,7 @@ item's Decision rule.
   story weakens further (V_T-normalized results unaffected).
 
 ### RX-15 Encoding-side generality (factoring bit budget + permutation scale)
-- Status: claimed 2026-07-23 session-1b46cb68-loop. Effort: 0.5-1 day each. Deps: none.
+- Status: done 2026-07-23 -> bench_perm_scale.py, results_rerun/{results_factor_ablation_M93,_M129,_M115,results_perm_scale}/, tsplib/{att48,eil51,kroA100}.tsp, 3.3.2 + 3.3.3 body/小结 + 3.6 (commit a3ddd07). OUTCOME: (a) "冗余比特有害" reproduces on M=93/129/115 (peak at min-cover b_q, p_s=0 one below, diluted above) — §3.3.2 claim confirmed. (b) permutation p_s=1.00 is n<=17 only; at T=5000 best still hits opt on att48/eil51 and is within 0.05% on kroA100, but per-trial p_s falls to 0.16/0.24/0.08 — the qualitative jump over QUBO survives (QUBO p_s=0 there) but "p_s=1" scoped to small n. Optima verified vs Heidelberg table; att48 ATT metric handled by loader. Effort: 0.5-1 day each. Deps: none.
 - (a) repeat the §3.3.2 b_q sweep on M in {93, 129, 115} (3x31, 3x43,
   5x23); (b) push perm_tsp to att48/eil51/kroA100 at matched sweeps.
   Decision: confirms or size-qualifies the §3.3.2 "冗余比特有害" and
