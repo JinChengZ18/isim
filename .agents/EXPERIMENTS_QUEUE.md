@@ -390,7 +390,7 @@ item's Decision rule.
   gets a bandwidth qualifier; else validating sentence.
 
 ### RX-14 H-bridge bipolar reset driver
-- Status: claimed 2026-07-23 session-1b46cb68-loop. Effort: 2-3 days. Deps: RX-03 useful.
+- Status: done 2026-07-23 -> eda/testbenches/{hbridge_reset.py,hbridge_reset_summary.json}, eda/interface/results_reproject_hbridge/, 3.5.4 reset line + 3.5.6 caveat + [^process-hbridge] (commit 1dc9c38). OUTCOME: bipolar reset = 1.48 pJ/pulse vs proxy 1.24 (+19%: 2nd series switch conduction 0.20, right-leg shoot-through 0.12, gate drive 0.17, negligible idle static). e_update +4-5% at k=2-3, G22 projection 18.7x->19.66x, TTS unchanged (settles in-pulse), V_T ratios unaffected. Real design correction footnoted (write buffer reuse drifts +98-116 mV -> fixed reverse rail). Effort: 2-3 days. Deps: RX-03 useful.
 - Minimal sky130 H-bridge around the OSDI SOT branch reusing the steering
   scaffolding; true bipolar reset energy + settling -> reassemble
   e_update(k), re-run reproject. Decision: replaces the §3.5.5 "energy

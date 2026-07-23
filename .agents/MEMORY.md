@@ -112,6 +112,10 @@ content OUT of here; this directory never ships.
   (130x margin), static IR model validated, no bandwidth qualifier;
   multi-cell same-line coupling (+15..+32 u) is the physical reason the
   schedule must be row-sequential. RX-12/RX-14 agents still running.
+- 2026-07-23: RX-14 DONE (1dc9c38) — H-bridge bipolar reset measured:
+  1.48 pJ/pulse (+19% vs proxy), e_update +4-5% at k=2-3, G22 projection
+  18.7x->19.66x, TTS/V_T-ratios unchanged. 3.5.6 caveat upgraded from
+  "not implemented" to measured. Only RX-12 (LLG sigmoid) still running.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
