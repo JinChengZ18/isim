@@ -116,6 +116,28 @@ content OUT of here; this directory never ships.
   1.48 pJ/pulse (+19% vs proxy), e_update +4-5% at k=2-3, G22 projection
   18.7x->19.66x, TTS/V_T-ratios unchanged. 3.5.6 caveat upgraded from
   "not implemented" to measured. Only RX-12 (LLG sigmoid) still running.
+- 2026-07-23: RX-12 DONE (159ec07) — macrospin LLG sigmoid-emergence. Under
+  an IDEAL 0.75 ns flat-top at the DC-measured v_wr (no RC), LLG under-
+  switches vs the ch2 measured-calibrated static sigmoid (max |dp|=0.54 @
+  code 51; code 30 emp 0.19 vs 0.49; code 63 emp 0.57 vs 0.99), affine-
+  recalibratable (u_emp=0.43u-1.54, resid ~0.20, ~2.3x window), switching
+  completes in the 1.5 ns relaxation tail (tw~tau0). DECISION="none": no
+  delivered-probability bias — harness draws Bernoulli in Python from the
+  measured sigmoid (ground truth); the deviation is a macrospin-model +
+  finite-pulse effect, and the RX-13 <=5.8 mV un-settled offset is absent
+  from this ideal deck AND too small/wrong-sign (+0.06) to cause a 0.54 gap.
+  -> §3.5.6 replay validating sentence + broadened LLG caveat. SCOPING: deck
+  uses an ideal flat-top, so RX-12 does NOT test the RC transient (RX-13
+  does). ALL RX-01..RX-15 NOW COMPLETE.
+- 2026-07-23 COORDINATION: a parallel session is mid-way through a large
+  uncommitted de-AIGC/restructuring rewrite of article/chapter03.md (~82/123
+  diff vs HEAD, backup chapter03_backup_20260723-195127.md). RX-12's edit
+  landed in §3.5.6 (which their rewrite had NOT reached) and was committed in
+  ISOLATION via the git index (staged only HEAD+RX-12 blob), leaving their
+  rewrite uncommitted on disk for them to commit. IF you are that session and
+  rewrite §3.5.6, PRESERVE the two RX-12 sentences ("平顶电压到翻转概率的映射
+  另经宏自旋LLG…" replay sentence + the broadened LLG caveat clause) — they
+  are in git @159ec07 if lost. docx regen still user-side.
 
 ## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
