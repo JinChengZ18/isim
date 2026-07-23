@@ -375,7 +375,7 @@ item's Decision rule.
 ## P3 — caveat-closing (mostly future-work grade; do after P0-P2)
 
 ### RX-12 Sigmoid emergence under the real transient waveform (LLG)
-- Status: open. Effort: 2-3 days. Deps: RX-05a harness.
+- Status: claimed 2026-07-23 session-1b46cb68-loop. Effort: 2-3 days. Deps: RX-05a harness.
 - Drive the measured V_wr(t) pulse (from update_energy.py wrdata) into the
   LLG engine over many seeds; empirical P_sw vs static sigma((V_flat-Vth)/
   V_T) across codes. Decision: bias found -> §3.5.1's delivered-probability
@@ -383,14 +383,14 @@ item's Decision rule.
   the harness-RNG decoupling (§3.5.5 methodology).
 
 ### RX-13 Write-line RC transient (extract C, data-dependent settling)
-- Status: open. Effort: 2-3 days. Deps: none.
+- Status: claimed 2026-07-23 session-1b46cb68-loop. Effort: 2-3 days. Deps: none.
 - Extend writeline_ir flow to capacitance, build the RC line, transient
   with mixed reset/write row currents in 0.75 ns. Decision: line does not
   settle or drop is data-dependent -> §3.5.3's static-predistortion claim
   gets a bandwidth qualifier; else validating sentence.
 
 ### RX-14 H-bridge bipolar reset driver
-- Status: open. Effort: 2-3 days. Deps: RX-03 useful.
+- Status: claimed 2026-07-23 session-1b46cb68-loop. Effort: 2-3 days. Deps: RX-03 useful.
 - Minimal sky130 H-bridge around the OSDI SOT branch reusing the steering
   scaffolding; true bipolar reset energy + settling -> reassemble
   e_update(k), re-run reproject. Decision: replaces the §3.5.5 "energy
@@ -398,7 +398,7 @@ item's Decision rule.
   story weakens further (V_T-normalized results unaffected).
 
 ### RX-15 Encoding-side generality (factoring bit budget + permutation scale)
-- Status: open. Effort: 0.5-1 day each. Deps: none.
+- Status: claimed 2026-07-23 session-1b46cb68-loop. Effort: 0.5-1 day each. Deps: none.
 - (a) repeat the §3.3.2 b_q sweep on M in {93, 129, 115} (3x31, 3x43,
   5x23); (b) push perm_tsp to att48/eil51/kroA100 at matched sweeps.
   Decision: confirms or size-qualifies the §3.3.2 "冗余比特有害" and
