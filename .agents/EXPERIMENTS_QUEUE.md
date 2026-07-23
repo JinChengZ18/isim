@@ -383,7 +383,7 @@ item's Decision rule.
   the harness-RNG decoupling (§3.5.5 methodology).
 
 ### RX-13 Write-line RC transient (extract C, data-dependent settling)
-- Status: claimed 2026-07-23 session-1b46cb68-loop. Effort: 2-3 days. Deps: none.
+- Status: done 2026-07-23 -> eda/extraction/writeline_ir/{rc_transient.py,rc_transient_summary.json}, 3.5.3 validating sentence + coupling table, 3.5.6 caveat (commit 1d400cb). OUTCOME: POSITIVE — met2 line settles to DC within 0.1V_T in <=5.8 ps (130x margin in the 0.75 ns pulse); static-DC IR model of 3.5.3 confirmed, DC endpoint matches committed static dV to <0.05 uV. NO bandwidth qualifier. Bonus: multi-cell same-column-line drive couples catastrophically (+15..+32 u), so the row-sequential schedule is physically REQUIRED, not a convenience — added as the quantitative justification. Effort: 2-3 days. Deps: none.
 - Extend writeline_ir flow to capacitance, build the RC line, transient
   with mixed reset/write row currents in 0.75 ns. Decision: line does not
   settle or drop is data-dependent -> §3.5.3's static-predistortion claim
