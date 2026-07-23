@@ -1,0 +1,22 @@
+{
+  "_label": "RX-15(b): permutation-space cluster solver at scale; optima verified 2026-07-23 vs Heidelberg TSPLIB95 table",
+  "protocol": {
+    "sweeps": 5000,
+    "beta": [
+      0.1,
+      50.0
+    ],
+    "trials": 100,
+    "opt_tol": 0.01,
+    "master_seed": 2024,
+    "schedule": "geometric"
+  },
+  "optima": {
+    "att48": 10628,
+    "eil51": 426,
+    "kroA100": 21282,
+    "burma14": 3323,
+    "ulysses16": 6859,
+    "gr17": 2085
+  }
+}

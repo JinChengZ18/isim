@@ -1,0 +1,4 @@
+18:57:19 INFO ablation: M=93 bq=4: bp=2, N_spins=7, penalty=8650
+18:57:19 INFO isim: multistart: problem='factor_M93', n_trials=200, n_jobs=12, mode=async_numba, dynamics=gibbs, sweeps=20000, beta0=0.05, betaf=30.0
+18:57:23 INFO isim: multistart done: problem='factor_M93' total_wall=3.2s per_trial_median=0.095s E_min=-22164.5000 E_median=-18384.5000
+18:57:23 INFO ablation:   p_success=0.00% constraint_rate=100.0% TTS99=infs

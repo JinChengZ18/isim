@@ -1,0 +1,4 @@
+18:57:51 INFO ablation: M=115 bq=5: bp=3, N_spins=14, penalty=13226
+18:57:51 INFO isim: multistart: problem='factor_M115', n_trials=200, n_jobs=12, mode=async_numba, dynamics=gibbs, sweeps=20000, beta0=0.05, betaf=30.0
+18:57:55 INFO isim: multistart done: problem='factor_M115' total_wall=3.3s per_trial_median=0.105s E_min=-81182.0000 E_median=-78580.0000
+18:57:55 INFO ablation:   p_success=2.00% constraint_rate=100.0% TTS99=24.03s
