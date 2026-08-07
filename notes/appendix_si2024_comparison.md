@@ -1,3 +1,7 @@
+<!-- 配套的 .docx 已由用户在WPS中手工排版 (重排标题、删去第7节与对照表末行、调整公式)，与本文件已不同步。
+     追加内容时请解包改 word/document.xml 后重新打包 (复用样式 5=小节标题、45=正文、40=Hyperlink字符样式)，
+     切勿用 pandoc 从本文件重新生成 docx——那会覆盖用户的排版。 -->
+
 # 附录：本文与Si等 (2024) 工作的逐项对比
 
 对比对象：Si J, Yang S, Cen Y, et al. Energy-efficient superparamagnetic Ising machine and its application to traveling salesman problems. Nature Communications, 2024, 15: 3457. DOI: 10.1038/s41467-024-47818-z。以下“该文”指此论文，“本文”指本论文 (章节号按修改稿)。

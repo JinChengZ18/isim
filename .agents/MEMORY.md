@@ -165,7 +165,17 @@ content OUT of here; this directory never ships.
   not -1440). IF you are the rewrite session: preserve all these markers
   and the reordered reference list; anchor sentences are identical in both
   versions except the 3.3 preamble Wilson sentence (wording differs per
-  version, both patched). Reviewer letter + docx appendix live in notes/. (LOW nits from the 2026-07-21 acceptance audit — apply
+  version, both patched). Reviewer letter + docx appendix live in notes/.
+- 2026-08-07 (3rd): notes/appendix_si2024_comparison.docx is now HAND-
+  FORMATTED by the user in WPS (headings shortened, §7 + the 统计协议 table
+  row deleted, page break before 对照表) and has DIVERGED from the .md.
+  NEVER regenerate it with pandoc — that clobbers his typesetting (it did
+  once; he pushed back). To add content: unzip HIS docx, edit
+  word/document.xml, rezip. Reuse existing styleIds (3=heading 2,
+  5=heading 3, 45=body First Paragraph, 46=Compact/table, 40=Hyperlink
+  char style); links need TargetMode="External" rels. The 信中所引文献
+  section (15 refs, clickable DOIs) was appended that way and validated
+  with the docx skill's validate.py (50→67 paragraphs). (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
 
 1. 表3.2/3.4/3.5 notes: RX-01's decision rule wanted a CI note at each
