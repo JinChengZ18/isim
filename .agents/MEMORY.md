@@ -169,3 +169,6 @@ content OUT of here; this directory never ships.
    artifacts ARE committed).
 5. `article/figs/Chapter03_local_03(1).png`: untracked user file, likely
    an accidental "(1)" duplicate — ask user / recycle, never commit.
+6. Rewrite-version §3.6 (working tree, ~line 652) uses banned word 落地
+   ("到第一类系统任务的落地") — global CLAUDE.md ban list. Replace with
+   落实 (or 完成…的衔接) when the rewrite session commits its version.
