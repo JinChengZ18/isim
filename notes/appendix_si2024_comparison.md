@@ -48,22 +48,23 @@
 | 阵列约束 | 架构级：串扰可忽略、涨落相位PH1限频 | 电路级：IR压降/校准码域/读出失配/复位回跳定量清单 |
 | 统计协议 | 成功概率+解质量 (95%质量判据) | $p_s$ (Wilson)+$\mathrm{TTS}_{99}$ (自举)+功效审计 |
 
-## 信中所引文献
+## 信与附录所引文献
 
-以下为说明信中提及的全部文献，按信中出现顺序，DOI为可点击链接。
+以下为说明信与本附录提及的全部文献。第1至10条为信中所列新增引文，第11至14条为信中提及的原有引文，第15条为本附录的对比对象，第16条为本附录第3节提及的Peskun排序的出处。
 
 1. Metropolis N, Rosenbluth A W, Rosenbluth M N, et al. Equation of state calculations by fast computing machines[J]. The Journal of Chemical Physics, 1953, 21(6): 1087-1092. DOI: [10.1063/1.1699114](https://doi.org/10.1063/1.1699114).
 2. Glauber R J. Time-dependent statistics of the Ising model[J]. Journal of Mathematical Physics, 1963, 4(2): 294-307. DOI: [10.1063/1.1703954](https://doi.org/10.1063/1.1703954).
 3. Geman S, Geman D. Stochastic relaxation, Gibbs distributions, and the Bayesian restoration of images[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence, 1984, PAMI-6(6): 721-741. DOI: [10.1109/TPAMI.1984.4767596](https://doi.org/10.1109/TPAMI.1984.4767596).
 4. Camsari K Y, Faria R, Sutton B M, et al. Stochastic p-bits for invertible logic[J]. Physical Review X, 2017, 7(3): 031014. DOI: [10.1103/PhysRevX.7.031014](https://doi.org/10.1103/PhysRevX.7.031014).
-5. Camsari K Y, Sutton B M, Datta S. p-bits for probabilistic spin logic[J]. Applied Physics Reviews, 2019, 6(1): 011305. DOI: [10.1063/1.5055860](https://doi.org/10.1063/1.5055860).
-6. Rønnow T F, Wang Z, Job J, et al. Defining and detecting quantum speedup[J]. Science, 2014, 345(6195): 420-424. DOI: [10.1126/science.1252319](https://doi.org/10.1126/science.1252319).
-7. Wilson E B. Probable inference, the law of succession, and statistical inference[J]. Journal of the American Statistical Association, 1927, 22(158): 209-212. DOI: [10.1080/01621459.1927.10502953](https://doi.org/10.1080/01621459.1927.10502953).
-8. Croes G A. A method for solving traveling-salesman problems[J]. Operations Research, 1958, 6(6): 791-812. DOI: [10.1287/opre.6.6.791](https://doi.org/10.1287/opre.6.6.791).
-9. Lin S, Kernighan B W. An effective heuristic algorithm for the traveling-salesman problem[J]. Operations Research, 1973, 21(2): 498-516. DOI: [10.1287/opre.21.2.498](https://doi.org/10.1287/opre.21.2.498).
-10. Pelgrom M J M, Duinmaijer A C J, Welbers A P G. Matching properties of MOS transistors[J]. IEEE Journal of Solid-State Circuits, 1989, 24(5): 1433-1439. DOI: [10.1109/JSSC.1989.572629](https://doi.org/10.1109/JSSC.1989.572629).
-11. Razavi B. The StrongARM latch [A Circuit for All Seasons][J]. IEEE Solid-State Circuits Magazine, 2015, 7(2): 12-17. DOI: [10.1109/MSSC.2015.2418155](https://doi.org/10.1109/MSSC.2015.2418155).
+5. Rønnow T F, Wang Z, Job J, et al. Defining and detecting quantum speedup[J]. Science, 2014, 345(6195): 420-424. DOI: [10.1126/science.1252319](https://doi.org/10.1126/science.1252319).
+6. Wilson E B. Probable inference, the law of succession, and statistical inference[J]. Journal of the American Statistical Association, 1927, 22(158): 209-212. DOI: [10.1080/01621459.1927.10502953](https://doi.org/10.1080/01621459.1927.10502953).
+7. Croes G A. A method for solving traveling-salesman problems[J]. Operations Research, 1958, 6(6): 791-812. DOI: [10.1287/opre.6.6.791](https://doi.org/10.1287/opre.6.6.791).
+8. Lin S, Kernighan B W. An effective heuristic algorithm for the traveling-salesman problem[J]. Operations Research, 1973, 21(2): 498-516. DOI: [10.1287/opre.21.2.498](https://doi.org/10.1287/opre.21.2.498).
+9. Pelgrom M J M, Duinmaijer A C J, Welbers A P G. Matching properties of MOS transistors[J]. IEEE Journal of Solid-State Circuits, 1989, 24(5): 1433-1439. DOI: [10.1109/JSSC.1989.572629](https://doi.org/10.1109/JSSC.1989.572629).
+10. Razavi B. The StrongARM latch [A Circuit for All Seasons][J]. IEEE Solid-State Circuits Magazine, 2015, 7(2): 12-17. DOI: [10.1109/MSSC.2015.2418155](https://doi.org/10.1109/MSSC.2015.2418155).
+11. Camsari K Y, Sutton B M, Datta S. p-bits for probabilistic spin logic[J]. Applied Physics Reviews, 2019, 6(1): 011305. DOI: [10.1063/1.5055860](https://doi.org/10.1063/1.5055860).
 12. Lucas A. Ising formulations of many NP problems[J]. Frontiers in Physics, 2014, 2: 5. DOI: [10.3389/fphy.2014.00005](https://doi.org/10.3389/fphy.2014.00005).
 13. Kirkpatrick S, Gelatt C D, Vecchi M P. Optimization by simulated annealing[J]. Science, 1983, 220(4598): 671-680. DOI: [10.1126/science.220.4598.671](https://doi.org/10.1126/science.220.4598.671).
 14. Borders W A, Pervaiz A Z, Fukami S, et al. Integer factorization using stochastic magnetic tunnel junctions[J]. Nature, 2019, 573(7774): 390-393. DOI: [10.1038/s41586-019-1557-9](https://doi.org/10.1038/s41586-019-1557-9).
 15. Si J, Yang S, Cen Y, et al. Energy-efficient superparamagnetic Ising machine and its application to traveling salesman problems[J]. Nature Communications, 2024, 15: 3457. DOI: [10.1038/s41467-024-47818-z](https://doi.org/10.1038/s41467-024-47818-z).
+16. Peskun P H. Optimum Monte-Carlo sampling using Markov chains[J]. Biometrika, 1973, 60(3): 607-612. DOI: [10.1093/biomet/60.3.607](https://doi.org/10.1093/biomet/60.3.607).
