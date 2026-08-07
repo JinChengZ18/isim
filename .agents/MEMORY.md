@@ -138,8 +138,20 @@ content OUT of here; this directory never ships.
   rewrite §3.5.6, PRESERVE the two RX-12 sentences ("平顶电压到翻转概率的映射
   另经宏自旋LLG…" replay sentence + the broadened LLG caveat clause) — they
   are in git @159ec07 if lost. docx regen still user-side.
-
-## Polish backlog (LOW nits from the 2026-07-21 acceptance audit — apply
+- 2026-08-07: Si2024 reference added (user request). Two edits to
+  article/chapter03.md, committed in ISOLATION via the git index (same
+  protocol as RX-12; the de-AIGC rewrite stays uncommitted on disk):
+  (1) one anchor sentence in §3.3.3 "问题布置与规模限制" right after
+  "而非强行套用QUBO求解器。" citing [^Si2024] (Si et al., Nat Commun
+  15:3457, 2024 — 80-SMTJ all-to-all Ising annealer, GP+CTSP compression
+  of 70-city TSP); (2) the [^Si2024] entry inserted between [^Aadit2022]
+  and [^Reinelt1991] (first-use order). IF you are the rewrite session
+  and touch §3.3.3 or the reference list, PRESERVE both. Differences
+  analysis lives in notes/ref_si2024_comparison.md (standalone per user
+  instruction — do NOT merge it into the chapter prose). Paper-side
+  numbers there were adversarially verified against the PDF text; note
+  Table 1's EXPERIMENTAL TSP70 time-to-solution is 40 s (50.54 s is the
+  4Kb-simulation column — the mirrored table is easy to mis-decode). (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
 
 1. 表3.2/3.4/3.5 notes: RX-01's decision rule wanted a CI note at each

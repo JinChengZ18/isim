@@ -403,7 +403,7 @@ H(\mathbf{x})=A\sum_{v}\Bigl(1-\sum_jx_{v,j}\Bigr)^2+A\sum_{j}\Bigl(1-\sum_vx_{v
 $$
 前两项强制每个城市恰被访问一次、每个位置恰被一个城市占据的约束，第三项刻画巡回路径长度。惩罚系数$A$与耦合系数$B$的比值控制约束与目标的相对强度；为使基态对应可行的最优巡回路径，需要$A>B\cdot d_{\max}$。
 
-该编码的自旋数随城市数平方增长：$n=14$时$N_{\text{spin}}=196$，$n=20$时$N_{\text{spin}}=400$，$n=52$时$N_{\text{spin}}=2704$。配合可行性约束使$2^{N_{\text{spin}}}$构型空间中只有$n!$个点对应合法哈密顿回路 (占比$n!/2^{n^2}$对$n=14$约$10^{-51}$)，对基础退火SA类求解器而言可行域测度极端稀疏。前述综述已指出$n^2$自旋QUBO形式的TSP对通用启发式极不友好，大规模实例应通过专用置换空间求解器 (如2-opt、Lin-Kernighan、Christofides等) 处理，而非强行套用QUBO求解器。本节将基础SA定位为QUBO-TSP性能边界的参考基线，而不把它当作实际求解方法，并相应在仿真框架中设置$n\leq 20$的默认规模限制。对更大实例的调用会直接报错，调用方须显式通过`--allow-large`参数确认，方能接受数小时量级的求解时间与高概率失败。
+该编码的自旋数随城市数平方增长：$n=14$时$N_{\text{spin}}=196$，$n=20$时$N_{\text{spin}}=400$，$n=52$时$N_{\text{spin}}=2704$。配合可行性约束使$2^{N_{\text{spin}}}$构型空间中只有$n!$个点对应合法哈密顿回路 (占比$n!/2^{n^2}$对$n=14$约$10^{-51}$)，对基础退火SA类求解器而言可行域测度极端稀疏。前述综述已指出$n^2$自旋QUBO形式的TSP对通用启发式极不友好，大规模实例应通过专用置换空间求解器 (如2-opt、Lin-Kernighan、Christofides等) 处理，而非强行套用QUBO求解器。大规模TSP的硬件演示同样依赖问题分解：Si等在80个sMTJ的全连接伊辛退火机上，经图分割与约束TSP滑窗优化把70城TSP (固定起点后4761自旋) 压缩至80节点求解，得到近优解[^Si2024]。本节将基础SA定位为QUBO-TSP性能边界的参考基线，而不把它当作实际求解方法，并相应在仿真框架中设置$n\leq 20$的默认规模限制。对更大实例的调用会直接报错，调用方须显式通过`--allow-large`参数确认，方能接受数小时量级的求解时间与高概率失败。
 
 **实验配置。**
 
@@ -719,6 +719,8 @@ $\beta$缩放轨下粗网格另有一种效应：若退火调度改由DAC基准�
 [^Onizawa2024]: Onizawa N, Hanyu T. Enhanced convergence in p-bit based simulated annealing with partial deactivation for large-scale combinatorial optimization problems[J]. Scientific Reports, 2024, 14: 1339. DOI: [10.1038/s41598-024-51639-x](https://doi.org/10.1038/s41598-024-51639-x).
 
 [^Aadit2022]: Aadit N A, Grimaldi A, Carpentieri M, et al. Massively parallel probabilistic computing with sparse Ising machines[J]. Nature Electronics, 2022, 5(7): 460-468. DOI: [10.1038/s41928-022-00774-2](https://doi.org/10.1038/s41928-022-00774-2).
+
+[^Si2024]: Si J, Yang S, Cen Y, et al. Energy-efficient superparamagnetic Ising machine and its application to traveling salesman problems[J]. Nature Communications, 2024, 15: 3457. DOI: [10.1038/s41467-024-47818-z](https://doi.org/10.1038/s41467-024-47818-z).
 
 [^Reinelt1991]: Reinelt G. TSPLIB: a traveling salesman problem library[J]. ORSA Journal on Computing, 1991, 3(4): 376-384. DOI: [10.1287/ijoc.3.4.376](https://doi.org/10.1287/ijoc.3.4.376).
 
