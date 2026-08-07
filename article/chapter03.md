@@ -22,7 +22,7 @@ $$
 
 一般含任意符号耦合的伊辛自旋玻璃基态求解为NP-hard[^Barahona1982]：哈密顿能量在高维离散空间$\{-1,+1\}^N$上呈高度非凸景观，存在指数多的局部极小。若直接在零温极限下进行贪婪下降，系统常被局部极小所俘获而无法达到全局最优。Kirkpatrick等提出的模拟退火算法 (simulated annealing，SA) [^Kirkpatrick1983]令系统在较高温度下充分遍历构型空间以跨越能量势垒，再以适当速率降低温度并持续采样，最终在低温极限下逼近基态。模拟退火理论进一步表明，冷却调度足够慢且与能垒深度匹配时，马尔可夫链可依概率收敛至全局最优；典型充分形式为温度按$T(t)\propto 1/\log t$衰减[^Hajek1988]。实际工程中为兼顾解质量与求解时间，更常用几何或线性退火。本章将SA作为求解器内核的算法基础，并将其sMTJ物理实现 (即p-bit SA) 作为后续基准的核心评估对象。
 
-在实现层面，玻尔兹曼分布的采样可通过马尔可夫链蒙特卡罗方法的单自旋更新获得。任一自旋$s_i$在给定其它自旋$\mathbf{s}_{\neq i}$时的条件概率仅依赖于该自旋所处的有效局部场
+在实现层面，玻尔兹曼分布的采样可通过马尔可夫链蒙特卡罗方法的单自旋更新获得[^Glauber1963][^GemanGeman1984]。任一自旋$s_i$在给定其它自旋$\mathbf{s}_{\neq i}$时的条件概率仅依赖于该自旋所处的有效局部场
 $$
 h_i^{\mathrm{eff}}=\sum_{j\neq i}J_{ij}s_j+h_i
 $$
@@ -30,7 +30,7 @@ $$
 $$
 p(s_i=+1\mid\mathbf{s}_{\neq i})=\frac{1}{1+\exp(-2\beta h_i^{\mathrm{eff}})}=\sigma(2\beta h_i^{\mathrm{eff}})
 $$
-其中$\sigma(\cdot)$为sigmoid函数。该条件概率在形式上与双稳态随机器件在外部偏置与热扰动共同作用下的占据概率分布一致。正因如此，sMTJ得以直接充当伊辛自旋，在硬件层面实现玻尔兹曼采样。
+其中$\sigma(\cdot)$为sigmoid函数。该条件概率在形式上与双稳态随机器件在外部偏置与热扰动共同作用下的占据概率分布一致。正因如此，sMTJ得以直接充当伊辛自旋，在硬件层面实现玻尔兹曼采样[^Camsari2017][^Camsari2019]。
 
 #### 3.1.2 伊辛哈密顿量与QUBO的等价变换
 
@@ -188,7 +188,7 @@ $$
 
 本节在公共基准实例上对前述求解器与仿真框架进行系统性能评估，覆盖三类具有不同结构特征的组合优化问题：Max-Cut (稀疏/稠密图、无约束)、整数分解 (约束耦合、位乘法电路拓扑)、TSP ($n^2$-spin QUBO、双层约束-目标能量结构)。每类问题除主基准外，均设计相应的消融实验以分离超参数与算法机制的贡献；TSP节进一步给出改进路径的定量验证。
 
-三小节共享统一的评估指标：单次试验成功概率$p_s$ (按问题语义定义的容差内命中最优解的比例)、$99\%$置信求解时间$\mathrm{TTS}_{99}=t_{\text{median}}\cdot\log(1-0.99)/\log(1-p_s)$、相对于已知最优解的最佳/中位相对偏差$\Delta_{\text{best}}, \Delta_{\text{med}}$。所有基准在Intel Core i9-14900HX (32核) 单节点上运行，多起点通过`multistart`接口的`SeedSequence.spawn`协议实现位级可复现并行[^wallclock]；每次试验的完整能量轨迹与最终自旋构型均持久化为JSON，以支持事后复核。$p_s$是$N_{\text{trial}}$次伯努利试验的命中比例，其区间按Wilson 95%给出；由$p_s$导出的$\mathrm{TTS}_{99}$比值的区间用命中数的参数化自举 (二项重采样$10^4$次) 传播，正文与表注引用的区间均由此计算。
+三小节共享统一的评估指标：单次试验成功概率$p_s$ (按问题语义定义的容差内命中最优解的比例)、$99\%$置信求解时间$\mathrm{TTS}_{99}=t_{\text{median}}\cdot\log(1-0.99)/\log(1-p_s)$[^Ronnow2014]、相对于已知最优解的最佳/中位相对偏差$\Delta_{\text{best}}, \Delta_{\text{med}}$。所有基准在Intel Core i9-14900HX (32核) 单节点上运行，多起点通过`multistart`接口的`SeedSequence.spawn`协议实现位级可复现并行[^wallclock]；每次试验的完整能量轨迹与最终自旋构型均持久化为JSON，以支持事后复核。$p_s$是$N_{\text{trial}}$次伯努利试验的命中比例，其区间按Wilson 95%给出[^Wilson1927]；由$p_s$导出的$\mathrm{TTS}_{99}$比值的区间用命中数的参数化自举 (二项重采样$10^4$次) 传播，正文与表注引用的区间均由此计算。
 
 [^wallclock]: 本章墙钟$\mathrm{TTS}_{99}$与单次耗时为该机器实测值 (由仓库`results_rerun/`下各驱动重新生成)，随宿主机性能近似线性缩放；而单次成功率$p_s$、以扫数计的$\mathrm{TTS}_{99}$比值、由$p_s$导出的加速比、以及器件消融的退化倍数均与硬件无关，可在任意环境逐位复现。
 
@@ -236,7 +236,7 @@ $\mathrm{G14}$的情况则有所不同。尽管$200$次试验均未精确命中B
 
 **sMTJ-Gibbs与经典模拟退火的统一框架对照。**
 
-要把单步采样规则对求解性能的贡献单独分离出来，需要在统一仿真框架内运行经典模拟退火 (Simulated Annealing，SA) 作为对照。此处所谓**经典SA**是Kirkpatrick、Gelatt和Vecchi于1983年提出的标准模拟退火算法，其单步翻转判定遵循Metropolis接受准则
+要把单步采样规则对求解性能的贡献单独分离出来，需要在统一仿真框架内运行经典模拟退火 (Simulated Annealing，SA) 作为对照。此处所谓**经典SA**是Kirkpatrick、Gelatt和Vecchi于1983年提出的标准模拟退火算法，其单步翻转判定遵循Metropolis接受准则[^Metropolis1953]
 $$
 P(\text{accept})=\min\bigl(1,\,e^{-\beta\Delta E}\bigr),
 $$
@@ -403,7 +403,7 @@ H(\mathbf{x})=A\sum_{v}\Bigl(1-\sum_jx_{v,j}\Bigr)^2+A\sum_{j}\Bigl(1-\sum_vx_{v
 $$
 前两项强制每个城市恰被访问一次、每个位置恰被一个城市占据的约束，第三项刻画巡回路径长度。惩罚系数$A$与耦合系数$B$的比值控制约束与目标的相对强度；为使基态对应可行的最优巡回路径，需要$A>B\cdot d_{\max}$。
 
-该编码的自旋数随城市数平方增长：$n=14$时$N_{\text{spin}}=196$，$n=20$时$N_{\text{spin}}=400$，$n=52$时$N_{\text{spin}}=2704$。配合可行性约束使$2^{N_{\text{spin}}}$构型空间中只有$n!$个点对应合法哈密顿回路 (占比$n!/2^{n^2}$对$n=14$约$10^{-51}$)，对基础退火SA类求解器而言可行域测度极端稀疏。前述综述已指出$n^2$自旋QUBO形式的TSP对通用启发式极不友好，大规模实例应通过专用置换空间求解器 (如2-opt、Lin-Kernighan、Christofides等) 处理，而非强行套用QUBO求解器。大规模TSP的硬件演示同样依赖问题分解：Si等在80个sMTJ的全连接伊辛退火机上，经图分割与约束TSP滑窗优化把70城TSP (固定起点后4761自旋) 压缩至80节点求解，得到近优解[^Si2024]。本节将基础SA定位为QUBO-TSP性能边界的参考基线，而不把它当作实际求解方法，并相应在仿真框架中设置$n\leq 20$的默认规模限制。对更大实例的调用会直接报错，调用方须显式通过`--allow-large`参数确认，方能接受数小时量级的求解时间与高概率失败。
+该编码的自旋数随城市数平方增长：$n=14$时$N_{\text{spin}}=196$，$n=20$时$N_{\text{spin}}=400$，$n=52$时$N_{\text{spin}}=2704$。配合可行性约束使$2^{N_{\text{spin}}}$构型空间中只有$n!$个点对应合法哈密顿回路 (占比$n!/2^{n^2}$对$n=14$约$10^{-51}$)，对基础退火SA类求解器而言可行域测度极端稀疏。前述综述已指出$n^2$自旋QUBO形式的TSP对通用启发式极不友好，大规模实例应通过专用置换空间求解器 (如2-opt[^Croes1958]、Lin-Kernighan[^LinKernighan1973]、Christofides等) 处理，而非强行套用QUBO求解器。大规模TSP的硬件演示同样依赖问题分解：Si等在80个sMTJ的全连接伊辛退火机上，经图分割与约束TSP滑窗优化把70城TSP (固定起点后4761自旋) 压缩至80节点求解，得到近优解[^Si2024]。本节将基础SA定位为QUBO-TSP性能边界的参考基线，而不把它当作实际求解方法，并相应在仿真框架中设置$n\leq 20$的默认规模限制。对更大实例的调用会直接报错，调用方须显式通过`--allow-large`参数确认，方能接受数小时量级的求解时间与高概率失败。
 
 **实验配置。**
 
@@ -595,7 +595,7 @@ $$
 
 工艺角改变的是链路的模拟精度而非功能：五个角下单调性与标称器件的读出判决均保持，tt/ss/ff/fs四角的LSB偏差在$\pm4\%$内。NMOS慢而PMOS快的sf角是例外，缓冲器工作点失衡使码相关失调升至18.0 mV ($0.77V_T$)、INL达9.3 LSB，相当于在概率映射上叠加一项随码字弯曲的确定性失真；它与写线IR压降同属确定性误差，可由一次性逐码校准吸收，构成版图前仿真给出的第一条角相关设计约束。
 
-静态特性之外，脉冲工作暴露出直流扫描不可见的环路问题：写使能门斩波时反馈环在脉冲间隙开环，缓冲器输出被推至电源轨，器件在脉冲内承受约1.6 V，翻转概率被固定在1。最终电路以互补门控的复制支路构成电流舵，使缓冲器负载电流在脉冲内外保持恒定[^process-pulse-loop]。读出支路与写支路共用器件：$7.35\,\mathrm{k\Omega}$参考电阻与器件双态阻抗构成分压，0.2 V读轨下两态感应电压相距$34.3\,\mathrm{mV}$，由一只PMOS输入的StrongARM锁存比较器判决，静态判决裕度为$-20.0$与$+14.3\,\mathrm{mV}$，其失配裕度在3.5.5节单独考察。修正后的连续更新波形见图3.9(c)：写脉冲平顶与直流传输值的偏差为$+2.8\sim+5.8\,\mathrm{mV}$，残余源于0.75 ns平顶内尚未完全收敛的建立过程。
+静态特性之外，脉冲工作暴露出直流扫描不可见的环路问题：写使能门斩波时反馈环在脉冲间隙开环，缓冲器输出被推至电源轨，器件在脉冲内承受约1.6 V，翻转概率被固定在1。最终电路以互补门控的复制支路构成电流舵，使缓冲器负载电流在脉冲内外保持恒定[^process-pulse-loop]。读出支路与写支路共用器件：$7.35\,\mathrm{k\Omega}$参考电阻与器件双态阻抗构成分压，0.2 V读轨下两态感应电压相距$34.3\,\mathrm{mV}$，由一只PMOS输入的StrongARM锁存比较器[^Razavi2015]判决，静态判决裕度为$-20.0$与$+14.3\,\mathrm{mV}$，其失配裕度在3.5.5节单独考察。修正后的连续更新波形见图3.9(c)：写脉冲平顶与直流传输值的偏差为$+2.8\sim+5.8\,\mathrm{mV}$，残余源于0.75 ns平顶内尚未完全收敛的建立过程。
 
 [^process-pulse-loop]: 过程记录：首版脉冲测试台直接以使能门斩波直流特性已验证的链路，缓冲器在脉冲间隙失去反馈，输出被推至电源轨，每个码字的翻转概率都被固定在1。曾尝试常通复制支路维持环路闭合，因输出级无法承受负载电流阶跃、平顶下垂87 mV而放弃；改为互补门控的电流舵后，缓冲器电源电流在脉冲内外恒定 (均为1.593 mA)，平顶偏差从约+650 mV收敛到+3～8 mV。
 
@@ -665,7 +665,7 @@ $\beta$缩放轨下粗网格另有一种效应：若退火调度改由DAC基准�
 
 #### 3.5.5 读出判决裕度与误读通道
 
-读出通路的判决裕度是本节暴露出的最紧约束。上述读出在标称器件下判决正确，器件失配则把这一结论推翻：对该StrongARM作Pelgrom失配蒙特卡洛 (120个失配样本，sky130 tt)，输入折合失调$\sigma_\mathrm{off}=18.5\,\mathrm{mV}$，即$0.79V_T$，为双态分离$34.3\,\mathrm{mV}$的$0.54$倍，已超过AP态$14.3\,\mathrm{mV}$的静态裕度本身。判决门限还依赖参考端的去耦状态：现有网表的参考端无电容，两态源阻抗不等，比较器kickback对两个输入节点的推动幅度因而不同，其方向恰好强化正确判决；参考端去耦后这一效应消失。由此得到两种口径——现有网表口径 (乐观) 与参考端去耦口径 (保守)，两者的单次误读概率相差两个数量级 ($8.2\times10^{-4}$对$0.18$)，但结论一致：把误读作为翻转通道回灌求解器，乐观口径在$\mathrm{G1}$上即退化$5.87\times$ (区间$[4.17,8.72]$、与基线不重叠)，保守口径下200次试验零命中。
+读出通路的判决裕度是本节暴露出的最紧约束。上述读出在标称器件下判决正确，器件失配则把这一结论推翻：对该StrongARM作Pelgrom失配蒙特卡洛[^Pelgrom1989] (120个失配样本，sky130 tt)，输入折合失调$\sigma_\mathrm{off}=18.5\,\mathrm{mV}$，即$0.79V_T$，为双态分离$34.3\,\mathrm{mV}$的$0.54$倍，已超过AP态$14.3\,\mathrm{mV}$的静态裕度本身。判决门限还依赖参考端的去耦状态：现有网表的参考端无电容，两态源阻抗不等，比较器kickback对两个输入节点的推动幅度因而不同，其方向恰好强化正确判决；参考端去耦后这一效应消失。由此得到两种口径——现有网表口径 (乐观) 与参考端去耦口径 (保守)，两者的单次误读概率相差两个数量级 ($8.2\times10^{-4}$对$0.18$)，但结论一致：把误读作为翻转通道回灌求解器，乐观口径在$\mathrm{G1}$上即退化$5.87\times$ (区间$[4.17,8.72]$、与基线不重叠)，保守口径下200次试验零命中。
 
 该通道的容限随规模收紧，与3.5.2节钳位量程的$N\cdot T$标度同源：14自旋实例在$10^{-3}$的误读率下与基线不可分辨 (200次试验，区间$[0.64,1.65]$)，而$\mathrm{G1}$在$10^{-4}$即显著退化$1.66\times$、不可分辨的界限降到$10^{-5}$ (图3.10(e))。与3.4.2节$\mathrm{G1}$上三项器件非理想性同落$1.04\sim1.39\times$窄带的结论相比，对照鲜明：$8.2\times10^{-4}$的每次误读概率已是$5.87\times$。物理通道还比该模型更不利：失配是静态的，保守口径下$\sigma_\mathrm{off}=18.5\,\mathrm{mV}$意味着约$13\%$与$23\%$的单元在两个状态下的每次读出均判错，构成固定的缺陷图而非独立同分布噪声。以保守口径计，要把$\sigma_\mathrm{off}$压到$\mathrm{G1}$所需水平须自$18.5\,\mathrm{mV}$降到$3.3\,\mathrm{mV}$，即再压低$5.6\times$；第四章比较器族中自调零结构在其自身流程下的$2.36\times$抑制[^autozero-src]不足以独力达成，须与抬高读轨、把读出共模移入NMOS输入管适用区间等增大裕度的措施并用。在正确性一侧，读出通路因此取代写通路成为阵列规模下的首要电路约束；能耗一侧的首要项仍是外围驱动的静态功耗。
 
@@ -700,6 +700,14 @@ $\beta$缩放轨下粗网格另有一种效应：若退火调度改由DAC基准�
 
 [^Hajek1988]: Hajek B. Cooling schedules for optimal annealing[J]. Mathematics of Operations Research, 1988, 13(2): 311-329. DOI: [10.1287/moor.13.2.311](https://doi.org/10.1287/moor.13.2.311).
 
+[^Glauber1963]: Glauber R J. Time-dependent statistics of the Ising model[J]. Journal of Mathematical Physics, 1963, 4(2): 294-307. DOI: [10.1063/1.1703954](https://doi.org/10.1063/1.1703954).
+
+[^GemanGeman1984]: Geman S, Geman D. Stochastic relaxation, Gibbs distributions, and the Bayesian restoration of images[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence, 1984, PAMI-6(6): 721-741. DOI: [10.1109/TPAMI.1984.4767596](https://doi.org/10.1109/TPAMI.1984.4767596).
+
+[^Camsari2017]: Camsari K Y, Faria R, Sutton B M, et al. Stochastic p-bits for invertible logic[J]. Physical Review X, 2017, 7(3): 031014. DOI: [10.1103/PhysRevX.7.031014](https://doi.org/10.1103/PhysRevX.7.031014).
+
+[^Camsari2019]: Camsari K Y, Sutton B M, Datta S. p-bits for probabilistic spin logic[J]. Applied Physics Reviews, 2019, 6(1): 011305. DOI: [10.1063/1.5055860](https://doi.org/10.1063/1.5055860).
+
 [^Kochenberger2014]: Kochenberger G, Hao J K, Glover F, et al. The unconstrained binary quadratic programming problem: a survey[J]. Journal of Combinatorial Optimization, 2014, 28(1): 58-81. DOI: [10.1007/s10878-014-9734-0](https://doi.org/10.1007/s10878-014-9734-0).
 
 [^Karp1972]: Karp R M. Reducibility among combinatorial problems[M]//Miller R E, Thatcher J W, Bohlinger J D, eds. Complexity of Computer Computations. Boston, MA: Springer, 1972: 85-103. DOI: [10.1007/978-1-4684-2001-2_9](https://doi.org/10.1007/978-1-4684-2001-2_9).
@@ -712,13 +720,25 @@ $\beta$缩放轨下粗网格另有一种效应：若退火调度改由DAC基准�
 
 [^Borders2019]: Borders W A, Pervaiz A Z, Fukami S, et al. Integer factorization using stochastic magnetic tunnel junctions[J]. Nature, 2019, 573(7774): 390-393. DOI: [10.1038/s41586-019-1557-9](https://doi.org/10.1038/s41586-019-1557-9).
 
+[^Ronnow2014]: Rønnow T F, Wang Z, Job J, et al. Defining and detecting quantum speedup[J]. Science, 2014, 345(6195): 420-424. DOI: [10.1126/science.1252319](https://doi.org/10.1126/science.1252319).
+
+[^Wilson1927]: Wilson E B. Probable inference, the law of succession, and statistical inference[J]. Journal of the American Statistical Association, 1927, 22(158): 209-212. DOI: [10.1080/01621459.1927.10502953](https://doi.org/10.1080/01621459.1927.10502953).
+
 [^Gset]: Ye Y. G-set benchmark instances for Max-Cut[DB/OL]. Stanford University. [G-set data page](https://web.stanford.edu/~yyye/yyye/Gset/).
 
 [^BenlicHao2013]: Benlic U, Hao J K. Breakout local search for the Max-Cut problem[J]. Engineering Applications of Artificial Intelligence, 2013, 26(3): 1162-1173. DOI: [10.1016/j.engappai.2012.09.001](https://doi.org/10.1016/j.engappai.2012.09.001).
 
 [^Onizawa2024]: Onizawa N, Hanyu T. Enhanced convergence in p-bit based simulated annealing with partial deactivation for large-scale combinatorial optimization problems[J]. Scientific Reports, 2024, 14: 1339. DOI: [10.1038/s41598-024-51639-x](https://doi.org/10.1038/s41598-024-51639-x).
 
+[^Metropolis1953]: Metropolis N, Rosenbluth A W, Rosenbluth M N, et al. Equation of state calculations by fast computing machines[J]. The Journal of Chemical Physics, 1953, 21(6): 1087-1092. DOI: [10.1063/1.1699114](https://doi.org/10.1063/1.1699114).
+
+[^Peskun1973]: Peskun P H. Optimum Monte-Carlo sampling using Markov chains[J]. Biometrika, 1973, 60(3): 607-612. DOI: [10.1093/biomet/60.3.607](https://doi.org/10.1093/biomet/60.3.607).
+
 [^Aadit2022]: Aadit N A, Grimaldi A, Carpentieri M, et al. Massively parallel probabilistic computing with sparse Ising machines[J]. Nature Electronics, 2022, 5(7): 460-468. DOI: [10.1038/s41928-022-00774-2](https://doi.org/10.1038/s41928-022-00774-2).
+
+[^Croes1958]: Croes G A. A method for solving traveling-salesman problems[J]. Operations Research, 1958, 6(6): 791-812. DOI: [10.1287/opre.6.6.791](https://doi.org/10.1287/opre.6.6.791).
+
+[^LinKernighan1973]: Lin S, Kernighan B W. An effective heuristic algorithm for the traveling-salesman problem[J]. Operations Research, 1973, 21(2): 498-516. DOI: [10.1287/opre.21.2.498](https://doi.org/10.1287/opre.21.2.498).
 
 [^Si2024]: Si J, Yang S, Cen Y, et al. Energy-efficient superparamagnetic Ising machine and its application to traveling salesman problems[J]. Nature Communications, 2024, 15: 3457. DOI: [10.1038/s41467-024-47818-z](https://doi.org/10.1038/s41467-024-47818-z).
 
@@ -728,12 +748,12 @@ $\beta$缩放轨下粗网格另有一种效应：若退火调度改由DAC基准�
 
 [^Aramon2019]: Aramon M, Rosenberg G, Valiante E, et al. Physics-inspired optimization for quadratic unconstrained problems using a digital annealer[J]. Frontiers in Physics, 2019, 7: 48. DOI: [10.3389/fphy.2019.00048](https://doi.org/10.3389/fphy.2019.00048).
 
-[^Camsari2019]: Camsari K Y, Sutton B M, Datta S. p-bits for probabilistic spin logic[J]. Applied Physics Reviews, 2019, 6(1): 011305. DOI: [10.1063/1.5055860](https://doi.org/10.1063/1.5055860).
-
 [^Goto2021]: Goto H, Endo K, Suzuki M, et al. High-performance combinatorial optimization based on classical mechanics[J]. Science Advances, 2021, 7(6): eabe7953. DOI: [10.1126/sciadv.abe7953](https://doi.org/10.1126/sciadv.abe7953).
 
 [^MohseniReview2022]: Mohseni N, McMahon P L, Byrnes T. Ising machines as hardware solvers of combinatorial optimization problems[J]. Nature Reviews Physics, 2022, 4(6): 363-379. DOI: [10.1038/s42254-022-00440-8](https://doi.org/10.1038/s42254-022-00440-8).
 
 [^Cacoilo2026]: Cacoilo N, Yoon J, Madhavan A, et al. 130-nm CMOS-integrated superparamagnetic tunnel junction-based p-bit[J]. IEEE Electron Device Letters, 2026, 47(7). DOI: [10.1109/LED.2026.3696800](https://doi.org/10.1109/LED.2026.3696800).
 
-[^Peskun1973]: Peskun P H. Optimum Monte-Carlo sampling using Markov chains[J]. Biometrika, 1973, 60(3): 607-612. DOI: [10.1093/biomet/60.3.607](https://doi.org/10.1093/biomet/60.3.607).
+[^Razavi2015]: Razavi B. The StrongARM latch [A Circuit for All Seasons][J]. IEEE Solid-State Circuits Magazine, 2015, 7(2): 12-17. DOI: [10.1109/MSSC.2015.2418155](https://doi.org/10.1109/MSSC.2015.2418155).
+
+[^Pelgrom1989]: Pelgrom M J M, Duinmaijer A C J, Welbers A P G. Matching properties of MOS transistors[J]. IEEE Journal of Solid-State Circuits, 1989, 24(5): 1433-1439. DOI: [10.1109/JSSC.1989.572629](https://doi.org/10.1109/JSSC.1989.572629).

@@ -151,7 +151,21 @@ content OUT of here; this directory never ships.
   instruction — do NOT merge it into the chapter prose). Paper-side
   numbers there were adversarially verified against the PDF text; note
   Table 1's EXPERIMENTAL TSP70 time-to-solution is 40 s (50.54 s is the
-  4Kb-simulation column — the mirrored table is easy to mis-decode). (LOW nits from the 2026-07-21 acceptance audit — apply
+  4Kb-simulation column — the mirrored table is easy to mis-decode).
+- 2026-08-07 (2nd): public-knowledge citation rectification (user request,
+  responds to reviewer's "方法出处未标注"). TEN new reference entries +
+  anchors added to article/chapter03.md, again committed in ISOLATION via
+  the index (rewrite still uncommitted on disk): Glauber1963, GemanGeman1984,
+  Camsari2017 (3.1.1); Ronnow2014, Wilson1927 (3.3 preamble); Metropolis1953
+  (3.3.1); Croes1958, LinKernighan1973 (3.3.3 2-opt parenthetical);
+  Razavi2015 (3.5.1); Pelgrom1989 (3.5.5). [^Camsari2019] gained a second
+  anchor at 3.1.1 and its DEFINITION MOVED up next to Camsari2017;
+  [^Peskun1973] definition moved into first-use order (after
+  Metropolis1953). All DOIs Crossref-verified (Pelgrom pages are 1433-1439,
+  not -1440). IF you are the rewrite session: preserve all these markers
+  and the reordered reference list; anchor sentences are identical in both
+  versions except the 3.3 preamble Wilson sentence (wording differs per
+  version, both patched). Reviewer letter + docx appendix live in notes/. (LOW nits from the 2026-07-21 acceptance audit — apply
 ## when no session is actively editing chapter03.md; each is one line)
 
 1. 表3.2/3.4/3.5 notes: RX-01's decision rule wanted a CI note at each
