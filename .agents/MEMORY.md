@@ -196,3 +196,29 @@ content OUT of here; this directory never ships.
 6. Rewrite-version §3.6 (working tree, ~line 652) uses banned word 落地
    ("到第一类系统任务的落地") — global CLAUDE.md ban list. Replace with
    落实 (or 完成…的衔接) when the rewrite session commits its version.
+- 2026-08-12: reviewer's WRITTEN comment (评阅书 不足/建议) is about §3.3 tables
+  lacking a literature comparison ("建议用表格形式进行比较，而不是文字描述"), NOT
+  the citation issue relayed earlier by the advisor. Response: three comparison
+  tables added -> 表3.3 (G-set vs BLS/pSA/TApSA/dSB), 表3.6 (factoring vs
+  Borders/Jiang), 表3.9 (TSPLIB vs D-Wave Kerberos/LeapHybridSampler, all three
+  instances). TABLE RENUMBERING: old 3.3->3.4, 3.4->3.5, 3.5->3.7, 3.6->3.8,
+  3.7->3.10, 3.8->3.11, 3.9->3.12. Older entries in this file and in
+  EXPERIMENTS_QUEUE.md still use the OLD numbers (表3.8 = hardware projection is
+  now 表3.11, 表3.9 = write-chain DC is now 表3.12) — read dated entries with
+  that shift in mind. eda/extraction/writeline_ir/README.md was updated.
+  THREE SOURCE ERRORS FOUND AND FIXED while building the tables:
+  (1) BLS on G1 is 13 s (Benlic&Hao Table 2), not the 2-3 s the chapter claimed
+      (2-3 s belongs to G11/G12/G13);
+  (2) Onizawa&Hanyu report pSA = 0 cut on G1/G14/G22 (parallel-update
+      oscillation, which is that paper's whole motivation) and TApSA at
+      0.996/0.991/0.994 — the chapter had claimed pSA 0.996-0.998 and TApSA
+      >0.999, i.e. it inverted the cited paper's argument;
+  (3) G14 is NOT sign-mixed — all 4694 edges are +1 (verified against gset/G14);
+      the ±1 variants of that topology are G18-G21. All "稀疏符号混合" wording
+      for G14 replaced; the shallow-minima mechanism now rests on low degree
+      (11.7 vs G1's 47.9).
+  Goto2021 reports G22 only (G1/G14 absent); Aramon2019 has no G-set instance.
+  Reply letter + 修改说明 + appendix live in notes/ (docx built on the user's
+  hand-formatted base, never pandoc — see the 2026-08-07 entry).
+  NOTE: bfbaff3 committed the de-AIGC rewrite, so HEAD and the working tree now
+  share a base and the index-isolation protocol is no longer needed here.
